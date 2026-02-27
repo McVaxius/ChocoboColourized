@@ -23,8 +23,6 @@ public class MainWindow : Window, IDisposable
     private CalculationResult? lastResult = null;
     private string statusMessage = "";
 
-    // Chocobo name input for timer display
-    private string chocoboNameInput = "";
 
     // Colours for inventory status
     private static readonly Vector4 ColorRed = new(1f, 0.3f, 0.3f, 1f);
@@ -264,10 +262,12 @@ public class MainWindow : Window, IDisposable
 
         if (ImGui.BeginTable("FruitReq", 4, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
         {
+            // Use scaled widths based on font size to handle UI scaling >100%
+            var scale = ImGui.GetFontSize() / 17f;  // 17 = default Dalamud font size
             ImGui.TableSetupColumn("Fruit", ImGuiTableColumnFlags.WidthStretch);
-            ImGui.TableSetupColumn("Required", ImGuiTableColumnFlags.WidthFixed, 60);
-            ImGui.TableSetupColumn("Owned", ImGuiTableColumnFlags.WidthFixed, 60);
-            ImGui.TableSetupColumn("Status", ImGuiTableColumnFlags.WidthFixed, 40);
+            ImGui.TableSetupColumn("Required", ImGuiTableColumnFlags.WidthFixed, 70 * scale);
+            ImGui.TableSetupColumn("Owned", ImGuiTableColumnFlags.WidthFixed, 70 * scale);
+            ImGui.TableSetupColumn("Status", ImGuiTableColumnFlags.WidthFixed, 50 * scale);
             ImGui.TableHeadersRow();
 
             foreach (var kvp in lastResult.FruitCounts.OrderByDescending(x => x.Value))
@@ -321,31 +321,20 @@ public class MainWindow : Window, IDisposable
         }
     }
 
-    // Feature 4: Save plan and Start button with gating
+    // Feature 4: Plan status and quick-start button with gating
     private void DrawPlanButtons()
     {
         if (lastResult == null || lastResult.TotalFruits == 0) return;
 
         if (!plugin.GameData.IsLoggedIn)
         {
-            ImGui.TextColored(ColorGrey, "Log in to save a feeding plan.");
+            ImGui.TextColored(ColorGrey, "Log in to use feeding plans.");
             return;
         }
 
         var charName = plugin.GameData.CharacterName;
         var worldName = plugin.GameData.WorldName;
         var charData = plugin.PlanStorage.GetCharacterData(charName, worldName);
-
-        // Show chocobo name input
-        ImGui.Text("Chocobo Name:");
-        ImGui.SameLine();
-        ImGui.SetNextItemWidth(200);
-        if (ImGui.InputText("##ChocoboName", ref chocoboNameInput, 64))
-        {
-            plugin.PlanStorage.SetChocoboName(charName, worldName, chocoboNameInput);
-        }
-
-        ImGui.Spacing();
 
         if (charData.ActivePlan != null)
         {
@@ -357,6 +346,8 @@ public class MainWindow : Window, IDisposable
             {
                 plugin.PlanStorage.ClearPlan(charName, worldName);
             }
+            ImGui.SameLine();
+            ImGui.TextColored(ColorGrey, "Switch to the Automation tab to start feeding.");
         }
         else if (charData.IsTimerActive)
         {
@@ -366,32 +357,38 @@ public class MainWindow : Window, IDisposable
         }
         else
         {
-            // Check inventory sufficiency for the Start button
+            // Check inventory sufficiency
             var hasEnough = plugin.GameData.HasEnoughFruits(lastResult.FruitCounts);
 
-            if (ImGui.Button("Save Feeding Plan", new Vector2(200, 25)))
+            if (hasEnough)
             {
-                var plan = FeedingPlan.FromCalculationResult(lastResult);
-                plugin.PlanStorage.SavePlan(charName, worldName, plan);
-                if (!string.IsNullOrEmpty(chocoboNameInput))
-                    plugin.PlanStorage.SetChocoboName(charName, worldName, chocoboNameInput);
-                statusMessage = "Plan saved!";
-            }
-
-            if (!hasEnough)
-            {
-                ImGui.TextColored(ColorRed, "Cannot start: insufficient fruits in inventory.");
-                ImGui.SameLine();
-                ImGui.TextColored(ColorGrey, "(?)");
-                if (ImGui.IsItemHovered())
+                if (ImGui.Button("Save Plan & Go to Automation", new Vector2(-1, 30)))
                 {
-                    ImGui.BeginTooltip();
-                    ImGui.Text("The Start button requires all fruits to be in your inventory.");
-                    ImGui.Text("Acquire the missing fruits and try again.");
-                    ImGui.EndTooltip();
+                    SavePlanFromResult(charName, worldName);
+                    statusMessage = "Plan saved! Switch to the Automation tab to start.";
                 }
             }
+            else
+            {
+                ImGui.BeginDisabled();
+                ImGui.Button("Save Plan (Insufficient Fruits)", new Vector2(-1, 30));
+                ImGui.EndDisabled();
+                ImGui.TextColored(ColorRed, "You need more fruits before you can save and start a plan.");
+            }
         }
+    }
+
+    /// <summary>Save plan from current calculation result and auto-set chocobo name.</summary>
+    private void SavePlanFromResult(string charName, string worldName)
+    {
+        if (lastResult == null) return;
+        var plan = FeedingPlan.FromCalculationResult(lastResult);
+        plugin.PlanStorage.SavePlan(charName, worldName, plan);
+
+        // Auto-set chocobo name from player's first name
+        var firstName = charName.Split(' ')[0];
+        var autoName = $"{firstName}'s Chocobo";
+        plugin.PlanStorage.SetChocoboName(charName, worldName, autoName);
     }
 
     // ========== TIMERS TAB ==========
@@ -407,10 +404,11 @@ public class MainWindow : Window, IDisposable
 
         if (ImGui.BeginTable("Timers", 4, ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg))
         {
+            var scale = ImGui.GetFontSize() / 17f;
             ImGui.TableSetupColumn("Character", ImGuiTableColumnFlags.WidthStretch);
-            ImGui.TableSetupColumn("Chocobo", ImGuiTableColumnFlags.WidthFixed, 120);
-            ImGui.TableSetupColumn("Status", ImGuiTableColumnFlags.WidthFixed, 100);
-            ImGui.TableSetupColumn("Remaining", ImGuiTableColumnFlags.WidthFixed, 100);
+            ImGui.TableSetupColumn("Chocobo", ImGuiTableColumnFlags.WidthFixed, 130 * scale);
+            ImGui.TableSetupColumn("Status", ImGuiTableColumnFlags.WidthFixed, 110 * scale);
+            ImGui.TableSetupColumn("Remaining", ImGuiTableColumnFlags.WidthFixed, 110 * scale);
             ImGui.TableHeadersRow();
 
             foreach (var kvp in allChars)
@@ -490,7 +488,7 @@ public class MainWindow : Window, IDisposable
         if (charData.ActivePlan == null)
         {
             ImGui.TextColored(ColorGrey, "No active feeding plan.");
-            ImGui.Text("Calculate a feeding path in the Calculator tab, then save the plan.");
+            ImGui.Text("Calculate a feeding path in the Calculator tab, then click 'Save Plan'.");
             return;
         }
 
@@ -598,6 +596,12 @@ public class MainWindow : Window, IDisposable
             {
                 if (ImGui.Button("Start Automated Feeding", new Vector2(-1, 35)))
                 {
+                    // Auto-set chocobo name from player's first name if not already set
+                    if (string.IsNullOrEmpty(charData.ChocoboName))
+                    {
+                        var firstName = charName.Split(' ')[0];
+                        plugin.PlanStorage.SetChocoboName(charName, worldName, $"{firstName}'s Chocobo");
+                    }
                     automation.Start(plan, charName, worldName);
                 }
             }
@@ -614,6 +618,59 @@ public class MainWindow : Window, IDisposable
             {
                 plugin.PlanStorage.ClearPlan(charName, worldName);
             }
+        }
+
+        // Quest prerequisites guide (always shown at bottom of Automation tab)
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+        DrawQuestPrerequisites();
+    }
+
+    private void DrawQuestPrerequisites()
+    {
+        if (ImGui.TreeNode("Prerequisites & Troubleshooting"))
+        {
+            ImGui.Spacing();
+            ImGui.TextColored(ColorCyan, "Required Quests:");
+            ImGui.Spacing();
+
+            ImGui.Text("1.");
+            ImGui.SameLine();
+            ImGui.TextColored(ColorWhite, "My Feisty Little Chocobo");
+            ImGui.Text("   Obtain your chocobo companion (Camp Tranquil, South Shroud)");
+
+            ImGui.Spacing();
+            ImGui.Text("2.");
+            ImGui.SameLine();
+            ImGui.TextColored(ColorWhite, "Bird in Hand");
+            ImGui.Text("   Unlock chocobo stabling and raising (Bentbranch Meadows, Central Shroud)");
+            ImGui.Text("   NPC: Luquelot at Bentbranch Meadows (X:21.4, Y:22.1)");
+
+            ImGui.Spacing();
+            ImGui.TextColored(ColorCyan, "Other Requirements:");
+            ImGui.Spacing();
+            ImGui.Text("- Access to a Chocobo Stable (FC house, personal house, or apartment)");
+            ImGui.Text("- Your chocobo must be stabled (not summoned as companion)");
+            ImGui.Text("- Fruits in your inventory (purchase from vendors or Market Board)");
+
+            ImGui.Spacing();
+            ImGui.TextColored(ColorCyan, "Common Errors:");
+            ImGui.Spacing();
+
+            ImGui.TextColored(ColorYellow, "\"You have yet to be trained in chocobo raising\"");
+            ImGui.Text("  -> Complete the quest \"Bird in Hand\" at Bentbranch Meadows.");
+
+            ImGui.Spacing();
+            ImGui.TextColored(ColorYellow, "\"Your chocobo is not stabled\"");
+            ImGui.Text("  -> Stable your chocobo at a Chocobo Stable before feeding.");
+
+            ImGui.Spacing();
+            ImGui.TextColored(ColorYellow, "Automation errors about context menu or inventory");
+            ImGui.Text("  -> Make sure you are on the Feed screen (inventory visible with");
+            ImGui.Text("     feedable items highlighted) before clicking Start.");
+
+            ImGui.TreePop();
         }
     }
 

@@ -8,6 +8,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### 2026-02-27 18:12:00
+
+#### UI Cleanup - Auto chocobo name, scaled columns, streamlined plan saving
+
+**Changes:**
+1. **Auto chocobo name** — Removed manual chocobo name input field. Name is now auto-generated as `"FirstName's Chocobo"` from the player's character name. Set automatically when saving a plan or starting automation.
+2. **Scaled table columns** — Material counter (FruitReq) and Timer table columns now scale with `ImGui.GetFontSize() / 17f` to handle UI scaling >100% and non-default Dalamud styles. Previous fixed widths (60/40px) truncated text at higher scaling.
+3. **Removed "Save Feeding Plan" button** — Replaced with "Save Plan & Go to Automation" button that saves the plan and prompts user to switch tabs. The separate save-only button was confusing since users always need to go to Automation next. Button is disabled (greyed out) when fruits are insufficient.
+4. **Automation tab hint** — Updated "no plan" message to say "click 'Save Plan'" instead of "save the plan" for clarity.
+5. **Auto-name on automation start** — If chocobo name is empty when Start is clicked, auto-sets it from player name.
+6. **Quest prerequisites guide** — Added collapsible "Prerequisites & Troubleshooting" section at the bottom of the Automation tab. Lists required quests (My Feisty Little Chocobo, Bird in Hand), NPC locations, other requirements, and common error messages with solutions.
+
+#### Files Modified
+- `ChocoboColourized/Windows/MainWindow.cs` — All UI changes
+
+#### Files Backed Up
+- `backups/20260227_181126_MainWindow.cs`
+- `backups/20260227_181232_CHANGELOG.md`
+- `backups/20260227_181232_KNOWLEDGEBASE.md`
+
+#### Build Status
+- Build succeeded: 0 errors, 0 warnings
+
+#### Testing Requirements
+- Open plugin, verify no chocobo name input field visible
+- Calculate a path, check column widths aren't truncated at various UI scales
+- Verify "Save Plan & Go to Automation" button saves and shows message
+- Check Timers tab shows auto-generated chocobo name
+- Start automation, verify chocobo name auto-populated in timer list
+
+---
+
 ### 2026-02-27 17:48:00
 
 #### Fixed - Talk addon visibility bug blocking stable menu detection
