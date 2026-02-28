@@ -1,0 +1,23 @@
+[
+    {
+      "Author": "DhogGPT",
+      "Name": "Chocobo Colourized",
+      "InternalName": "ChocoboColourized",
+      "AssemblyVersion": "0.0.0.1",
+      "Description": "Chocobo Colourized helps you find the most efficient sequence of fruits to feed your chocobo companion to reach your desired target colour. Use /chococolor to open the calculator.",
+      "ApplicableVersion": "any",
+      "Tags": [
+        "chocobo",
+        "color",
+        "colour",
+        "companion",
+        "calculator"
+      ],
+      "DalamudApiLevel": 14,
+      "Punchline": "Calculate the optimal fruit feeding path to change your chocobo's colour.",
+      "DownloadLinkInstall": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
+      "DownloadLinkUpdate": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
+      "IsHide": false,
+      "IsTestingExclusive": false
+    }
+  ]
