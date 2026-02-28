@@ -1,3 +1,3 @@
 Chocobo Colouring Automated
 
-https://github.com/McVaxius/ChocoboColourized/blob/main/repo.json
+https://raw.githubusercontent.com/McVaxius/ChocoboColourized/main/repo.json

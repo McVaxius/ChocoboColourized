@@ -3,7 +3,7 @@
   "Name": "DhogGPT Plugins",
   "Punchline": "Third-party Dalamud plugins.",
   "Description": "Third-party Dalamud plugin repository.",
-  "RepoUrl": "https://raw.githubusercontent.com/yourusername/ChocoboColourized/main/repo.json",
+  "RepoUrl": "https://raw.githubusercontent.com/McVaxius/ChocoboColourized/main/repo.json",
   "IconUrl": "",
   "ImageUrls": [],
   "Changelog": "",
@@ -24,8 +24,8 @@
       ],
       "DalamudApiLevel": 14,
       "Punchline": "Calculate the optimal fruit feeding path to change your chocobo's colour.",
-      "DownloadLinkInstall": "https://github.com/yourusername/ChocoboColourized/releases/latest/download/latest.zip",
-      "DownloadLinkUpdate": "https://github.com/yourusername/ChocoboColourized/releases/latest/download/latest.zip",
+      "DownloadLinkInstall": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
+      "DownloadLinkUpdate": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
       "IsHide": false,
       "IsTestingExclusive": false
     }
