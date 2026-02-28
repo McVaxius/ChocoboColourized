@@ -7,4 +7,8 @@
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <DalamudLibPath Condition="$(DALAMUD_HOME) != ''">$(DALAMUD_HOME)/</DalamudLibPath>
+  </PropertyGroup>
 </Project>
