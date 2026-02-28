@@ -3,7 +3,7 @@
       "Author": "DhogGPT",
       "Name": "Chocobo Colourized",
       "InternalName": "ChocoboColourized",
-      "AssemblyVersion": "0.0.0.1",
+      "AssemblyVersion": "0.0.0.5",
       "Description": "Chocobo Colourized helps you find the most efficient sequence of fruits to feed your chocobo companion to reach your desired target colour. Use /chococolor to open the calculator.",
       "ApplicableVersion": "any",
       "Tags": [
