@@ -19,9 +19,14 @@ public class MainWindow : Window, IDisposable
     private int targetColorIndex = 0;
     private readonly string[] colorNames;
 
+    private string currentColorSearch = string.Empty;
+    private string targetColorSearch = string.Empty;
+
     // Calculation state
     private CalculationResult? lastResult = null;
     private string statusMessage = "";
+
+    private bool selectAutomationTabNextFrame;
 
 
     // Colours for inventory status
@@ -61,10 +66,17 @@ public class MainWindow : Window, IDisposable
                 DrawTimersTab();
                 ImGui.EndTabItem();
             }
-            if (ImGui.BeginTabItem("Automation"))
+            var automationFlags = selectAutomationTabNextFrame ? ImGuiTabItemFlags.SetSelected : ImGuiTabItemFlags.None;
+            if (ImGui.BeginTabItem("Automation", automationFlags))
             {
+                selectAutomationTabNextFrame = false;
                 DrawAutomationTab();
                 ImGui.EndTabItem();
+            }
+            else if (selectAutomationTabNextFrame)
+            {
+                // If tab failed to open for any reason, avoid repeatedly forcing selection
+                selectAutomationTabNextFrame = false;
             }
             ImGui.EndTabBar();
         }
@@ -129,7 +141,9 @@ public class MainWindow : Window, IDisposable
         // Current Color
         ImGui.Text("Current Chocobo Colour:");
         ImGui.SetNextItemWidth(-1);
-        ImGui.Combo("##CurrentColor", ref currentColorIndex, colorNames, colorNames.Length);
+        ImGui.InputTextWithHint("##CurrentColorSearch", "Search colours...", ref currentColorSearch, 64);
+        ImGui.SetNextItemWidth(-1);
+        DrawColorCombo("##CurrentColor", ref currentColorIndex, currentColorSearch);
         var currentColor = ColorDatabase.GetByIndex(currentColorIndex);
         DrawColorPreview("Current:", currentColor);
 
@@ -138,9 +152,38 @@ public class MainWindow : Window, IDisposable
         // Target Color
         ImGui.Text("Target Colour:");
         ImGui.SetNextItemWidth(-1);
-        ImGui.Combo("##TargetColor", ref targetColorIndex, colorNames, colorNames.Length);
+        ImGui.InputTextWithHint("##TargetColorSearch", "Search colours...", ref targetColorSearch, 64);
+        ImGui.SetNextItemWidth(-1);
+        DrawColorCombo("##TargetColor", ref targetColorIndex, targetColorSearch);
         var targetColor = ColorDatabase.GetByIndex(targetColorIndex);
         DrawColorPreview("Target:", targetColor);
+    }
+
+    private void DrawColorCombo(string label, ref int selectedIndex, string search)
+    {
+        var currentName = colorNames[selectedIndex];
+        if (ImGui.BeginCombo(label, currentName))
+        {
+            for (var i = 0; i < colorNames.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(search) &&
+                    !colorNames[i].Contains(search, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var isSelected = selectedIndex == i;
+                if (ImGui.Selectable(colorNames[i], isSelected))
+                {
+                    selectedIndex = i;
+                }
+                if (isSelected)
+                {
+                    ImGui.SetItemDefaultFocus();
+                }
+            }
+            ImGui.EndCombo();
+        }
     }
 
     private void DrawColorPreview(string label, ChocoboColor color)
@@ -357,24 +400,26 @@ public class MainWindow : Window, IDisposable
         }
         else
         {
-            // Check inventory sufficiency
             var hasEnough = plugin.GameData.HasEnoughFruits(lastResult.FruitCounts);
 
-            if (hasEnough)
+            if (ImGui.Button("Save Plan & Switch to Automation", new Vector2(-1, 30)))
             {
-                if (ImGui.Button("Save Plan & Go to Automation", new Vector2(-1, 30)))
-                {
-                    SavePlanFromResult(charName, worldName);
-                    statusMessage = "Plan saved! Switch to the Automation tab to start.";
-                }
+                SavePlanFromResult(charName, worldName);
+                statusMessage = "Plan saved! Switched to Automation tab.";
+                selectAutomationTabNextFrame = true;
+            }
+
+            if (!hasEnough)
+            {
+                ImGui.TextColored(ColorYellow,
+                    "You do not have all required fruits yet. Automation start will stay disabled until you gather them.");
             }
             else
             {
-                ImGui.BeginDisabled();
-                ImGui.Button("Save Plan (Insufficient Fruits)", new Vector2(-1, 30));
-                ImGui.EndDisabled();
-                ImGui.TextColored(ColorRed, "You need more fruits before you can save and start a plan.");
+                ImGui.TextColored(ColorGreen, "All required fruits are in your inventory. Head to the Automation tab to start.");
             }
+
+            ImGui.TextColored(ColorGrey, "Automation controls live in the Automation tab.");
         }
     }
 
