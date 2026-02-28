@@ -449,7 +449,10 @@ public class FeedingAutomationService : IDisposable
         }
         else if (ElapsedInState > MenuTimeoutSec)
         {
-            SetError("Feed inventory did not open after selecting Feed from stable menu.");
+            SetError("Feed inventory did not open after selecting Feed from stable menu. " +
+                    "This happens if you are not in expanded inventory mode. " +
+                    "Please expand your inventory to 'Open all + Expanded', apply, then start again. " +
+                    "It will resume from where it left off, so no steps should be lost under normal circumstances.");
         }
     }
 
