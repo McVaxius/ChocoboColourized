@@ -1,18 +1,9 @@
-{
-  "Author": "DhogGPT",
-  "Name": "DhogGPT Plugins",
-  "Punchline": "Third-party Dalamud plugins.",
-  "Description": "Third-party Dalamud plugin repository.",
-  "RepoUrl": "https://raw.githubusercontent.com/McVaxius/ChocoboColourized/main/repo.json",
-  "IconUrl": "",
-  "ImageUrls": [],
-  "Changelog": "",
-  "Plugins": [
+[
     {
       "Author": "DhogGPT",
       "Name": "Chocobo Colourized",
       "InternalName": "ChocoboColourized",
-      "AssemblyVersion": "0.0.0.4",
+      "AssemblyVersion": "0.0.0.1",
       "Description": "Chocobo Colourized helps you find the most efficient sequence of fruits to feed your chocobo companion to reach your desired target colour. Use /chococolor to open the calculator.",
       "ApplicableVersion": "any",
       "Tags": [
@@ -30,4 +21,3 @@
       "IsTestingExclusive": false
     }
   ]
-}
