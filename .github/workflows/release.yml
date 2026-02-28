@@ -33,9 +33,17 @@ jobs:
       - name: Build (Release)
         run: dotnet build .\ChocoboColourized.sln -c Release --no-restore
 
+      - name: Verify packaged zip exists
+        run: |
+          $zip = Join-Path $env:GITHUB_WORKSPACE "ChocoboColourized/bin/x64/Release/ChocoboColourized/latest.zip"
+          if (-not (Test-Path $zip)) {
+            Write-Error "Expected package not found: $zip"
+            exit 1
+          }
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
           files: |
-            .\ChocoboColourized\bin\x64\Release\ChocoboColourized\latest.zip
+            ChocoboColourized/bin/x64/Release/ChocoboColourized/latest.zip
