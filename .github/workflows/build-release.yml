@@ -43,7 +43,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PLUGIN_NAME }}-artifact
-          path: ${{ env.RELEASE_DIR }}
+          path: |
+            ${{ env.RELEASE_DIR }}\latest.zip
+            ${{ env.RELEASE_DIR }}\${{ env.INTERNAL_NAME }}.json
           if-no-files-found: error
 
   release:
@@ -61,19 +63,13 @@ jobs:
           name: ${{ env.PLUGIN_NAME }}-artifact
           path: artifact
 
-      - name: Create latest.zip
-        run: |
-          cd artifact
-          zip -r ../latest.zip .
-          cd ..
-
       - name: Get version from tag
         id: get_version
         run: |
           if [ "${{ github.ref_type }}" == "tag" ]; then
             echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           else
-            echo "version=v0.0.0.12" >> $GITHUB_OUTPUT
+            echo "version=v0.0.0.13" >> $GITHUB_OUTPUT
           fi
 
       - name: Create Release
@@ -84,7 +80,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            latest.zip
+            artifact/latest.zip
             artifact/${{ env.INTERNAL_NAME }}.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
