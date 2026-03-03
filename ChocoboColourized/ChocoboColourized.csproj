@@ -2,7 +2,7 @@
 <Project Sdk="Dalamud.NET.Sdk/14.0.2">
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <Version>0.0.0.11</Version>
+    <Version>0.0.0.12</Version>
     <PackageProjectUrl>https://github.com/McVaxius/ChocoboColourized</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
@@ -11,4 +11,28 @@
   <PropertyGroup>
     <DalamudLibPath Condition="$(DALAMUD_HOME) != ''">$(DALAMUD_HOME)/</DalamudLibPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="images\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <Target Name="CopyPluginArtifacts" AfterTargets="Build">
+    <PropertyGroup>
+      <PluginOutput>$(OutputPath)$(AssemblyName)</PluginOutput>
+    </PropertyGroup>
+
+    <MakeDir Directories="$(PluginOutput)" />
+
+    <ItemGroup>
+      <PluginFiles Include="$(TargetPath)" />
+      <PluginFiles Include="$(ProjectDir)$(AssemblyName).json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DalamudPackagerFile Include="images\icon.png" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(PluginFiles)"
+          DestinationFolder="$(PluginOutput)" />
+  </Target>
 </Project>
