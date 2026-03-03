@@ -43,7 +43,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PLUGIN_NAME }}-artifact
-          path: ${{ env.RELEASE_DIR }}\latest.zip
+          path: |
+            ${{ env.RELEASE_DIR }}\latest.zip
+            ${{ env.RELEASE_DIR }}\${{ env.INTERNAL_NAME }}.json
           if-no-files-found: error
 
   release:
@@ -59,7 +61,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.PLUGIN_NAME }}-artifact
-          path: .
+          path: artifact
 
       - name: Get version from tag
         id: get_version
@@ -77,6 +79,8 @@ jobs:
           name: Release ${{ steps.get_version.outputs.version }}
           draft: false
           prerelease: false
-          files: latest.zip
+          files: |
+            artifact/latest.zip
+            artifact/${{ env.INTERNAL_NAME }}.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
