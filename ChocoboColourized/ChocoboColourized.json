@@ -1,7 +1,7 @@
 {
   "Author": "DhogGPT",
   "Name": "Chocobo Colourized",
-  "Punchline": "Calculate the optimal fruit feeding path to change your chocobo's colour.",
+  "Punchline": "Calculate+Automatically-feed the optimal fruit-feeding-path to change your chocobo's colour.",
   "Description": "Chocobo Colourized helps you find the most efficient sequence of fruits to feed your chocobo companion to reach your desired target colour. Use /chococolor to open the calculator.",
   "ApplicableVersion": "any",
   "Tags": [
