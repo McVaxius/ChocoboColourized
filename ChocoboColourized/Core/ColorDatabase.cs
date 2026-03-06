@@ -21,6 +21,7 @@ public static class ColorDatabase
         // Pinks
         new ChocoboColor(230, 159, 150, "Rose Pink"),
         new ChocoboColor(228, 141, 105, "Salmon Pink"),
+        new ChocoboColor(204, 108, 94,  "Coral Pink"),
         new ChocoboColor(254, 206, 245, "Lotus Pink"),
         new ChocoboColor(220, 155, 202, "Colibri Pink"),
 
@@ -29,6 +30,7 @@ public static class ColorDatabase
         new ChocoboColor(120, 26,  26,  "Dalamud Red"),
         new ChocoboColor(145, 59,  48,  "Rust Red"),
         new ChocoboColor(91,  23,  41,  "Rolanberry Red"),
+        new ChocoboColor(69,  21,  17,  "Wine Red"),
         new ChocoboColor(173, 90,  60,  "Mesa Red"),
 
         // Oranges
