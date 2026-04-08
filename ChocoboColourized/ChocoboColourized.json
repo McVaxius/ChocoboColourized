@@ -1,6 +1,7 @@
 {
   "Author": "DhogGPT",
   "Name": "Chocobo Colourized",
+  "DalamudApiLevel": 14,
   "InternalName": "ChocoboColourized",
   "Punchline": "(Personal Chocobo) Calculate+Automatically-feed the optimal fruit-feeding-path to change your chocobo's colour.",
   "Description": "(Personal Chocobo) Chocobo Colourized helps you find the most efficient sequence of fruits to feed your chocobo companion to reach your desired target colour. Use /chococolor to open the calculator.",
@@ -13,5 +14,5 @@
     "companion",
     "calculator"
   ],
-  "AssemblyVersion": "1.0.0.1"
+  "AssemblyVersion": "1.0.0.2"
 }
