@@ -16,6 +16,7 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IClientState ClientState { get; private set; } = null!;
     [PluginService] internal static IGameGui GameGui { get; private set; } = null!;
     [PluginService] internal static IFramework Framework { get; private set; } = null!;
+    [PluginService] internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
     [PluginService] internal static IObjectTable ObjectTable { get; private set; } = null!;
 
     private const string CommandName = "/chococolor";
@@ -26,6 +27,7 @@ public sealed class Plugin : IDalamudPlugin
     public GameDataService GameData { get; init; }
     public PlanStorageService PlanStorage { get; init; }
     public IpcService Ipc { get; init; }
+    public BuddyFeedCutsceneSkipService BuddyFeedCutsceneSkip { get; init; }
     public FeedingAutomationService FeedingAutomation { get; init; }
 
     public readonly WindowSystem WindowSystem = new("ChocoboColourized");
@@ -40,6 +42,7 @@ public sealed class Plugin : IDalamudPlugin
         GameData = new GameDataService(ClientState, ObjectTable, Log);
         PlanStorage = new PlanStorageService(PluginInterface, Log);
         Ipc = new IpcService(PluginInterface, Log);
+        BuddyFeedCutsceneSkip = new BuddyFeedCutsceneSkipService(GameInteropProvider, Log);
         FeedingAutomation = new FeedingAutomationService(GameGui, Framework, Log, Ipc, PlanStorage, GameData);
 
         // Clean up expired timers on load
@@ -58,7 +61,7 @@ public sealed class Plugin : IDalamudPlugin
 
         PluginInterface.UiBuilder.Draw += WindowSystem.Draw;
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUi;
-        PluginInterface.UiBuilder.OpenMainUi += ToggleMainUi;
+        PluginInterface.UiBuilder.OpenMainUi += OpenMainUi;
 
         Log.Information($"===Chocobo Colourized loaded!===");
     }
@@ -67,11 +70,12 @@ public sealed class Plugin : IDalamudPlugin
     {
         PluginInterface.UiBuilder.Draw -= WindowSystem.Draw;
         PluginInterface.UiBuilder.OpenConfigUi -= ToggleConfigUi;
-        PluginInterface.UiBuilder.OpenMainUi -= ToggleMainUi;
+        PluginInterface.UiBuilder.OpenMainUi -= OpenMainUi;
 
         WindowSystem.RemoveAllWindows();
 
         FeedingAutomation.Dispose();
+        BuddyFeedCutsceneSkip.Dispose();
         Ipc.Dispose();
         PlanStorage.Dispose();
         GameData.Dispose();
@@ -84,9 +88,16 @@ public sealed class Plugin : IDalamudPlugin
 
     private void OnCommand(string command, string args)
     {
-        MainWindow.Toggle();
+        MainWindow.IsOpen = !MainWindow.IsOpen;
+        if (MainWindow.IsOpen)
+            BuddyFeedCutsceneSkip.Enable();
     }
 
     public void ToggleConfigUi() => ConfigWindow.Toggle();
-    public void ToggleMainUi() => MainWindow.Toggle();
+
+    public void OpenMainUi()
+    {
+        BuddyFeedCutsceneSkip.Enable();
+        MainWindow.IsOpen = true;
+    }
 }

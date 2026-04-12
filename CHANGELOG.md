@@ -8,6 +8,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### 2026-04-12 12:24:00
+
+#### Fixed - Use dedicated buddy-feed scene hook instead of TextAdvance pulse
+
+**Problem:** The first post-feed transition was not reliably skipping the chocobo feed scene. The prior implementation pulsed `TextAdvance` after clicking `Feed`, which was the wrong seam for this case.
+
+**Fixes:**
+1. **Added `BuddyFeedCutsceneSkipService`** — Mirrors the curated DailyRoutines `PlayFeedBuddySceneSig` hook and swallows the buddy-feed scene directly.
+2. **Enable on main window open** — The hook is armed when the Chocobo Colourized main window is opened, instead of being left as a broad always-on change.
+3. **Removed the wrong TextAdvance pulse path** — Feeding automation no longer temporarily re-enables `TextAdvance` during the post-feed window; `TextAdvance` and `YesAlready` are still paused during automation to avoid interference.
+4. **UI text updated** — Automation instructions now describe the real behavior.
+
+#### Files Modified
+- `ChocoboColourized/Plugin.cs`
+- `ChocoboColourized/Services/BuddyFeedCutsceneSkipService.cs`
+- `ChocoboColourized/Services/FeedingAutomationService.cs`
+- `ChocoboColourized/Services/IpcService.cs`
+- `ChocoboColourized/Windows/MainWindow.cs`
+
+#### Files Backed Up
+- `backups/CHANGELOG.round563.bak`
+- `ChocoboColourized/backups/Plugin.round563.bak`
+- `ChocoboColourized/Services/backups/FeedingAutomationService.round563.bak`
+- `ChocoboColourized/Services/backups/IpcService.round563.bak`
+- `ChocoboColourized/Windows/backups/MainWindow.round563.bak`
+
+#### Build Status
+- Build succeeded: 0 errors, 0 warnings
+
 ### 2026-02-27 18:12:00
 
 #### UI Cleanup - Auto chocobo name, scaled columns, streamlined plan saving

@@ -346,10 +346,9 @@ public class FeedingAutomationService : IDisposable
             _log.Debug($"WaitForMenu: elapsed={ElapsedInState:F1}s, SelectString=0x{ssPtr:X}, HousingMyChocobo=0x{hmcPtr:X}, Talk=0x{talkPtr:X}");
         }
 
-        // After feeding, the game may show a Talk dialog (e.g. "You feed your chocobo...")
-        // TextAdvance is paused so we must dismiss it ourselves.
-        // IMPORTANT: Only return early if Talk is VISIBLE. If it exists but isn't visible,
-        // continue to check for stable menu (Talk pointer can linger after dismissal).
+        // After feeding, the game may still show a Talk dialog (e.g. "You feed your chocobo...").
+        // The buddy-feed scene hook should suppress the normal feed scene, but keep the
+        // manual Talk dismiss fallback in case the client still surfaces a dialog here.
         if (IsTalkAddonVisible())
         {
             DismissTalkAddon();
@@ -513,7 +512,7 @@ public class FeedingAutomationService : IDisposable
     /// <summary>
     /// Dismiss a Talk dialog by firing a callback.
     /// After feeding, the game may show "You feed your chocobo..." etc.
-    /// TextAdvance is paused during automation so we handle this ourselves.
+    /// This is a fallback if the buddy-feed cutscene hook still leaves a Talk dialog visible.
     /// </summary>
     private unsafe void DismissTalkAddon()
     {
@@ -522,7 +521,7 @@ public class FeedingAutomationService : IDisposable
         var addon = (AtkUnitBase*)ptr;
         if (!addon->IsVisible) return;
 
-        _log.Debug("Dismissing Talk dialog (TextAdvance is paused)");
+        _log.Debug("Dismissing Talk dialog with manual fallback callback");
         // Click/advance the Talk dialog
         var values = stackalloc AtkValue[1];
         values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;

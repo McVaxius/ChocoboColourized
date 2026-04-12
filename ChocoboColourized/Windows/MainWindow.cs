@@ -620,7 +620,7 @@ public class MainWindow : Window, IDisposable
             ImGui.TextColored(ColorYellow,
                 "(inventory open with feedable items highlighted) before clicking Start.");
             ImGui.TextColored(ColorYellow,
-                "TextAdvance and YesAlready will be paused during automation.");
+                "TextAdvance and YesAlready will be paused; buddy-feed cutscene skip is armed when this window opens.");
             ImGui.Spacing();
 
             // Stable condition check

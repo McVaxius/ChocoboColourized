@@ -17,7 +17,6 @@ public class IpcService : IDisposable
     private bool _textAdvanceWasPaused;
     private bool _yesAlreadyWasPaused;
     private bool _isPaused;
-
     public IpcService(IDalamudPluginInterface pluginInterface, IPluginLog log)
     {
         _pluginInterface = pluginInterface;
