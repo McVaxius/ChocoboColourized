@@ -524,7 +524,7 @@ public class FeedingAutomationService : IDisposable
         _log.Debug("Dismissing Talk dialog with manual fallback callback");
         // Click/advance the Talk dialog
         var values = stackalloc AtkValue[1];
-        values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;
+        values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.Int;
         values[0].Int = 0;
         addon->FireCallback(1, values, true);  // updateState: true
     }
@@ -587,7 +587,7 @@ public class FeedingAutomationService : IDisposable
 
         // Fire callback with the index
         var values = stackalloc AtkValue[1];
-        values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;
+        values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.Int;
         values[0].Int = index;
         addon->FireCallback(1, values, true);  // updateState: true (matches ECommons Callback.Fire)
     }
@@ -599,15 +599,15 @@ public class FeedingAutomationService : IDisposable
     private unsafe void ClickContextMenu(AtkUnitBase* addon, int index)
     {
         var values = stackalloc AtkValue[5];
-        values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;
+        values[0].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.Int;
         values[0].Int = 0;
-        values[1].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;
+        values[1].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.Int;
         values[1].Int = index;
-        values[2].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.UInt;
+        values[2].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.UInt;
         values[2].UInt = 0;
-        values[3].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;
+        values[3].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.Int;
         values[3].Int = 0;
-        values[4].Type = FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int;
+        values[4].Type = FFXIVClientStructs.FFXIV.Component.GUI.AtkValueType.Int;
         values[4].Int = 0;
         addon->FireCallback(5, values, true);  // updateState: true (matches ECommons Callback.Fire)
     }
