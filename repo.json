@@ -6,7 +6,7 @@
     "Punchline": "(Personal Chocobo) Calculate+Automatically feed the optimal fruit-feeding-path to change your chocobo's colour.",
     "Description": "(Personal Chocobo) Chocobo Colourized helps you find+automatically turn-in the most efficient sequence of fruits to feed your chocobo companion to reach your desired target colour. Use /chococolor to open the calculator.",
     "ApplicableVersion": "any",
-    "IconUrl": "https://raw.githubusercontent.com/McVaxius/ChocoboColourized/refs/heads/master/ChocoboColourized/images/icon.png",
+    "IconUrl": "https://raw.githubusercontent.com/McVaxius/ChocoboColourized/main/ChocoboColourized/images/icon.png",
     "Tags": [
       "chocobo",
       "color",
@@ -15,10 +15,10 @@
       "calculator"
     ],
     "RepoUrl": "https://github.com/McVaxius/ChocoboColourized",
-    "AssemblyVersion": "1.1.0.1",
+    "AssemblyVersion": "1.1.0.2",
     "DalamudApiLevel": 15,
-    "DownloadLinkInstall": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
-    "DownloadLinkUpdate": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
+    "DownloadLinkInstall": "https://github.com/McVaxius/ChocoboColourized/releases/download/v1.1.0.2/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/McVaxius/ChocoboColourized/releases/download/v1.1.0.2/latest.zip",
     "DownloadLinkTesting": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
     "IsHide": false,
     "IsTestingExclusive": false,
