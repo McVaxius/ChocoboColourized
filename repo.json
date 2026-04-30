@@ -15,10 +15,10 @@
       "calculator"
     ],
     "RepoUrl": "https://github.com/McVaxius/ChocoboColourized",
-    "AssemblyVersion": "1.1.0.2",
+    "AssemblyVersion": "1.1.0.3",
     "DalamudApiLevel": 15,
-    "DownloadLinkInstall": "https://github.com/McVaxius/ChocoboColourized/releases/download/v1.1.0.2/latest.zip",
-    "DownloadLinkUpdate": "https://github.com/McVaxius/ChocoboColourized/releases/download/v1.1.0.2/latest.zip",
+    "DownloadLinkInstall": "https://github.com/McVaxius/ChocoboColourized/releases/download/v1.1.0.3/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/McVaxius/ChocoboColourized/releases/download/v1.1.0.3/latest.zip",
     "DownloadLinkTesting": "https://github.com/McVaxius/ChocoboColourized/releases/latest/download/latest.zip",
     "IsHide": false,
     "IsTestingExclusive": false,
