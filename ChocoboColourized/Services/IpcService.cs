@@ -1,130 +1,125 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Dalamud.Plugin;
-using Dalamud.Plugin.Ipc;
 using Dalamud.Plugin.Services;
 
 namespace ChocoboColourized.Services;
 
-/// <summary>
-/// Manages IPC communication with TextAdvance and YesAlready plugins.
-/// These plugins must be paused during automated feeding to prevent interference.
-/// </summary>
+/// <summary>Owns stop requests during automated feeding.</summary>
 public class IpcService : IDisposable
 {
+    private const string RequestOwner = "ChocoboColourized";
     private readonly IDalamudPluginInterface _pluginInterface;
     private readonly IPluginLog _log;
-
-    private bool _textAdvanceWasPaused;
-    private bool _yesAlreadyWasPaused;
+    private HashSet<string>? _textAdvanceRequests;
+    private HashSet<string>? _yesAlreadyRequests;
     private bool _isPaused;
+    private volatile bool _providerChanged;
+
     public IpcService(IDalamudPluginInterface pluginInterface, IPluginLog log)
     {
         _pluginInterface = pluginInterface;
         _log = log;
+        _pluginInterface.ActivePluginsChanged += OnActivePluginsChanged;
     }
 
-    /// <summary>Whether we are currently holding pauses on other plugins.</summary>
     public bool IsPaused => _isPaused;
 
-    /// <summary>
-    /// Pause TextAdvance and YesAlready before starting automated feeding.
-    /// Stores their previous state so we can restore it afterwards.
-    /// </summary>
-    public void PauseExternalPlugins()
+    public bool PauseExternalPlugins()
     {
-        if (_isPaused) return;
+        if (_isPaused) return ValidatePauses();
 
-        _textAdvanceWasPaused = false;
-        _yesAlreadyWasPaused = false;
-
-        // Pause TextAdvance
+        _providerChanged = false;
         try
         {
-            var ta = _pluginInterface.GetIpcSubscriber<bool>("TextAdvance.IsEnabled");
-            var wasEnabled = ta.InvokeFunc();
-            if (wasEnabled)
-            {
-                var taSet = _pluginInterface.GetIpcSubscriber<bool, object?>("TextAdvance.SetEnabled");
-                taSet.InvokeAction(false);
-                _textAdvanceWasPaused = true;
-                _log.Information("TextAdvance paused for automated feeding.");
-            }
+            AcquirePause("TextAdvance", ref _textAdvanceRequests);
+            AcquirePause("YesAlready", ref _yesAlreadyRequests);
+            _isPaused = true;
+            if (ValidatePauses()) return true;
+
+            throw new InvalidOperationException("A feeding helper changed while acquiring its pause.");
         }
         catch (Exception ex)
         {
-            _log.Debug($"TextAdvance IPC not available (plugin may not be loaded): {ex.Message}");
+            ResumeExternalPlugins();
+            _log.Error($"Could not pause feeding helpers: {ex.Message}");
+            return false;
         }
-
-        // Pause YesAlready
-        try
-        {
-            var ya = _pluginInterface.GetIpcSubscriber<bool>("YesAlready.IsEnabled");
-            var wasEnabled = ya.InvokeFunc();
-            if (wasEnabled)
-            {
-                var yaSet = _pluginInterface.GetIpcSubscriber<bool, object?>("YesAlready.SetEnabled");
-                yaSet.InvokeAction(false);
-                _yesAlreadyWasPaused = true;
-                _log.Information("YesAlready paused for automated feeding.");
-            }
-        }
-        catch (Exception ex)
-        {
-            _log.Debug($"YesAlready IPC not available (plugin may not be loaded): {ex.Message}");
-        }
-
-        _isPaused = true;
     }
 
-    /// <summary>
-    /// Re-enable TextAdvance and YesAlready after automated feeding completes.
-    /// Only re-enables plugins that were enabled before we paused them.
-    /// </summary>
+    private bool IsLoaded(string provider)
+        => _pluginInterface.InstalledPlugins.Any(plugin => plugin.InternalName == provider && plugin.IsLoaded);
+
+    private HashSet<string>? GetStopRequests(string provider)
+    {
+        var key = $"{provider}.StopRequests";
+        if (!_pluginInterface.TryGetData<HashSet<string>>(key, out var requests))
+            return null;
+
+        // Do not keep the shared data alive across a provider unload/reload.
+        _pluginInterface.RelinquishData(key);
+        return requests;
+    }
+
+    private void AcquirePause(string provider, ref HashSet<string>? ownedRequests)
+    {
+        if (!IsLoaded(provider)) return;
+
+        var requests = GetStopRequests(provider)
+            ?? throw new InvalidOperationException($"{provider} has no StopRequests set available.");
+        if (!requests.Add(RequestOwner))
+            throw new InvalidOperationException($"{provider} already has a stop request for {RequestOwner}.");
+
+        ownedRequests = requests;
+        _log.Information($"{provider} paused for automated feeding.");
+    }
+
+    public bool ValidatePauses()
+    {
+        if (!_isPaused || _providerChanged) return false;
+
+        try
+        {
+            return HasPause("TextAdvance", _textAdvanceRequests)
+                && HasPause("YesAlready", _yesAlreadyRequests);
+        }
+        catch (Exception ex)
+        {
+            _log.Warning($"Could not verify feeding helper pauses: {ex.Message}");
+            return false;
+        }
+    }
+
+    private bool HasPause(string provider, HashSet<string>? ownedRequests)
+    {
+        // A provider appearing during feeding also requires a fresh start.
+        if (ownedRequests == null) return !IsLoaded(provider);
+
+        return IsLoaded(provider)
+            && ReferenceEquals(ownedRequests, GetStopRequests(provider))
+            && ownedRequests.Contains(RequestOwner);
+    }
+
     public void ResumeExternalPlugins()
     {
-        if (!_isPaused) return;
-
-        // Resume TextAdvance
-        if (_textAdvanceWasPaused)
-        {
-            try
-            {
-                var taSet = _pluginInterface.GetIpcSubscriber<bool, object?>("TextAdvance.SetEnabled");
-                taSet.InvokeAction(true);
-                _log.Information("TextAdvance resumed.");
-            }
-            catch (Exception ex)
-            {
-                _log.Warning($"Failed to resume TextAdvance: {ex.Message}");
-            }
-            _textAdvanceWasPaused = false;
-        }
-
-        // Resume YesAlready
-        if (_yesAlreadyWasPaused)
-        {
-            try
-            {
-                var yaSet = _pluginInterface.GetIpcSubscriber<bool, object?>("YesAlready.SetEnabled");
-                yaSet.InvokeAction(true);
-                _log.Information("YesAlready resumed.");
-            }
-            catch (Exception ex)
-            {
-                _log.Warning($"Failed to resume YesAlready: {ex.Message}");
-            }
-            _yesAlreadyWasPaused = false;
-        }
-
+        // Remove only entries we added, from the exact sets that received them.
+        _textAdvanceRequests?.Remove(RequestOwner);
+        _textAdvanceRequests = null;
+        _yesAlreadyRequests?.Remove(RequestOwner);
+        _yesAlreadyRequests = null;
         _isPaused = false;
+    }
+
+    private void OnActivePluginsChanged(IActivePluginsChangedEventArgs args)
+    {
+        if (args.AffectedInternalNames.Any(name => name is "TextAdvance" or "YesAlready"))
+            _providerChanged = true;
     }
 
     public void Dispose()
     {
-        // Safety: always resume on dispose
-        if (_isPaused)
-        {
-            ResumeExternalPlugins();
-        }
+        _pluginInterface.ActivePluginsChanged -= OnActivePluginsChanged;
+        ResumeExternalPlugins();
     }
 }

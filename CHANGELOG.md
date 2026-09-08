@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### 2026-09-08
+
+- Replaced obsolete TextAdvance/YesAlready enable toggles with provider-owned StopRequests sets. Feeding releases only its own entries, permits missing providers, and stops cleanly when pause coordination fails or providers change during feeding.
+
 ### 2026-04-12 12:24:00
 
 #### Fixed - Use dedicated buddy-feed scene hook instead of TextAdvance pulse

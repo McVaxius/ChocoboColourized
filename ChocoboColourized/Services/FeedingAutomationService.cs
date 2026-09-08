@@ -139,7 +139,11 @@ public class FeedingAutomationService : IDisposable
         _errorMessage = "";
         _retryCount = 0;
 
-        _ipcService.PauseExternalPlugins();
+        if (!_ipcService.PauseExternalPlugins())
+        {
+            SetError("Could not pause TextAdvance or YesAlready. Check that loaded helpers are ready before starting again.");
+            return false;
+        }
         _framework.Update += OnFrameworkTick;
 
         // User is already in the feed inventory screen for the first feed
@@ -185,6 +189,12 @@ public class FeedingAutomationService : IDisposable
     {
         try
         {
+            if (!_ipcService.ValidatePauses())
+            {
+                SetError("A feeding helper changed or its pause was lost. Start again after TextAdvance and YesAlready have settled.");
+                return;
+            }
+
             switch (_state)
             {
                 case FeedingState.FindingFruitSlot:
