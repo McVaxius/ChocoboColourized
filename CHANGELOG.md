@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+- Build only the plugin project in GitHub Actions so test and regression projects do not block production artifacts.
+
 ### 2026-09-08
 
 - Replaced obsolete TextAdvance/YesAlready enable toggles with provider-owned StopRequests sets. Feeding releases only its own entries, permits missing providers, and stops cleanly when pause coordination fails or providers change during feeding.
