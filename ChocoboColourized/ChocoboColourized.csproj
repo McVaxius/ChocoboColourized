@@ -2,9 +2,11 @@
 <Project Sdk="Dalamud.NET.Sdk/15.0.0">
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <Version>1.1.0.5</Version>
-    <FileVersion>1.1.0.5</FileVersion>
-    <AssemblyVersion>1.1.0.5</AssemblyVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>2.0.0.0</Version>
+    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <PackageProjectUrl>https://github.com/McVaxius/ChocoboColourized</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
@@ -13,6 +15,12 @@
   <PropertyGroup>
     <DalamudLibPath Condition="$(DALAMUD_HOME) != ''">$(DALAMUD_HOME)/</DalamudLibPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\aethertekUI\src\AethertekUI\AethertekUI.csproj" />
+    <ProjectReference Include="..\..\aethertekUI\src\AethertekUI.Dalamud\AethertekUI.Dalamud.csproj" />
+    <EmbeddedResource Update="Localization\Strings_*.resx" WithCulture="false" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="images\icon.png" CopyToOutputDirectory="PreserveNewest" />
@@ -27,6 +35,8 @@
 
     <ItemGroup>
       <PluginFiles Include="$(TargetPath)" />
+      <PluginFiles Include="$(TargetDir)AethertekUI.dll" />
+      <PluginFiles Include="$(TargetDir)AethertekUI.Dalamud.dll" />
       <PluginFiles Include="$(ProjectDir)$(AssemblyName).json" />
     </ItemGroup>
 

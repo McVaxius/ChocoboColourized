@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Color" xml:space="preserve"><value>色</value></data>
+  <data name="Language" xml:space="preserve"><value>言語</value></data>
+  <data name="Teal" xml:space="preserve"><value>ティール</value></data>
+  <data name="Blue" xml:space="preserve"><value>青</value></data>
+  <data name="Pink" xml:space="preserve"><value>ピンク</value></data>
+  <data name="Custom RGB" xml:space="preserve"><value>カスタム RGB</value></data>
+  <data name="Compact mode" xml:space="preserve"><value>コンパクトモード</value></data>
+  <data name="Loading UI fonts..." xml:space="preserve"><value>UI フォントを読み込み中...</value></data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve"><value>UI フォントの読み込みに失敗しました。ログを確認してください。</value></data>
+  <data name="Calculator" xml:space="preserve"><value>計算</value></data>
+  <data name="Timers" xml:space="preserve"><value>タイマー</value></data>
+  <data name="Automation" xml:space="preserve"><value>自動化</value></data>
+  <data name="Plan your chocobo's colour with precision." xml:space="preserve"><value>チョコボの羽色を正確に計画します。</value></data>
+  <data name="Support on Ko-fi" xml:space="preserve"><value>Ko-fiで支援</value></data>
+  <data name="Support development on Ko-fi" xml:space="preserve"><value>Ko-fiで開発を支援</value></data>
+  <data name="Colour Calculation" xml:space="preserve"><value>羽色の計算</value></data>
+  <data name="Select your chocobo's current and target colours, then calculate the feeding path." xml:space="preserve"><value>現在と目標の羽色を選択し、給餌の順番を計算してください。</value></data>
+  <data name="Required Fruits" xml:space="preserve"><value>必要な果実</value></data>
+  <data name="The following fruits are required for this colour change." xml:space="preserve"><value>羽色の変更には以下の果実が必要です。</value></data>
+  <data name="Already at the closest possible colour!" xml:space="preserve"><value>すでに最も近い羽色です！</value></data>
+  <data name="Calculation details" xml:space="preserve"><value>計算の詳細</value></data>
+  <data name="Feeding order" xml:space="preserve"><value>給餌の順番</value></data>
+  <data name="Feed the following fruits to your chocobo in order." xml:space="preserve"><value>以下の順番でチョコボに果実を与えてください。</value></data>
+  <data name="Your feeding order will appear here." xml:space="preserve"><value>給餌の順番がここに表示されます。</value></data>
+  <data name="Fruit" xml:space="preserve"><value>果実</value></data>
+  <data name="Required" xml:space="preserve"><value>必要数</value></data>
+  <data name="Owned" xml:space="preserve"><value>所持数</value></data>
+  <data name="Status" xml:space="preserve"><value>状態</value></data>
+  <data name="Select colours and click Calculate." xml:space="preserve"><value>羽色を選択し、計算を押してください。</value></data>
+  <data name="Save Plan &amp; Switch to Automation" xml:space="preserve"><value>計画を保存して自動化へ</value></data>
+  <data name="Copy Results to Clipboard" xml:space="preserve"><value>結果をクリップボードにコピー</value></data>
+  <data name="Plan saved! Switched to Automation tab." xml:space="preserve"><value>計画を保存し、自動化タブに切り替えました。</value></data>
+  <data name="Results copied to clipboard!" xml:space="preserve"><value>結果をクリップボードにコピーしました！</value></data>
+  <data name="Detected chocobo colour: {0}" xml:space="preserve"><value>検出した羽色：{0}</value></data>
+  <data name="Current colour:" xml:space="preserve"><value>現在の羽色：</value></data>
+  <data name="How to find your chocobo's current colour:" xml:space="preserve"><value>現在の羽色を確認する方法：</value></data>
+  <data name="1. Open the Companion window (default: N key)" xml:space="preserve"><value>1. バディウィンドウを開きます（既定：Nキー）</value></data>
+  <data name="2. Click the Appearance tab" xml:space="preserve"><value>2. 外見タブを選択します</value></data>
+  <data name="3. Check the current colour listed" xml:space="preserve"><value>3. 現在の羽色を確認します</value></data>
+  <data name="4. Select it from the dropdown below" xml:space="preserve"><value>4. 下の一覧でその羽色を選択します</value></data>
+  <data name="Auto-detection will be added in a future update." xml:space="preserve"><value>自動検出は今後の更新で追加されます。</value></data>
+  <data name="Current colour" xml:space="preserve"><value>現在の羽色</value></data>
+  <data name="Search colours..." xml:space="preserve"><value>羽色を検索...</value></data>
+  <data name="Current:" xml:space="preserve"><value>現在：</value></data>
+  <data name="Target colour" xml:space="preserve"><value>目標の羽色</value></data>
+  <data name="Target:" xml:space="preserve"><value>目標：</value></data>
+  <data name="Current and target colours are the same!" xml:space="preserve"><value>現在と目標の羽色が同じです！</value></data>
+  <data name="Calculate Feeding Path" xml:space="preserve"><value>給餌の順番を計算</value></data>
+  <data name="Calculation complete! ({0} fruits needed)" xml:space="preserve"><value>計算完了！（必要な果実：{0}個）</value></data>
+  <data name="From: {0}" xml:space="preserve"><value>変更前：{0}</value></data>
+  <data name="To:   {0}" xml:space="preserve"><value>変更後：{0}</value></data>
+  <data name="Result Colour:" xml:space="preserve"><value>計算結果の羽色：</value></data>
+  <data name="Closest Named Colour: {0}" xml:space="preserve"><value>最も近い羽色：{0}</value></data>
+  <data name="Distance to Target: {0:F2}" xml:space="preserve"><value>目標との差：{0:F2}</value></data>
+  <data name="Total Fruits Required: {0}" xml:space="preserve"><value>必要な果実の合計：{0}</value></data>
+  <data name="OK" xml:space="preserve"><value>充足</value></data>
+  <data name="Low" xml:space="preserve"><value>不足</value></data>
+  <data name="None" xml:space="preserve"><value>なし</value></data>
+  <data name="You need more fruits. Acquire them however you prefer." xml:space="preserve"><value>果実が不足しています。お好みの方法で入手してください。</value></data>
+  <data name="Log in to use feeding plans." xml:space="preserve"><value>給餌計画を使うにはログインしてください。</value></data>
+  <data name="Active plan: {0}/{1} fed ({2} -&gt; {3})" xml:space="preserve"><value>実行中の計画：給餌 {0}/{1}（{2} -&gt; {3}）</value></data>
+  <data name="Clear Existing Plan" xml:space="preserve"><value>現在の計画を削除</value></data>
+  <data name="Switch to the Automation tab to start feeding." xml:space="preserve"><value>給餌を始めるには自動化タブを開いてください。</value></data>
+  <data name="Colour change in progress: {0}h {1}m {2}s remaining" xml:space="preserve"><value>羽色を変更中：残り{0}時間{1}分{2}秒</value></data>
+  <data name="You do not have all required fruits yet. Automation start will stay disabled until you gather them." xml:space="preserve"><value>必要な果実が不足しています。すべて集めるまで自動化は開始できません。</value></data>
+  <data name="All required fruits are in your inventory. Head to the Automation tab to start." xml:space="preserve"><value>必要な果実がすべて揃っています。自動化タブから開始できます。</value></data>
+  <data name="Automation controls live in the Automation tab." xml:space="preserve"><value>自動化の操作は自動化タブにあります。</value></data>
+  <data name="Colour Change Timers" xml:space="preserve"><value>羽色変更タイマー</value></data>
+  <data name="Character" xml:space="preserve"><value>キャラクター</value></data>
+  <data name="Chocobo" xml:space="preserve"><value>チョコボ</value></data>
+  <data name="Remaining" xml:space="preserve"><value>残り</value></data>
+  <data name="(unnamed)" xml:space="preserve"><value>（名前なし）</value></data>
+  <data name="Changing..." xml:space="preserve"><value>変更中...</value></data>
+  <data name="Feeding {0}/{1}" xml:space="preserve"><value>給餌 {0}/{1}</value></data>
+  <data name="{0}h {1:D2}m {2:D2}s" xml:space="preserve"><value>{0}時間{1:D2}分{2:D2}秒</value></data>
+  <data name="No active timers or feeding plans." xml:space="preserve"><value>実行中のタイマーや給餌計画はありません。</value></data>
+  <data name="Timers will appear here after completing a full feeding." xml:space="preserve"><value>給餌をすべて終えると、ここにタイマーが表示されます。</value></data>
+  <data name="Each character on this account will have their own timer." xml:space="preserve"><value>このアカウントのキャラクターごとにタイマーがあります。</value></data>
+  <data name="Automated Feeding" xml:space="preserve"><value>自動給餌</value></data>
+  <data name="You must be logged in to use automated feeding." xml:space="preserve"><value>自動給餌を使うにはログインしてください。</value></data>
+  <data name="Colour change already in progress: {0}h {1:D2}m {2:D2}s remaining." xml:space="preserve"><value>羽色は変更中です：残り{0}時間{1:D2}分{2:D2}秒。</value></data>
+  <data name="No active feeding plan." xml:space="preserve"><value>実行中の給餌計画はありません。</value></data>
+  <data name="Calculate a feeding path in the Calculator tab, then click 'Save Plan'." xml:space="preserve"><value>計算タブで給餌の順番を計算し、「計画を保存」を押してください。</value></data>
+  <data name="Plan: {0} -&gt; {1}" xml:space="preserve"><value>計画：{0} -&gt; {1}</value></data>
+  <data name="Progress: {0} / {1} fruits fed" xml:space="preserve"><value>進捗：{0} / {1}個を給餌済み</value></data>
+  <data name="Remaining fruits:" xml:space="preserve"><value>残りの果実：</value></data>
+  <data name="Feeding in progress: step {0}/{1}" xml:space="preserve"><value>給餌中：手順 {0}/{1}</value></data>
+  <data name="Current: {0}" xml:space="preserve"><value>現在：{0}</value></data>
+  <data name="State: {0}" xml:space="preserve"><value>状態：{0}</value></data>
+  <data name="Stop Automation" xml:space="preserve"><value>自動化を停止</value></data>
+  <data name="Automation stopped." xml:space="preserve"><value>自動化を停止しました。</value></data>
+  <data name="Feeding complete! Your chocobo's colour will change in 6 hours." xml:space="preserve"><value>給餌完了！6時間後に羽色が変わります。</value></data>
+  <data name="Error: {0}" xml:space="preserve"><value>エラー：{0}</value></data>
+  <data name="Dismiss" xml:space="preserve"><value>閉じる</value></data>
+  <data name="IMPORTANT: You must be at the Chocobo Stable in the FEED screen" xml:space="preserve"><value>重要：チョコボ厩舎の給餌画面を開いてください</value></data>
+  <data name="(inventory open with feedable items highlighted) before clicking Start." xml:space="preserve"><value>開始前に、給餌可能なアイテムが強調表示された所持品を開いてください。</value></data>
+  <data name="TextAdvance and YesAlready will be paused; buddy-feed cutscene skip is armed when this window opens." xml:space="preserve"><value>TextAdvanceとYesAlreadyを一時停止します。このウィンドウを開くと給餌カットシーンのスキップを準備します。</value></data>
+  <data name="Check stable condition before feeding" xml:space="preserve"><value>給餌前に厩舎の状態を確認</value></data>
+  <data name="If enabled, warns you if the stable condition is Poor or Fair." xml:space="preserve"><value>厩舎の状態が悪い、または普通の場合に警告します。</value></data>
+  <data name="Use a Magicked Stable Broom to clean the stable first." xml:space="preserve"><value>先にマジックブルームで厩舎を掃除してください。</value></data>
+  <data name="Magicked Stable Broom: {0} in inventory" xml:space="preserve"><value>所持マジックブルーム：{0}</value></data>
+  <data name="Start Automated Feeding" xml:space="preserve"><value>自動給餌を開始</value></data>
+  <data name="Start Automated Feeding (Insufficient Fruits)" xml:space="preserve"><value>自動給餌を開始（果実不足）</value></data>
+  <data name="You do not have enough fruits in your inventory." xml:space="preserve"><value>所持している果実が不足しています。</value></data>
+  <data name="Clear Plan" xml:space="preserve"><value>計画を削除</value></data>
+  <data name="Chocobo Colourized Settings" xml:space="preserve"><value>Chocobo Colourized設定</value></data>
+  <data name="Movable Config Window" xml:space="preserve"><value>設定ウィンドウを移動可能にする</value></data>
+  <data name="Prerequisites &amp; Troubleshooting" xml:space="preserve"><value>必要条件とトラブル対処</value></data>
+  <data name="Required Quests:" xml:space="preserve"><value>必要なクエスト：</value></data>
+  <data name="   Obtain your chocobo companion (Camp Tranquil, South Shroud)" xml:space="preserve"><value>   バディのチョコボを入手（Camp Tranquil, South Shroud）</value></data>
+  <data name="   Unlock chocobo stabling and raising (Bentbranch Meadows, Central Shroud)" xml:space="preserve"><value>   厩舎と育成を解放（Bentbranch Meadows, Central Shroud）</value></data>
+  <data name="   NPC: Luquelot at Bentbranch Meadows (X:21.4, Y:22.1)" xml:space="preserve"><value>   NPC：Bentbranch MeadowsのLuquelot（X:21.4, Y:22.1）</value></data>
+  <data name="Other Requirements:" xml:space="preserve"><value>その他の条件：</value></data>
+  <data name="- Access to a Chocobo Stable (FC house, personal house, or apartment)" xml:space="preserve"><value>- チョコボ厩舎を利用できること（FCハウス・個人宅・アパルトメント）</value></data>
+  <data name="- Your chocobo must be stabled (not summoned as companion)" xml:space="preserve"><value>- チョコボを厩舎に預けること（バディとして呼び出していない状態）</value></data>
+  <data name="- Fruits in your inventory (purchase from vendors or Market Board)" xml:space="preserve"><value>- 果実を所持していること（商人やマーケットボードで入手）</value></data>
+  <data name="Common Errors:" xml:space="preserve"><value>よくあるエラー：</value></data>
+  <data name="&quot;You have yet to be trained in chocobo raising&quot;" xml:space="preserve"><value>"チョコボ育成の訓練を受けていません"</value></data>
+  <data name="  -&gt; Complete the quest &quot;Bird in Hand&quot; at Bentbranch Meadows." xml:space="preserve"><value>  -&gt; Bentbranch Meadowsで「Bird in Hand」を完了してください。</value></data>
+  <data name="&quot;Your chocobo is not stabled&quot;" xml:space="preserve"><value>"チョコボが厩舎に預けられていません"</value></data>
+  <data name="  -&gt; Stable your chocobo at a Chocobo Stable before feeding." xml:space="preserve"><value>  -&gt; 給餌前にチョコボを厩舎に預けてください。</value></data>
+  <data name="Automation errors about context menu or inventory" xml:space="preserve"><value>コンテキストメニューや所持品に関する自動化エラー</value></data>
+  <data name="  -&gt; Make sure you are on the Feed screen (inventory visible with" xml:space="preserve"><value>  -&gt; 給餌画面を開いてください（所持品が表示され、</value></data>
+  <data name="     feedable items highlighted) before clicking Start." xml:space="preserve"><value>     給餌可能なアイテムが強調表示されている状態）で開始を押します。</value></data>
+  <data name="Result: {0} ({1})" xml:space="preserve"><value>結果：{0}（{1}）</value></data>
+  <data name="Total Fruits: {0}" xml:space="preserve"><value>果実の合計：{0}</value></data>
+  <data name="Fruit Summary:" xml:space="preserve"><value>果実の一覧：</value></data>
+  <data name="Feeding Order:" xml:space="preserve"><value>給餌の順番：</value></data>
+  <data name="Idle" xml:space="preserve"><value>待機中</value></data>
+  <data name="FindingFruitSlot" xml:space="preserve"><value>果実のスロットを検索中</value></data>
+  <data name="OpeningContextMenu" xml:space="preserve"><value>コンテキストメニューを開いています</value></data>
+  <data name="WaitingForContextMenu" xml:space="preserve"><value>コンテキストメニュー待機中</value></data>
+  <data name="SelectingFeed" xml:space="preserve"><value>給餌を選択中</value></data>
+  <data name="WaitingForStableMenu" xml:space="preserve"><value>厩舎メニュー待機中</value></data>
+  <data name="SelectingFeedFromMenu" xml:space="preserve"><value>厩舎メニューで給餌を選択中</value></data>
+  <data name="WaitingForFeedInventory" xml:space="preserve"><value>給餌用の所持品待機中</value></data>
+  <data name="Completed" xml:space="preserve"><value>完了</value></data>
+  <data name="Error" xml:space="preserve"><value>エラー</value></data>
+  <data name="Automation is already running." xml:space="preserve"><value>自動化はすでに実行中です。</value></data>
+  <data name="Plan is already complete." xml:space="preserve"><value>計画はすでに完了しています。</value></data>
+  <data name="Could not pause TextAdvance or YesAlready. Check that loaded helpers are ready before starting again." xml:space="preserve"><value>TextAdvanceまたはYesAlreadyを一時停止できません。再開前に読み込んだ補助プラグインを確認してください。</value></data>
+  <data name="A feeding helper changed or its pause was lost. Start again after TextAdvance and YesAlready have settled." xml:space="preserve"><value>補助プラグインが変更されたか、一時停止が解除されました。TextAdvanceとYesAlreadyが安定してから再開してください。</value></data>
+  <data name="Unexpected error: {0}" xml:space="preserve"><value>予期しないエラー：{0}</value></data>
+  <data name="Unknown fruit type: {0}" xml:space="preserve"><value>不明な果実：{0}</value></data>
+  <data name="Could not find {0} (ID:{1}) in inventory. Do you have it?" xml:space="preserve"><value>所持品に{0}（ID:{1}）が見つかりません。所持していますか？</value></data>
+  <data name="Failed to open context menu after {0} retries: {1}" xml:space="preserve"><value>{0}回試行してもコンテキストメニューを開けません：{1}</value></data>
+  <data name="Context menu did not appear. Ensure you are in the stable's Feed screen with your inventory open." xml:space="preserve"><value>コンテキストメニューが表示されません。厩舎の給餌画面と所持品を開いてください。</value></data>
+  <data name="Context menu disappeared before we could select Feed." xml:space="preserve"><value>給餌を選択する前にコンテキストメニューが閉じました。</value></data>
+  <data name="Failed to select Feed from context menu: {0}" xml:space="preserve"><value>コンテキストメニューで給餌を選択できません：{0}</value></data>
+  <data name="Stable menu did not reappear after feeding. Neither SelectString nor HousingMyChocobo found. The UI may have changed or closed." xml:space="preserve"><value>給餌後に厩舎メニューが再表示されません。SelectStringとHousingMyChocoboが見つかりません。画面が変更されたか閉じています。</value></data>
+  <data name="Stable menu disappeared before we could click Feed. Neither SelectString nor HousingMyChocobo found." xml:space="preserve"><value>給餌を選択する前に厩舎メニューが閉じました。SelectStringとHousingMyChocoboが見つかりません。</value></data>
+  <data name="Failed to select Feed from stable menu: {0}" xml:space="preserve"><value>厩舎メニューで給餌を選択できません：{0}</value></data>
+  <data name="Feed inventory did not open after selecting Feed from stable menu. This happens if you are not in expanded inventory mode. Please expand your inventory to 'Open all + Expanded', apply, then start again. It will resume from where it left off, so no steps should be lost under normal circumstances." xml:space="preserve"><value>給餌用の所持品が開きません。所持品を「すべて開く＋拡張」モードに設定して適用し、再開してください。通常は前回の続きから再開され、手順は失われません。</value></data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>ウィンドウの外観</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>メインウィンドウにコンパクト切替を表示</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>メインウィンドウに言語選択を表示</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>不透明度 (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>フォーカスがないときに自動で薄くする</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>非フォーカス時の不透明度 (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>非フォーカス時の待機時間 (秒)</value>
+  </data>
+</root>

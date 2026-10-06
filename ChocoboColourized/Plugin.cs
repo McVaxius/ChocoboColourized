@@ -5,6 +5,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using ChocoboColourized.Services;
 using ChocoboColourized.Windows;
+using ChocoboColourized.Ui;
 
 namespace ChocoboColourized;
 
@@ -18,10 +19,12 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IFramework Framework { get; private set; } = null!;
     [PluginService] internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
     [PluginService] internal static IObjectTable ObjectTable { get; private set; } = null!;
+    [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
 
     private const string CommandName = "/chococolor";
 
     public Configuration Configuration { get; init; }
+    internal ChocoboAppearance Appearance { get; }
 
     // Services
     public GameDataService GameData { get; init; }
@@ -37,6 +40,7 @@ public sealed class Plugin : IDalamudPlugin
     public Plugin()
     {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
+        Appearance = new(this);
 
         // Initialize services
         GameData = new GameDataService(ClientState, ObjectTable, Log);
@@ -59,7 +63,7 @@ public sealed class Plugin : IDalamudPlugin
             HelpMessage = "Open the Chocobo Colourized calculator window."
         });
 
-        PluginInterface.UiBuilder.Draw += WindowSystem.Draw;
+        PluginInterface.UiBuilder.Draw += DrawUi;
         PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUi;
         PluginInterface.UiBuilder.OpenMainUi += OpenMainUi;
 
@@ -68,7 +72,7 @@ public sealed class Plugin : IDalamudPlugin
 
     public void Dispose()
     {
-        PluginInterface.UiBuilder.Draw -= WindowSystem.Draw;
+        PluginInterface.UiBuilder.Draw -= DrawUi;
         PluginInterface.UiBuilder.OpenConfigUi -= ToggleConfigUi;
         PluginInterface.UiBuilder.OpenMainUi -= OpenMainUi;
 
@@ -82,6 +86,7 @@ public sealed class Plugin : IDalamudPlugin
 
         ConfigWindow.Dispose();
         MainWindow.Dispose();
+        Appearance.Dispose();
 
         CommandManager.RemoveHandler(CommandName);
     }
@@ -92,6 +97,8 @@ public sealed class Plugin : IDalamudPlugin
         if (MainWindow.IsOpen)
             BuddyFeedCutsceneSkip.Enable();
     }
+
+    private void DrawUi() => Appearance.Draw(WindowSystem);
 
     public void ToggleConfigUi() => ConfigWindow.Toggle();
 

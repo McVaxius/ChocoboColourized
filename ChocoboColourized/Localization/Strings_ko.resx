@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Color" xml:space="preserve"><value>색상</value></data>
+  <data name="Language" xml:space="preserve"><value>언어</value></data>
+  <data name="Teal" xml:space="preserve"><value>청록색</value></data>
+  <data name="Blue" xml:space="preserve"><value>파란색</value></data>
+  <data name="Pink" xml:space="preserve"><value>분홍색</value></data>
+  <data name="Custom RGB" xml:space="preserve"><value>사용자 RGB</value></data>
+  <data name="Compact mode" xml:space="preserve"><value>컴팩트 모드</value></data>
+  <data name="Loading UI fonts..." xml:space="preserve"><value>UI 글꼴 로드 중...</value></data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve"><value>UI 글꼴 로드 실패. 플러그인 로그를 확인하세요.</value></data>
+  <data name="Calculator" xml:space="preserve"><value>계산기</value></data>
+  <data name="Timers" xml:space="preserve"><value>타이머</value></data>
+  <data name="Automation" xml:space="preserve"><value>자동화</value></data>
+  <data name="Plan your chocobo's colour with precision." xml:space="preserve"><value>초코보의 깃털 색을 정확하게 계획하세요.</value></data>
+  <data name="Support on Ko-fi" xml:space="preserve"><value>Ko-fi에서 후원</value></data>
+  <data name="Support development on Ko-fi" xml:space="preserve"><value>Ko-fi에서 개발 후원</value></data>
+  <data name="Colour Calculation" xml:space="preserve"><value>색상 계산</value></data>
+  <data name="Select your chocobo's current and target colours, then calculate the feeding path." xml:space="preserve"><value>현재 색과 목표 색을 선택한 다음 먹이 순서를 계산하세요.</value></data>
+  <data name="Required Fruits" xml:space="preserve"><value>필요한 과일</value></data>
+  <data name="The following fruits are required for this colour change." xml:space="preserve"><value>이 색상 변경에 다음 과일이 필요합니다.</value></data>
+  <data name="Already at the closest possible colour!" xml:space="preserve"><value>이미 가능한 가장 가까운 색입니다!</value></data>
+  <data name="Calculation details" xml:space="preserve"><value>계산 세부 정보</value></data>
+  <data name="Feeding order" xml:space="preserve"><value>먹이 순서</value></data>
+  <data name="Feed the following fruits to your chocobo in order." xml:space="preserve"><value>다음 순서대로 초코보에게 과일을 주세요.</value></data>
+  <data name="Your feeding order will appear here." xml:space="preserve"><value>먹이 순서가 여기에 표시됩니다.</value></data>
+  <data name="Fruit" xml:space="preserve"><value>과일</value></data>
+  <data name="Required" xml:space="preserve"><value>필요</value></data>
+  <data name="Owned" xml:space="preserve"><value>보유</value></data>
+  <data name="Status" xml:space="preserve"><value>상태</value></data>
+  <data name="Select colours and click Calculate." xml:space="preserve"><value>색을 선택하고 계산을 누르세요.</value></data>
+  <data name="Save Plan &amp; Switch to Automation" xml:space="preserve"><value>계획 저장 및 자동화 열기</value></data>
+  <data name="Copy Results to Clipboard" xml:space="preserve"><value>결과를 클립보드에 복사</value></data>
+  <data name="Plan saved! Switched to Automation tab." xml:space="preserve"><value>계획을 저장하고 자동화 탭으로 전환했습니다.</value></data>
+  <data name="Results copied to clipboard!" xml:space="preserve"><value>결과를 클립보드에 복사했습니다!</value></data>
+  <data name="Detected chocobo colour: {0}" xml:space="preserve"><value>감지된 초코보 색: {0}</value></data>
+  <data name="Current colour:" xml:space="preserve"><value>현재 색:</value></data>
+  <data name="How to find your chocobo's current colour:" xml:space="preserve"><value>초코보의 현재 색을 확인하는 방법:</value></data>
+  <data name="1. Open the Companion window (default: N key)" xml:space="preserve"><value>1. 버디 창을 엽니다(기본: N 키)</value></data>
+  <data name="2. Click the Appearance tab" xml:space="preserve"><value>2. 외형 탭을 선택합니다</value></data>
+  <data name="3. Check the current colour listed" xml:space="preserve"><value>3. 현재 색을 확인합니다</value></data>
+  <data name="4. Select it from the dropdown below" xml:space="preserve"><value>4. 아래 목록에서 해당 색을 선택합니다</value></data>
+  <data name="Auto-detection will be added in a future update." xml:space="preserve"><value>자동 감지는 향후 업데이트에 추가됩니다.</value></data>
+  <data name="Current colour" xml:space="preserve"><value>현재 색</value></data>
+  <data name="Search colours..." xml:space="preserve"><value>색 검색...</value></data>
+  <data name="Current:" xml:space="preserve"><value>현재:</value></data>
+  <data name="Target colour" xml:space="preserve"><value>목표 색</value></data>
+  <data name="Target:" xml:space="preserve"><value>목표:</value></data>
+  <data name="Current and target colours are the same!" xml:space="preserve"><value>현재 색과 목표 색이 같습니다!</value></data>
+  <data name="Calculate Feeding Path" xml:space="preserve"><value>먹이 순서 계산</value></data>
+  <data name="Calculation complete! ({0} fruits needed)" xml:space="preserve"><value>계산 완료! (과일 {0}개 필요)</value></data>
+  <data name="From: {0}" xml:space="preserve"><value>변경 전: {0}</value></data>
+  <data name="To:   {0}" xml:space="preserve"><value>변경 후: {0}</value></data>
+  <data name="Result Colour:" xml:space="preserve"><value>결과 색:</value></data>
+  <data name="Closest Named Colour: {0}" xml:space="preserve"><value>가장 가까운 이름 있는 색: {0}</value></data>
+  <data name="Distance to Target: {0:F2}" xml:space="preserve"><value>목표와의 차이: {0:F2}</value></data>
+  <data name="Total Fruits Required: {0}" xml:space="preserve"><value>필요한 과일 총수: {0}</value></data>
+  <data name="OK" xml:space="preserve"><value>충분</value></data>
+  <data name="Low" xml:space="preserve"><value>부족</value></data>
+  <data name="None" xml:space="preserve"><value>없음</value></data>
+  <data name="You need more fruits. Acquire them however you prefer." xml:space="preserve"><value>과일이 부족합니다. 원하는 방법으로 구하세요.</value></data>
+  <data name="Log in to use feeding plans." xml:space="preserve"><value>먹이 계획을 사용하려면 로그인하세요.</value></data>
+  <data name="Active plan: {0}/{1} fed ({2} -&gt; {3})" xml:space="preserve"><value>활성 계획: {0}/{1} 먹임 ({2} -&gt; {3})</value></data>
+  <data name="Clear Existing Plan" xml:space="preserve"><value>기존 계획 지우기</value></data>
+  <data name="Switch to the Automation tab to start feeding." xml:space="preserve"><value>먹이를 주려면 자동화 탭을 여세요.</value></data>
+  <data name="Colour change in progress: {0}h {1}m {2}s remaining" xml:space="preserve"><value>색상 변경 중: {0}시간 {1}분 {2}초 남음</value></data>
+  <data name="You do not have all required fruits yet. Automation start will stay disabled until you gather them." xml:space="preserve"><value>필요한 과일이 부족합니다. 모두 모을 때까지 자동화를 시작할 수 없습니다.</value></data>
+  <data name="All required fruits are in your inventory. Head to the Automation tab to start." xml:space="preserve"><value>필요한 과일이 모두 있습니다. 자동화 탭에서 시작하세요.</value></data>
+  <data name="Automation controls live in the Automation tab." xml:space="preserve"><value>자동화 제어는 자동화 탭에 있습니다.</value></data>
+  <data name="Colour Change Timers" xml:space="preserve"><value>색상 변경 타이머</value></data>
+  <data name="Character" xml:space="preserve"><value>캐릭터</value></data>
+  <data name="Chocobo" xml:space="preserve"><value>초코보</value></data>
+  <data name="Remaining" xml:space="preserve"><value>남은 시간</value></data>
+  <data name="(unnamed)" xml:space="preserve"><value>(이름 없음)</value></data>
+  <data name="Changing..." xml:space="preserve"><value>변경 중...</value></data>
+  <data name="Feeding {0}/{1}" xml:space="preserve"><value>먹이는 중 {0}/{1}</value></data>
+  <data name="{0}h {1:D2}m {2:D2}s" xml:space="preserve"><value>{0}시간 {1:D2}분 {2:D2}초</value></data>
+  <data name="No active timers or feeding plans." xml:space="preserve"><value>활성 타이머나 먹이 계획이 없습니다.</value></data>
+  <data name="Timers will appear here after completing a full feeding." xml:space="preserve"><value>전체 먹이 주기가 완료되면 타이머가 표시됩니다.</value></data>
+  <data name="Each character on this account will have their own timer." xml:space="preserve"><value>이 계정의 각 캐릭터마다 별도의 타이머가 있습니다.</value></data>
+  <data name="Automated Feeding" xml:space="preserve"><value>자동 먹이 주기</value></data>
+  <data name="You must be logged in to use automated feeding." xml:space="preserve"><value>자동 먹이 주기를 사용하려면 로그인해야 합니다.</value></data>
+  <data name="Colour change already in progress: {0}h {1:D2}m {2:D2}s remaining." xml:space="preserve"><value>색상 변경 중: {0}시간 {1:D2}분 {2:D2}초 남음.</value></data>
+  <data name="No active feeding plan." xml:space="preserve"><value>활성 먹이 계획이 없습니다.</value></data>
+  <data name="Calculate a feeding path in the Calculator tab, then click 'Save Plan'." xml:space="preserve"><value>계산기 탭에서 먹이 순서를 계산한 다음 '계획 저장'을 누르세요.</value></data>
+  <data name="Plan: {0} -&gt; {1}" xml:space="preserve"><value>계획: {0} -&gt; {1}</value></data>
+  <data name="Progress: {0} / {1} fruits fed" xml:space="preserve"><value>진행: 과일 {0} / {1}개 먹임</value></data>
+  <data name="Remaining fruits:" xml:space="preserve"><value>남은 과일:</value></data>
+  <data name="Feeding in progress: step {0}/{1}" xml:space="preserve"><value>먹이는 중: 단계 {0}/{1}</value></data>
+  <data name="Current: {0}" xml:space="preserve"><value>현재: {0}</value></data>
+  <data name="State: {0}" xml:space="preserve"><value>상태: {0}</value></data>
+  <data name="Stop Automation" xml:space="preserve"><value>자동화 중지</value></data>
+  <data name="Automation stopped." xml:space="preserve"><value>자동화를 중지했습니다.</value></data>
+  <data name="Feeding complete! Your chocobo's colour will change in 6 hours." xml:space="preserve"><value>먹이 주기 완료! 6시간 후 초코보 색이 바뀝니다.</value></data>
+  <data name="Error: {0}" xml:space="preserve"><value>오류: {0}</value></data>
+  <data name="Dismiss" xml:space="preserve"><value>닫기</value></data>
+  <data name="IMPORTANT: You must be at the Chocobo Stable in the FEED screen" xml:space="preserve"><value>중요: 초코보 축사에서 먹이 주기 화면을 열어야 합니다</value></data>
+  <data name="(inventory open with feedable items highlighted) before clicking Start." xml:space="preserve"><value>시작 전에 먹이 가능한 아이템이 강조된 소지품 창을 여세요.</value></data>
+  <data name="TextAdvance and YesAlready will be paused; buddy-feed cutscene skip is armed when this window opens." xml:space="preserve"><value>TextAdvance와 YesAlready를 일시 중지하며, 이 창을 열면 먹이 주기 영상 건너뛰기를 준비합니다.</value></data>
+  <data name="Check stable condition before feeding" xml:space="preserve"><value>먹이 주기 전 축사 상태 확인</value></data>
+  <data name="If enabled, warns you if the stable condition is Poor or Fair." xml:space="preserve"><value>축사 상태가 나쁘거나 보통이면 경고합니다.</value></data>
+  <data name="Use a Magicked Stable Broom to clean the stable first." xml:space="preserve"><value>먼저 마법의 빗자루로 축사를 청소하세요.</value></data>
+  <data name="Magicked Stable Broom: {0} in inventory" xml:space="preserve"><value>소지품의 마법의 빗자루: {0}</value></data>
+  <data name="Start Automated Feeding" xml:space="preserve"><value>자동 먹이 주기 시작</value></data>
+  <data name="Start Automated Feeding (Insufficient Fruits)" xml:space="preserve"><value>시작 (과일 부족)</value></data>
+  <data name="You do not have enough fruits in your inventory." xml:space="preserve"><value>소지품에 과일이 부족합니다.</value></data>
+  <data name="Clear Plan" xml:space="preserve"><value>계획 지우기</value></data>
+  <data name="Chocobo Colourized Settings" xml:space="preserve"><value>Chocobo Colourized 설정</value></data>
+  <data name="Movable Config Window" xml:space="preserve"><value>설정 창 이동 허용</value></data>
+  <data name="Prerequisites &amp; Troubleshooting" xml:space="preserve"><value>필수 조건 및 문제 해결</value></data>
+  <data name="Required Quests:" xml:space="preserve"><value>필수 퀘스트:</value></data>
+  <data name="   Obtain your chocobo companion (Camp Tranquil, South Shroud)" xml:space="preserve"><value>   초코보 버디 획득 (Camp Tranquil, South Shroud)</value></data>
+  <data name="   Unlock chocobo stabling and raising (Bentbranch Meadows, Central Shroud)" xml:space="preserve"><value>   초코보 축사 및 육성 해금 (Bentbranch Meadows, Central Shroud)</value></data>
+  <data name="   NPC: Luquelot at Bentbranch Meadows (X:21.4, Y:22.1)" xml:space="preserve"><value>   NPC: Bentbranch Meadows의 Luquelot (X:21.4, Y:22.1)</value></data>
+  <data name="Other Requirements:" xml:space="preserve"><value>기타 필수 조건:</value></data>
+  <data name="- Access to a Chocobo Stable (FC house, personal house, or apartment)" xml:space="preserve"><value>- 초코보 축사 이용 가능 (자유부대 주택, 개인 주택 또는 아파트)</value></data>
+  <data name="- Your chocobo must be stabled (not summoned as companion)" xml:space="preserve"><value>- 초코보가 축사에 있어야 합니다 (버디로 소환되지 않은 상태)</value></data>
+  <data name="- Fruits in your inventory (purchase from vendors or Market Board)" xml:space="preserve"><value>- 소지품에 과일 보유 (상인 또는 장터에서 구매)</value></data>
+  <data name="Common Errors:" xml:space="preserve"><value>자주 발생하는 오류:</value></data>
+  <data name="&quot;You have yet to be trained in chocobo raising&quot;" xml:space="preserve"><value>"초코보 육성 방법을 배우지 않았습니다"</value></data>
+  <data name="  -&gt; Complete the quest &quot;Bird in Hand&quot; at Bentbranch Meadows." xml:space="preserve"><value>  -&gt; Bentbranch Meadows에서 'Bird in Hand'를 완료하세요.</value></data>
+  <data name="&quot;Your chocobo is not stabled&quot;" xml:space="preserve"><value>"초코보가 축사에 없습니다"</value></data>
+  <data name="  -&gt; Stable your chocobo at a Chocobo Stable before feeding." xml:space="preserve"><value>  -&gt; 먹이를 주기 전에 초코보를 축사에 맡기세요.</value></data>
+  <data name="Automation errors about context menu or inventory" xml:space="preserve"><value>상황 메뉴 또는 소지품 관련 자동화 오류</value></data>
+  <data name="  -&gt; Make sure you are on the Feed screen (inventory visible with" xml:space="preserve"><value>  -&gt; 먹이 주기 화면을 여세요 (소지품이 보이고</value></data>
+  <data name="     feedable items highlighted) before clicking Start." xml:space="preserve"><value>     먹이 가능한 아이템이 강조된 상태)에서 시작하세요.</value></data>
+  <data name="Result: {0} ({1})" xml:space="preserve"><value>결과: {0} ({1})</value></data>
+  <data name="Total Fruits: {0}" xml:space="preserve"><value>과일 총수: {0}</value></data>
+  <data name="Fruit Summary:" xml:space="preserve"><value>과일 요약:</value></data>
+  <data name="Feeding Order:" xml:space="preserve"><value>먹이 순서:</value></data>
+  <data name="Idle" xml:space="preserve"><value>대기</value></data>
+  <data name="FindingFruitSlot" xml:space="preserve"><value>과일 슬롯 찾는 중</value></data>
+  <data name="OpeningContextMenu" xml:space="preserve"><value>상황 메뉴 여는 중</value></data>
+  <data name="WaitingForContextMenu" xml:space="preserve"><value>상황 메뉴 대기 중</value></data>
+  <data name="SelectingFeed" xml:space="preserve"><value>먹이 주기 선택 중</value></data>
+  <data name="WaitingForStableMenu" xml:space="preserve"><value>축사 메뉴 대기 중</value></data>
+  <data name="SelectingFeedFromMenu" xml:space="preserve"><value>축사 메뉴에서 먹이 주기 선택 중</value></data>
+  <data name="WaitingForFeedInventory" xml:space="preserve"><value>먹이 소지품 대기 중</value></data>
+  <data name="Completed" xml:space="preserve"><value>완료</value></data>
+  <data name="Error" xml:space="preserve"><value>오류</value></data>
+  <data name="Automation is already running." xml:space="preserve"><value>자동화가 이미 실행 중입니다.</value></data>
+  <data name="Plan is already complete." xml:space="preserve"><value>계획이 이미 완료되었습니다.</value></data>
+  <data name="Could not pause TextAdvance or YesAlready. Check that loaded helpers are ready before starting again." xml:space="preserve"><value>TextAdvance 또는 YesAlready를 일시 중지할 수 없습니다. 재시작 전에 보조 플러그인을 확인하세요.</value></data>
+  <data name="A feeding helper changed or its pause was lost. Start again after TextAdvance and YesAlready have settled." xml:space="preserve"><value>보조 플러그인이 변경되었거나 일시 중지가 해제되었습니다. TextAdvance와 YesAlready가 준비되면 다시 시작하세요.</value></data>
+  <data name="Unexpected error: {0}" xml:space="preserve"><value>예기치 않은 오류: {0}</value></data>
+  <data name="Unknown fruit type: {0}" xml:space="preserve"><value>알 수 없는 과일 종류: {0}</value></data>
+  <data name="Could not find {0} (ID:{1}) in inventory. Do you have it?" xml:space="preserve"><value>소지품에서 {0} (ID:{1})을 찾을 수 없습니다. 보유하고 있나요?</value></data>
+  <data name="Failed to open context menu after {0} retries: {1}" xml:space="preserve"><value>{0}번 시도 후 상황 메뉴를 열지 못했습니다: {1}</value></data>
+  <data name="Context menu did not appear. Ensure you are in the stable's Feed screen with your inventory open." xml:space="preserve"><value>상황 메뉴가 나타나지 않습니다. 축사 먹이 주기 화면과 소지품을 여세요.</value></data>
+  <data name="Context menu disappeared before we could select Feed." xml:space="preserve"><value>먹이 주기를 선택하기 전에 상황 메뉴가 닫혔습니다.</value></data>
+  <data name="Failed to select Feed from context menu: {0}" xml:space="preserve"><value>상황 메뉴에서 먹이 주기를 선택하지 못했습니다: {0}</value></data>
+  <data name="Stable menu did not reappear after feeding. Neither SelectString nor HousingMyChocobo found. The UI may have changed or closed." xml:space="preserve"><value>먹이 주기 후 축사 메뉴가 다시 나타나지 않습니다. SelectString과 HousingMyChocobo를 찾을 수 없습니다. 화면이 변경되거나 닫혔을 수 있습니다.</value></data>
+  <data name="Stable menu disappeared before we could click Feed. Neither SelectString nor HousingMyChocobo found." xml:space="preserve"><value>먹이 주기를 누르기 전에 축사 메뉴가 닫혔습니다. SelectString과 HousingMyChocobo를 찾을 수 없습니다.</value></data>
+  <data name="Failed to select Feed from stable menu: {0}" xml:space="preserve"><value>축사 메뉴에서 먹이 주기를 선택하지 못했습니다: {0}</value></data>
+  <data name="Feed inventory did not open after selecting Feed from stable menu. This happens if you are not in expanded inventory mode. Please expand your inventory to 'Open all + Expanded', apply, then start again. It will resume from where it left off, so no steps should be lost under normal circumstances." xml:space="preserve"><value>먹이 소지품이 열리지 않았습니다. 소지품을 '모두 열기 + 확장' 모드로 설정하고 적용한 다음 다시 시작하세요. 보통 마지막 단계부터 이어서 진행하므로 진행 상황이 유지됩니다.</value></data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>창 모양</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>메인 창에 간결 모드 전환 표시</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>메인 창에 언어 선택 표시</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>투명도</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>불투명도 (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>포커스를 잃으면 자동으로 흐리게 표시</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>포커스가 없을 때 불투명도 (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>포커스를 잃은 후 대기 시간 (초)</value>
+  </data>
+</root>

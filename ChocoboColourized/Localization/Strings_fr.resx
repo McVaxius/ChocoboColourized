@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Color" xml:space="preserve"><value>Couleur</value></data>
+  <data name="Language" xml:space="preserve"><value>Langue</value></data>
+  <data name="Teal" xml:space="preserve"><value>Turquoise</value></data>
+  <data name="Blue" xml:space="preserve"><value>Bleu</value></data>
+  <data name="Pink" xml:space="preserve"><value>Rose</value></data>
+  <data name="Custom RGB" xml:space="preserve"><value>RVB personnalisé</value></data>
+  <data name="Compact mode" xml:space="preserve"><value>Mode compact</value></data>
+  <data name="Loading UI fonts..." xml:space="preserve"><value>Chargement des polices...</value></data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve"><value>Échec du chargement des polices. Consultez le journal.</value></data>
+  <data name="Calculator" xml:space="preserve"><value>Calculateur</value></data>
+  <data name="Timers" xml:space="preserve"><value>Minuteurs</value></data>
+  <data name="Automation" xml:space="preserve"><value>Automatisation</value></data>
+  <data name="Plan your chocobo's colour with precision." xml:space="preserve"><value>Planifiez précisément la couleur de votre chocobo.</value></data>
+  <data name="Support on Ko-fi" xml:space="preserve"><value>Soutenir sur Ko-fi</value></data>
+  <data name="Support development on Ko-fi" xml:space="preserve"><value>Soutenir le développement sur Ko-fi</value></data>
+  <data name="Colour Calculation" xml:space="preserve"><value>Calcul de couleur</value></data>
+  <data name="Select your chocobo's current and target colours, then calculate the feeding path." xml:space="preserve"><value>Choisissez les couleurs actuelle et souhaitée, puis calculez l’alimentation.</value></data>
+  <data name="Required Fruits" xml:space="preserve"><value>Fruits requis</value></data>
+  <data name="The following fruits are required for this colour change." xml:space="preserve"><value>Ces fruits sont nécessaires pour ce changement de couleur.</value></data>
+  <data name="Already at the closest possible colour!" xml:space="preserve"><value>La couleur la plus proche est déjà atteinte !</value></data>
+  <data name="Calculation details" xml:space="preserve"><value>Détails du calcul</value></data>
+  <data name="Feeding order" xml:space="preserve"><value>Ordre d’alimentation</value></data>
+  <data name="Feed the following fruits to your chocobo in order." xml:space="preserve"><value>Donnez ces fruits à votre chocobo dans l’ordre indiqué.</value></data>
+  <data name="Your feeding order will appear here." xml:space="preserve"><value>L’ordre d’alimentation apparaîtra ici.</value></data>
+  <data name="Fruit" xml:space="preserve"><value>Fruit</value></data>
+  <data name="Required" xml:space="preserve"><value>Requis</value></data>
+  <data name="Owned" xml:space="preserve"><value>Possédé</value></data>
+  <data name="Status" xml:space="preserve"><value>État</value></data>
+  <data name="Select colours and click Calculate." xml:space="preserve"><value>Choisissez les couleurs et cliquez sur Calculer.</value></data>
+  <data name="Save Plan &amp; Switch to Automation" xml:space="preserve"><value>Enregistrer et ouvrir l’automatisation</value></data>
+  <data name="Copy Results to Clipboard" xml:space="preserve"><value>Copier les résultats</value></data>
+  <data name="Plan saved! Switched to Automation tab." xml:space="preserve"><value>Plan enregistré ! Onglet Automatisation ouvert.</value></data>
+  <data name="Results copied to clipboard!" xml:space="preserve"><value>Résultats copiés !</value></data>
+  <data name="Detected chocobo colour: {0}" xml:space="preserve"><value>Couleur du chocobo détectée : {0}</value></data>
+  <data name="Current colour:" xml:space="preserve"><value>Couleur actuelle :</value></data>
+  <data name="How to find your chocobo's current colour:" xml:space="preserve"><value>Comment trouver la couleur actuelle du chocobo :</value></data>
+  <data name="1. Open the Companion window (default: N key)" xml:space="preserve"><value>1. Ouvrir Compagnon (touche N par défaut)</value></data>
+  <data name="2. Click the Appearance tab" xml:space="preserve"><value>2. Cliquer sur l’onglet Apparence</value></data>
+  <data name="3. Check the current colour listed" xml:space="preserve"><value>3. Vérifier la couleur actuelle</value></data>
+  <data name="4. Select it from the dropdown below" xml:space="preserve"><value>4. La sélectionner dans la liste ci-dessous</value></data>
+  <data name="Auto-detection will be added in a future update." xml:space="preserve"><value>La détection automatique sera ajoutée ultérieurement.</value></data>
+  <data name="Current colour" xml:space="preserve"><value>Couleur actuelle</value></data>
+  <data name="Search colours..." xml:space="preserve"><value>Rechercher une couleur...</value></data>
+  <data name="Current:" xml:space="preserve"><value>Actuelle :</value></data>
+  <data name="Target colour" xml:space="preserve"><value>Couleur souhaitée</value></data>
+  <data name="Target:" xml:space="preserve"><value>Cible :</value></data>
+  <data name="Current and target colours are the same!" xml:space="preserve"><value>Les deux couleurs sont identiques !</value></data>
+  <data name="Calculate Feeding Path" xml:space="preserve"><value>Calculer l’alimentation</value></data>
+  <data name="Calculation complete! ({0} fruits needed)" xml:space="preserve"><value>Calcul terminé ! ({0} fruits nécessaires)</value></data>
+  <data name="From: {0}" xml:space="preserve"><value>De : {0}</value></data>
+  <data name="To:   {0}" xml:space="preserve"><value>À :   {0}</value></data>
+  <data name="Result Colour:" xml:space="preserve"><value>Couleur obtenue :</value></data>
+  <data name="Closest Named Colour: {0}" xml:space="preserve"><value>Couleur nommée la plus proche : {0}</value></data>
+  <data name="Distance to Target: {0:F2}" xml:space="preserve"><value>Écart avec la cible : {0:F2}</value></data>
+  <data name="Total Fruits Required: {0}" xml:space="preserve"><value>Total de fruits requis : {0}</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Low" xml:space="preserve"><value>Insuffisant</value></data>
+  <data name="None" xml:space="preserve"><value>Aucun</value></data>
+  <data name="You need more fruits. Acquire them however you prefer." xml:space="preserve"><value>Il vous faut plus de fruits. Procurez-vous-en comme vous le souhaitez.</value></data>
+  <data name="Log in to use feeding plans." xml:space="preserve"><value>Connectez-vous pour utiliser les plans d’alimentation.</value></data>
+  <data name="Active plan: {0}/{1} fed ({2} -&gt; {3})" xml:space="preserve"><value>Plan actif : {0}/{1} donnés ({2} -&gt; {3})</value></data>
+  <data name="Clear Existing Plan" xml:space="preserve"><value>Effacer le plan existant</value></data>
+  <data name="Switch to the Automation tab to start feeding." xml:space="preserve"><value>Ouvrez Automatisation pour commencer à nourrir.</value></data>
+  <data name="Colour change in progress: {0}h {1}m {2}s remaining" xml:space="preserve"><value>Changement de couleur : reste {0} h {1} min {2} s</value></data>
+  <data name="You do not have all required fruits yet. Automation start will stay disabled until you gather them." xml:space="preserve"><value>Il vous manque des fruits requis. L’automatisation reste désactivée tant qu’ils manquent.</value></data>
+  <data name="All required fruits are in your inventory. Head to the Automation tab to start." xml:space="preserve"><value>Tous les fruits sont disponibles. Ouvrez Automatisation pour démarrer.</value></data>
+  <data name="Automation controls live in the Automation tab." xml:space="preserve"><value>Les commandes se trouvent dans Automatisation.</value></data>
+  <data name="Colour Change Timers" xml:space="preserve"><value>Minuteurs de changement de couleur</value></data>
+  <data name="Character" xml:space="preserve"><value>Personnage</value></data>
+  <data name="Chocobo" xml:space="preserve"><value>Chocobo</value></data>
+  <data name="Remaining" xml:space="preserve"><value>Restant</value></data>
+  <data name="(unnamed)" xml:space="preserve"><value>(sans nom)</value></data>
+  <data name="Changing..." xml:space="preserve"><value>Changement...</value></data>
+  <data name="Feeding {0}/{1}" xml:space="preserve"><value>Alimentation {0}/{1}</value></data>
+  <data name="{0}h {1:D2}m {2:D2}s" xml:space="preserve"><value>{0} h {1:D2} min {2:D2} s</value></data>
+  <data name="No active timers or feeding plans." xml:space="preserve"><value>Aucun minuteur ni plan actif.</value></data>
+  <data name="Timers will appear here after completing a full feeding." xml:space="preserve"><value>Les minuteurs apparaissent une fois l’alimentation terminée.</value></data>
+  <data name="Each character on this account will have their own timer." xml:space="preserve"><value>Chaque personnage de ce compte a son propre minuteur.</value></data>
+  <data name="Automated Feeding" xml:space="preserve"><value>Alimentation automatique</value></data>
+  <data name="You must be logged in to use automated feeding." xml:space="preserve"><value>Connectez-vous pour l’alimentation automatique.</value></data>
+  <data name="Colour change already in progress: {0}h {1:D2}m {2:D2}s remaining." xml:space="preserve"><value>Changement déjà en cours : reste {0} h {1:D2} min {2:D2} s.</value></data>
+  <data name="No active feeding plan." xml:space="preserve"><value>Aucun plan d’alimentation actif.</value></data>
+  <data name="Calculate a feeding path in the Calculator tab, then click 'Save Plan'." xml:space="preserve"><value>Calculez l’alimentation, puis cliquez sur « Enregistrer le plan ».</value></data>
+  <data name="Plan: {0} -&gt; {1}" xml:space="preserve"><value>Plan : {0} -&gt; {1}</value></data>
+  <data name="Progress: {0} / {1} fruits fed" xml:space="preserve"><value>Progression : {0} / {1} fruits donnés</value></data>
+  <data name="Remaining fruits:" xml:space="preserve"><value>Fruits restants :</value></data>
+  <data name="Feeding in progress: step {0}/{1}" xml:space="preserve"><value>Alimentation : étape {0}/{1}</value></data>
+  <data name="Current: {0}" xml:space="preserve"><value>Actuel : {0}</value></data>
+  <data name="State: {0}" xml:space="preserve"><value>État : {0}</value></data>
+  <data name="Stop Automation" xml:space="preserve"><value>Arrêter l’automatisation</value></data>
+  <data name="Automation stopped." xml:space="preserve"><value>Automatisation arrêtée.</value></data>
+  <data name="Feeding complete! Your chocobo's colour will change in 6 hours." xml:space="preserve"><value>Alimentation terminée ! La couleur changera dans 6 heures.</value></data>
+  <data name="Error: {0}" xml:space="preserve"><value>Erreur : {0}</value></data>
+  <data name="Dismiss" xml:space="preserve"><value>Fermer</value></data>
+  <data name="IMPORTANT: You must be at the Chocobo Stable in the FEED screen" xml:space="preserve"><value>IMPORTANT : ouvrez l’écran Nourrir à l’écurie de chocobos</value></data>
+  <data name="(inventory open with feedable items highlighted) before clicking Start." xml:space="preserve"><value>(inventaire ouvert et aliments surlignés) avant de démarrer.</value></data>
+  <data name="TextAdvance and YesAlready will be paused; buddy-feed cutscene skip is armed when this window opens." xml:space="preserve"><value>TextAdvance et YesAlready seront suspendus ; cette fenêtre active le saut de cinématique.</value></data>
+  <data name="Check stable condition before feeding" xml:space="preserve"><value>Vérifier l’état de l’écurie avant de nourrir</value></data>
+  <data name="If enabled, warns you if the stable condition is Poor or Fair." xml:space="preserve"><value>Avertit si l’écurie est en mauvais état ou dans un état moyen.</value></data>
+  <data name="Use a Magicked Stable Broom to clean the stable first." xml:space="preserve"><value>Nettoyez d’abord l’écurie avec un balai magique.</value></data>
+  <data name="Magicked Stable Broom: {0} in inventory" xml:space="preserve"><value>Balais magiques en inventaire : {0}</value></data>
+  <data name="Start Automated Feeding" xml:space="preserve"><value>Démarrer l’alimentation automatique</value></data>
+  <data name="Start Automated Feeding (Insufficient Fruits)" xml:space="preserve"><value>Démarrer (fruits insuffisants)</value></data>
+  <data name="You do not have enough fruits in your inventory." xml:space="preserve"><value>Votre inventaire ne contient pas assez de fruits.</value></data>
+  <data name="Clear Plan" xml:space="preserve"><value>Effacer le plan</value></data>
+  <data name="Chocobo Colourized Settings" xml:space="preserve"><value>Paramètres Chocobo Colourized</value></data>
+  <data name="Movable Config Window" xml:space="preserve"><value>Fenêtre de paramètres déplaçable</value></data>
+  <data name="Prerequisites &amp; Troubleshooting" xml:space="preserve"><value>Prérequis et dépannage</value></data>
+  <data name="Required Quests:" xml:space="preserve"><value>Quêtes requises :</value></data>
+  <data name="   Obtain your chocobo companion (Camp Tranquil, South Shroud)" xml:space="preserve"><value>   Obtenir votre compagnon chocobo (Camp Tranquil, South Shroud)</value></data>
+  <data name="   Unlock chocobo stabling and raising (Bentbranch Meadows, Central Shroud)" xml:space="preserve"><value>   Débloquer l’écurie et l’élevage (Bentbranch Meadows, Central Shroud)</value></data>
+  <data name="   NPC: Luquelot at Bentbranch Meadows (X:21.4, Y:22.1)" xml:space="preserve"><value>   PNJ : Luquelot à Bentbranch Meadows (X:21.4, Y:22.1)</value></data>
+  <data name="Other Requirements:" xml:space="preserve"><value>Autres prérequis :</value></data>
+  <data name="- Access to a Chocobo Stable (FC house, personal house, or apartment)" xml:space="preserve"><value>- Accès à une écurie (maison de CL, personnelle ou appartement)</value></data>
+  <data name="- Your chocobo must be stabled (not summoned as companion)" xml:space="preserve"><value>- Le chocobo doit être à l’écurie, pas invoqué comme compagnon</value></data>
+  <data name="- Fruits in your inventory (purchase from vendors or Market Board)" xml:space="preserve"><value>- Fruits en inventaire (marchands ou tableau des ventes)</value></data>
+  <data name="Common Errors:" xml:space="preserve"><value>Erreurs courantes :</value></data>
+  <data name="&quot;You have yet to be trained in chocobo raising&quot;" xml:space="preserve"><value>"Vous n’avez pas encore appris l’élevage de chocobos"</value></data>
+  <data name="  -&gt; Complete the quest &quot;Bird in Hand&quot; at Bentbranch Meadows." xml:space="preserve"><value>  -&gt; Terminez « Bird in Hand » à Bentbranch Meadows.</value></data>
+  <data name="&quot;Your chocobo is not stabled&quot;" xml:space="preserve"><value>"Votre chocobo n’est pas à l’écurie"</value></data>
+  <data name="  -&gt; Stable your chocobo at a Chocobo Stable before feeding." xml:space="preserve"><value>  -&gt; Placez le chocobo à l’écurie avant de nourrir.</value></data>
+  <data name="Automation errors about context menu or inventory" xml:space="preserve"><value>Erreurs d’automatisation du menu contextuel ou de l’inventaire</value></data>
+  <data name="  -&gt; Make sure you are on the Feed screen (inventory visible with" xml:space="preserve"><value>  -&gt; Ouvrez l’écran Nourrir (inventaire visible avec</value></data>
+  <data name="     feedable items highlighted) before clicking Start." xml:space="preserve"><value>     aliments surlignés) avant de démarrer.</value></data>
+  <data name="Result: {0} ({1})" xml:space="preserve"><value>Résultat : {0} ({1})</value></data>
+  <data name="Total Fruits: {0}" xml:space="preserve"><value>Total de fruits : {0}</value></data>
+  <data name="Fruit Summary:" xml:space="preserve"><value>Résumé des fruits :</value></data>
+  <data name="Feeding Order:" xml:space="preserve"><value>Ordre d’alimentation :</value></data>
+  <data name="Idle" xml:space="preserve"><value>Au repos</value></data>
+  <data name="FindingFruitSlot" xml:space="preserve"><value>Recherche du fruit</value></data>
+  <data name="OpeningContextMenu" xml:space="preserve"><value>Ouverture du menu contextuel</value></data>
+  <data name="WaitingForContextMenu" xml:space="preserve"><value>Attente du menu contextuel</value></data>
+  <data name="SelectingFeed" xml:space="preserve"><value>Sélection de Nourrir</value></data>
+  <data name="WaitingForStableMenu" xml:space="preserve"><value>Attente du menu d’écurie</value></data>
+  <data name="SelectingFeedFromMenu" xml:space="preserve"><value>Sélection de Nourrir dans l’écurie</value></data>
+  <data name="WaitingForFeedInventory" xml:space="preserve"><value>Attente de l’inventaire d’alimentation</value></data>
+  <data name="Completed" xml:space="preserve"><value>Terminé</value></data>
+  <data name="Error" xml:space="preserve"><value>Erreur</value></data>
+  <data name="Automation is already running." xml:space="preserve"><value>L’automatisation est déjà en cours.</value></data>
+  <data name="Plan is already complete." xml:space="preserve"><value>Le plan est déjà terminé.</value></data>
+  <data name="Could not pause TextAdvance or YesAlready. Check that loaded helpers are ready before starting again." xml:space="preserve"><value>Impossible de suspendre TextAdvance ou YesAlready. Vérifiez les assistants avant de redémarrer.</value></data>
+  <data name="A feeding helper changed or its pause was lost. Start again after TextAdvance and YesAlready have settled." xml:space="preserve"><value>Un assistant a changé ou sa pause a été perdue. Redémarrez lorsque TextAdvance et YesAlready sont prêts.</value></data>
+  <data name="Unexpected error: {0}" xml:space="preserve"><value>Erreur inattendue : {0}</value></data>
+  <data name="Unknown fruit type: {0}" xml:space="preserve"><value>Type de fruit inconnu : {0}</value></data>
+  <data name="Could not find {0} (ID:{1}) in inventory. Do you have it?" xml:space="preserve"><value>{0} (ID:{1}) introuvable dans l’inventaire. En possédez-vous ?</value></data>
+  <data name="Failed to open context menu after {0} retries: {1}" xml:space="preserve"><value>Menu contextuel non ouvert après {0} essais : {1}</value></data>
+  <data name="Context menu did not appear. Ensure you are in the stable's Feed screen with your inventory open." xml:space="preserve"><value>Le menu contextuel n’apparaît pas. Ouvrez Nourrir à l’écurie avec l’inventaire ouvert.</value></data>
+  <data name="Context menu disappeared before we could select Feed." xml:space="preserve"><value>Le menu contextuel a disparu avant de sélectionner Nourrir.</value></data>
+  <data name="Failed to select Feed from context menu: {0}" xml:space="preserve"><value>Impossible de sélectionner Nourrir : {0}</value></data>
+  <data name="Stable menu did not reappear after feeding. Neither SelectString nor HousingMyChocobo found. The UI may have changed or closed." xml:space="preserve"><value>Menu d’écurie non rouvert après alimentation. SelectString et HousingMyChocobo introuvables. L’interface a peut-être changé ou fermé.</value></data>
+  <data name="Stable menu disappeared before we could click Feed. Neither SelectString nor HousingMyChocobo found." xml:space="preserve"><value>Menu d’écurie disparu avant Nourrir. SelectString et HousingMyChocobo introuvables.</value></data>
+  <data name="Failed to select Feed from stable menu: {0}" xml:space="preserve"><value>Impossible de choisir Nourrir dans l’écurie : {0}</value></data>
+  <data name="Feed inventory did not open after selecting Feed from stable menu. This happens if you are not in expanded inventory mode. Please expand your inventory to 'Open all + Expanded', apply, then start again. It will resume from where it left off, so no steps should be lost under normal circumstances." xml:space="preserve"><value>L’inventaire ne s’ouvre pas après Nourrir. Activez « Tout ouvrir + Étendu », appliquez et redémarrez. La reprise se fait normalement au dernier point, sans perte d’étapes.</value></data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Apparence de la fenêtre</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Afficher le mode compact dans la fenêtre principale</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Afficher la langue dans la fenêtre principale</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparence</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Opacité (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Atténuer automatiquement sans focus</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Opacité sans focus (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Délai sans focus (secondes)</value>
+  </data>
+</root>

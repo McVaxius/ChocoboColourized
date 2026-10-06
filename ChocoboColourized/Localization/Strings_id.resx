@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="Color" xml:space="preserve"><value>Warna</value></data>
+  <data name="Language" xml:space="preserve"><value>Bahasa</value></data>
+  <data name="Teal" xml:space="preserve"><value>Toska</value></data>
+  <data name="Blue" xml:space="preserve"><value>Biru</value></data>
+  <data name="Pink" xml:space="preserve"><value>Merah muda</value></data>
+  <data name="Custom RGB" xml:space="preserve"><value>RGB khusus</value></data>
+  <data name="Compact mode" xml:space="preserve"><value>Mode ringkas</value></data>
+  <data name="Loading UI fonts..." xml:space="preserve"><value>Memuat font antarmuka...</value></data>
+  <data name="UI fonts failed to load. See the plugin log." xml:space="preserve"><value>Gagal memuat font antarmuka. Lihat log plugin.</value></data>
+  <data name="Calculator" xml:space="preserve"><value>Kalkulator</value></data>
+  <data name="Timers" xml:space="preserve"><value>Pengatur waktu</value></data>
+  <data name="Automation" xml:space="preserve"><value>Otomatisasi</value></data>
+  <data name="Plan your chocobo's colour with precision." xml:space="preserve"><value>Rencanakan warna chocobo Anda dengan tepat.</value></data>
+  <data name="Support on Ko-fi" xml:space="preserve"><value>Dukung di Ko-fi</value></data>
+  <data name="Support development on Ko-fi" xml:space="preserve"><value>Dukung pengembangan di Ko-fi</value></data>
+  <data name="Colour Calculation" xml:space="preserve"><value>Perhitungan warna</value></data>
+  <data name="Select your chocobo's current and target colours, then calculate the feeding path." xml:space="preserve"><value>Pilih warna chocobo saat ini dan warna tujuan, lalu hitung urutan pemberian makan.</value></data>
+  <data name="Required Fruits" xml:space="preserve"><value>Buah yang dibutuhkan</value></data>
+  <data name="The following fruits are required for this colour change." xml:space="preserve"><value>Buah berikut dibutuhkan untuk perubahan warna ini.</value></data>
+  <data name="Already at the closest possible colour!" xml:space="preserve"><value>Warna terdekat yang mungkin sudah tercapai!</value></data>
+  <data name="Calculation details" xml:space="preserve"><value>Rincian perhitungan</value></data>
+  <data name="Feeding order" xml:space="preserve"><value>Urutan pemberian makan</value></data>
+  <data name="Feed the following fruits to your chocobo in order." xml:space="preserve"><value>Berikan buah berikut kepada chocobo Anda secara berurutan.</value></data>
+  <data name="Your feeding order will appear here." xml:space="preserve"><value>Urutan pemberian makan akan muncul di sini.</value></data>
+  <data name="Fruit" xml:space="preserve"><value>Buah</value></data>
+  <data name="Required" xml:space="preserve"><value>Dibutuhkan</value></data>
+  <data name="Owned" xml:space="preserve"><value>Dimiliki</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Select colours and click Calculate." xml:space="preserve"><value>Pilih warna lalu klik Hitung.</value></data>
+  <data name="Save Plan &amp; Switch to Automation" xml:space="preserve"><value>Simpan rencana dan buka Otomatisasi</value></data>
+  <data name="Copy Results to Clipboard" xml:space="preserve"><value>Salin hasil ke papan klip</value></data>
+  <data name="Plan saved! Switched to Automation tab." xml:space="preserve"><value>Rencana tersimpan! Tab Otomatisasi dibuka.</value></data>
+  <data name="Results copied to clipboard!" xml:space="preserve"><value>Hasil disalin ke papan klip!</value></data>
+  <data name="Detected chocobo colour: {0}" xml:space="preserve"><value>Warna chocobo terdeteksi: {0}</value></data>
+  <data name="Current colour:" xml:space="preserve"><value>Warna saat ini:</value></data>
+  <data name="How to find your chocobo's current colour:" xml:space="preserve"><value>Cara menemukan warna chocobo saat ini:</value></data>
+  <data name="1. Open the Companion window (default: N key)" xml:space="preserve"><value>1. Buka jendela Companion (bawaan: tombol N)</value></data>
+  <data name="2. Click the Appearance tab" xml:space="preserve"><value>2. Klik tab Appearance</value></data>
+  <data name="3. Check the current colour listed" xml:space="preserve"><value>3. Periksa warna saat ini yang tercantum</value></data>
+  <data name="4. Select it from the dropdown below" xml:space="preserve"><value>4. Pilih warna tersebut dari daftar di bawah</value></data>
+  <data name="Auto-detection will be added in a future update." xml:space="preserve"><value>Deteksi otomatis akan ditambahkan dalam pembaruan mendatang.</value></data>
+  <data name="Current colour" xml:space="preserve"><value>Warna saat ini</value></data>
+  <data name="Search colours..." xml:space="preserve"><value>Cari warna...</value></data>
+  <data name="Current:" xml:space="preserve"><value>Saat ini:</value></data>
+  <data name="Target colour" xml:space="preserve"><value>Warna tujuan</value></data>
+  <data name="Target:" xml:space="preserve"><value>Tujuan:</value></data>
+  <data name="Current and target colours are the same!" xml:space="preserve"><value>Warna saat ini dan warna tujuan sama!</value></data>
+  <data name="Calculate Feeding Path" xml:space="preserve"><value>Hitung urutan pemberian makan</value></data>
+  <data name="Calculation complete! ({0} fruits needed)" xml:space="preserve"><value>Perhitungan selesai! ({0} buah dibutuhkan)</value></data>
+  <data name="From: {0}" xml:space="preserve"><value>Dari: {0}</value></data>
+  <data name="To:   {0}" xml:space="preserve"><value>Ke:   {0}</value></data>
+  <data name="Result Colour:" xml:space="preserve"><value>Warna hasil:</value></data>
+  <data name="Closest Named Colour: {0}" xml:space="preserve"><value>Warna bernama terdekat: {0}</value></data>
+  <data name="Distance to Target: {0:F2}" xml:space="preserve"><value>Jarak ke tujuan: {0:F2}</value></data>
+  <data name="Total Fruits Required: {0}" xml:space="preserve"><value>Total buah yang dibutuhkan: {0}</value></data>
+  <data name="OK" xml:space="preserve"><value>Cukup</value></data>
+  <data name="Low" xml:space="preserve"><value>Sedikit</value></data>
+  <data name="None" xml:space="preserve"><value>Tidak ada</value></data>
+  <data name="You need more fruits. Acquire them however you prefer." xml:space="preserve"><value>Anda membutuhkan lebih banyak buah. Dapatkan dengan cara yang Anda inginkan.</value></data>
+  <data name="Log in to use feeding plans." xml:space="preserve"><value>Masuk untuk menggunakan rencana pemberian makan.</value></data>
+  <data name="Active plan: {0}/{1} fed ({2} -&gt; {3})" xml:space="preserve"><value>Rencana aktif: {0}/{1} telah diberikan ({2} -&gt; {3})</value></data>
+  <data name="Clear Existing Plan" xml:space="preserve"><value>Hapus rencana yang ada</value></data>
+  <data name="Switch to the Automation tab to start feeding." xml:space="preserve"><value>Buka tab Otomatisasi untuk mulai memberi makan.</value></data>
+  <data name="Colour change in progress: {0}h {1}m {2}s remaining" xml:space="preserve"><value>Perubahan warna berlangsung: tersisa {0}j {1}m {2}d</value></data>
+  <data name="You do not have all required fruits yet. Automation start will stay disabled until you gather them." xml:space="preserve"><value>Buah yang dibutuhkan belum lengkap. Tombol mulai otomatisasi tetap nonaktif hingga semua buah terkumpul.</value></data>
+  <data name="All required fruits are in your inventory. Head to the Automation tab to start." xml:space="preserve"><value>Semua buah yang dibutuhkan ada di inventaris. Buka tab Otomatisasi untuk memulai.</value></data>
+  <data name="Automation controls live in the Automation tab." xml:space="preserve"><value>Kontrol otomatisasi ada di tab Otomatisasi.</value></data>
+  <data name="Colour Change Timers" xml:space="preserve"><value>Waktu perubahan warna</value></data>
+  <data name="Character" xml:space="preserve"><value>Karakter</value></data>
+  <data name="Chocobo" xml:space="preserve"><value>Chocobo</value></data>
+  <data name="Remaining" xml:space="preserve"><value>Tersisa</value></data>
+  <data name="(unnamed)" xml:space="preserve"><value>(tanpa nama)</value></data>
+  <data name="Changing..." xml:space="preserve"><value>Berubah...</value></data>
+  <data name="Feeding {0}/{1}" xml:space="preserve"><value>Memberi makan {0}/{1}</value></data>
+  <data name="{0}h {1:D2}m {2:D2}s" xml:space="preserve"><value>{0}j {1:D2}m {2:D2}d</value></data>
+  <data name="No active timers or feeding plans." xml:space="preserve"><value>Tidak ada pengatur waktu atau rencana pemberian makan aktif.</value></data>
+  <data name="Timers will appear here after completing a full feeding." xml:space="preserve"><value>Pengatur waktu akan muncul di sini setelah pemberian makan selesai.</value></data>
+  <data name="Each character on this account will have their own timer." xml:space="preserve"><value>Setiap karakter pada akun ini memiliki pengatur waktu sendiri.</value></data>
+  <data name="Automated Feeding" xml:space="preserve"><value>Pemberian makan otomatis</value></data>
+  <data name="You must be logged in to use automated feeding." xml:space="preserve"><value>Anda harus masuk untuk menggunakan pemberian makan otomatis.</value></data>
+  <data name="Colour change already in progress: {0}h {1:D2}m {2:D2}s remaining." xml:space="preserve"><value>Perubahan warna sedang berlangsung: tersisa {0}j {1:D2}m {2:D2}d.</value></data>
+  <data name="No active feeding plan." xml:space="preserve"><value>Tidak ada rencana pemberian makan aktif.</value></data>
+  <data name="Calculate a feeding path in the Calculator tab, then click 'Save Plan'." xml:space="preserve"><value>Hitung urutan pemberian makan pada tab Kalkulator, lalu klik 'Simpan rencana'.</value></data>
+  <data name="Plan: {0} -&gt; {1}" xml:space="preserve"><value>Rencana: {0} -&gt; {1}</value></data>
+  <data name="Progress: {0} / {1} fruits fed" xml:space="preserve"><value>Kemajuan: {0} / {1} buah telah diberikan</value></data>
+  <data name="Remaining fruits:" xml:space="preserve"><value>Buah tersisa:</value></data>
+  <data name="Feeding in progress: step {0}/{1}" xml:space="preserve"><value>Pemberian makan berlangsung: langkah {0}/{1}</value></data>
+  <data name="Current: {0}" xml:space="preserve"><value>Saat ini: {0}</value></data>
+  <data name="State: {0}" xml:space="preserve"><value>Status: {0}</value></data>
+  <data name="Stop Automation" xml:space="preserve"><value>Hentikan otomatisasi</value></data>
+  <data name="Automation stopped." xml:space="preserve"><value>Otomatisasi dihentikan.</value></data>
+  <data name="Feeding complete! Your chocobo's colour will change in 6 hours." xml:space="preserve"><value>Pemberian makan selesai! Warna chocobo akan berubah dalam 6 jam.</value></data>
+  <data name="Error: {0}" xml:space="preserve"><value>Kesalahan: {0}</value></data>
+  <data name="Dismiss" xml:space="preserve"><value>Tutup</value></data>
+  <data name="IMPORTANT: You must be at the Chocobo Stable in the FEED screen" xml:space="preserve"><value>PENTING: Anda harus berada di Chocobo Stable pada layar FEED</value></data>
+  <data name="(inventory open with feedable items highlighted) before clicking Start." xml:space="preserve"><value>(inventaris terbuka dengan item yang dapat diberikan disorot) sebelum mengeklik Mulai.</value></data>
+  <data name="TextAdvance and YesAlready will be paused; buddy-feed cutscene skip is armed when this window opens." xml:space="preserve"><value>TextAdvance dan YesAlready akan dijeda; fitur lewati adegan pemberian makan aktif saat jendela ini dibuka.</value></data>
+  <data name="Check stable condition before feeding" xml:space="preserve"><value>Periksa kondisi kandang sebelum memberi makan</value></data>
+  <data name="If enabled, warns you if the stable condition is Poor or Fair." xml:space="preserve"><value>Jika aktif, memberi peringatan saat kondisi kandang Poor atau Fair.</value></data>
+  <data name="Use a Magicked Stable Broom to clean the stable first." xml:space="preserve"><value>Gunakan Magicked Stable Broom untuk membersihkan kandang terlebih dahulu.</value></data>
+  <data name="Magicked Stable Broom: {0} in inventory" xml:space="preserve"><value>Magicked Stable Broom: {0} di inventaris</value></data>
+  <data name="Start Automated Feeding" xml:space="preserve"><value>Mulai pemberian makan otomatis</value></data>
+  <data name="Start Automated Feeding (Insufficient Fruits)" xml:space="preserve"><value>Mulai pemberian makan otomatis (Buah tidak cukup)</value></data>
+  <data name="You do not have enough fruits in your inventory." xml:space="preserve"><value>Buah di inventaris Anda tidak cukup.</value></data>
+  <data name="Clear Plan" xml:space="preserve"><value>Hapus rencana</value></data>
+  <data name="Chocobo Colourized Settings" xml:space="preserve"><value>Pengaturan Chocobo Colourized</value></data>
+  <data name="Movable Config Window" xml:space="preserve"><value>Jendela pengaturan dapat dipindahkan</value></data>
+  <data name="Prerequisites &amp; Troubleshooting" xml:space="preserve"><value>Prasyarat dan pemecahan masalah</value></data>
+  <data name="Required Quests:" xml:space="preserve"><value>Misi yang dibutuhkan:</value></data>
+  <data name="   Obtain your chocobo companion (Camp Tranquil, South Shroud)" xml:space="preserve"><value>   Dapatkan chocobo pendamping (Camp Tranquil, South Shroud)</value></data>
+  <data name="   Unlock chocobo stabling and raising (Bentbranch Meadows, Central Shroud)" xml:space="preserve"><value>   Buka akses penitipan dan pemeliharaan chocobo (Bentbranch Meadows, Central Shroud)</value></data>
+  <data name="   NPC: Luquelot at Bentbranch Meadows (X:21.4, Y:22.1)" xml:space="preserve"><value>   NPC: Luquelot di Bentbranch Meadows (X:21.4, Y:22.1)</value></data>
+  <data name="Other Requirements:" xml:space="preserve"><value>Persyaratan lainnya:</value></data>
+  <data name="- Access to a Chocobo Stable (FC house, personal house, or apartment)" xml:space="preserve"><value>- Akses ke Chocobo Stable (rumah FC, rumah pribadi, atau apartemen)</value></data>
+  <data name="- Your chocobo must be stabled (not summoned as companion)" xml:space="preserve"><value>- Chocobo harus berada di kandang (tidak dipanggil sebagai pendamping)</value></data>
+  <data name="- Fruits in your inventory (purchase from vendors or Market Board)" xml:space="preserve"><value>- Buah di inventaris (beli dari penjual atau Market Board)</value></data>
+  <data name="Common Errors:" xml:space="preserve"><value>Kesalahan umum:</value></data>
+  <data name="&quot;You have yet to be trained in chocobo raising&quot;" xml:space="preserve"><value>"Anda belum dilatih memelihara chocobo"</value></data>
+  <data name="  -&gt; Complete the quest &quot;Bird in Hand&quot; at Bentbranch Meadows." xml:space="preserve"><value>  -&gt; Selesaikan misi "Bird in Hand" di Bentbranch Meadows.</value></data>
+  <data name="&quot;Your chocobo is not stabled&quot;" xml:space="preserve"><value>"Chocobo Anda tidak berada di kandang"</value></data>
+  <data name="  -&gt; Stable your chocobo at a Chocobo Stable before feeding." xml:space="preserve"><value>  -&gt; Titipkan chocobo di Chocobo Stable sebelum memberi makan.</value></data>
+  <data name="Automation errors about context menu or inventory" xml:space="preserve"><value>Kesalahan otomatisasi terkait menu konteks atau inventaris</value></data>
+  <data name="  -&gt; Make sure you are on the Feed screen (inventory visible with" xml:space="preserve"><value>  -&gt; Pastikan Anda berada pada layar Feed (inventaris terlihat dengan</value></data>
+  <data name="     feedable items highlighted) before clicking Start." xml:space="preserve"><value>     item yang dapat diberikan disorot) sebelum mengeklik Mulai.</value></data>
+  <data name="Result: {0} ({1})" xml:space="preserve"><value>Hasil: {0} ({1})</value></data>
+  <data name="Total Fruits: {0}" xml:space="preserve"><value>Total buah: {0}</value></data>
+  <data name="Fruit Summary:" xml:space="preserve"><value>Ringkasan buah:</value></data>
+  <data name="Feeding Order:" xml:space="preserve"><value>Urutan pemberian makan:</value></data>
+  <data name="Idle" xml:space="preserve"><value>Siaga</value></data>
+  <data name="FindingFruitSlot" xml:space="preserve"><value>Mencari slot buah</value></data>
+  <data name="OpeningContextMenu" xml:space="preserve"><value>Membuka menu konteks</value></data>
+  <data name="WaitingForContextMenu" xml:space="preserve"><value>Menunggu menu konteks</value></data>
+  <data name="SelectingFeed" xml:space="preserve"><value>Memilih Feed</value></data>
+  <data name="WaitingForStableMenu" xml:space="preserve"><value>Menunggu menu kandang</value></data>
+  <data name="SelectingFeedFromMenu" xml:space="preserve"><value>Memilih Feed dari menu</value></data>
+  <data name="WaitingForFeedInventory" xml:space="preserve"><value>Menunggu inventaris pemberian makan</value></data>
+  <data name="Completed" xml:space="preserve"><value>Selesai</value></data>
+  <data name="Error" xml:space="preserve"><value>Kesalahan</value></data>
+  <data name="Automation is already running." xml:space="preserve"><value>Otomatisasi sudah berjalan.</value></data>
+  <data name="Plan is already complete." xml:space="preserve"><value>Rencana sudah selesai.</value></data>
+  <data name="Could not pause TextAdvance or YesAlready. Check that loaded helpers are ready before starting again." xml:space="preserve"><value>Tidak dapat menjeda TextAdvance atau YesAlready. Pastikan plugin pendukung yang dimuat sudah siap sebelum memulai lagi.</value></data>
+  <data name="A feeding helper changed or its pause was lost. Start again after TextAdvance and YesAlready have settled." xml:space="preserve"><value>Plugin pendukung pemberian makan berubah atau jedanya hilang. Mulai lagi setelah TextAdvance dan YesAlready stabil.</value></data>
+  <data name="Unexpected error: {0}" xml:space="preserve"><value>Kesalahan tak terduga: {0}</value></data>
+  <data name="Unknown fruit type: {0}" xml:space="preserve"><value>Jenis buah tidak dikenal: {0}</value></data>
+  <data name="Could not find {0} (ID:{1}) in inventory. Do you have it?" xml:space="preserve"><value>Tidak menemukan {0} (ID:{1}) di inventaris. Apakah Anda memilikinya?</value></data>
+  <data name="Failed to open context menu after {0} retries: {1}" xml:space="preserve"><value>Gagal membuka menu konteks setelah {0} percobaan ulang: {1}</value></data>
+  <data name="Context menu did not appear. Ensure you are in the stable's Feed screen with your inventory open." xml:space="preserve"><value>Menu konteks tidak muncul. Pastikan Anda berada pada layar Feed kandang dengan inventaris terbuka.</value></data>
+  <data name="Context menu disappeared before we could select Feed." xml:space="preserve"><value>Menu konteks menghilang sebelum Feed dapat dipilih.</value></data>
+  <data name="Failed to select Feed from context menu: {0}" xml:space="preserve"><value>Gagal memilih Feed dari menu konteks: {0}</value></data>
+  <data name="Stable menu did not reappear after feeding. Neither SelectString nor HousingMyChocobo found. The UI may have changed or closed." xml:space="preserve"><value>Menu kandang tidak muncul kembali setelah pemberian makan. SelectString maupun HousingMyChocobo tidak ditemukan. Antarmuka mungkin berubah atau tertutup.</value></data>
+  <data name="Stable menu disappeared before we could click Feed. Neither SelectString nor HousingMyChocobo found." xml:space="preserve"><value>Menu kandang menghilang sebelum Feed dapat diklik. SelectString maupun HousingMyChocobo tidak ditemukan.</value></data>
+  <data name="Failed to select Feed from stable menu: {0}" xml:space="preserve"><value>Gagal memilih Feed dari menu kandang: {0}</value></data>
+  <data name="Feed inventory did not open after selecting Feed from stable menu. This happens if you are not in expanded inventory mode. Please expand your inventory to 'Open all + Expanded', apply, then start again. It will resume from where it left off, so no steps should be lost under normal circumstances." xml:space="preserve"><value>Inventaris pemberian makan tidak terbuka setelah memilih Feed dari menu kandang. Ini terjadi jika Anda tidak menggunakan mode inventaris diperluas. Ubah ke 'Open all + Expanded', terapkan, lalu mulai lagi. Proses dilanjutkan dari langkah terakhir, sehingga biasanya tidak ada langkah yang hilang.</value></data>
+  <data name="Window appearance" xml:space="preserve">
+    <value>Tampilan jendela</value>
+  </data>
+  <data name="Compact visible on main window" xml:space="preserve">
+    <value>Tampilkan mode ringkas di jendela utama</value>
+  </data>
+  <data name="Language visible on main window" xml:space="preserve">
+    <value>Tampilkan pilihan bahasa di jendela utama</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparansi</value>
+  </data>
+  <data name="Opacity (%)" xml:space="preserve">
+    <value>Opasitas (%)</value>
+  </data>
+  <data name="Auto-fade when unfocused" xml:space="preserve">
+    <value>Redupkan otomatis saat tidak fokus</value>
+  </data>
+  <data name="Unfocused opacity (%)" xml:space="preserve">
+    <value>Opasitas saat tidak fokus (%)</value>
+  </data>
+  <data name="Unfocused delay (seconds)" xml:space="preserve">
+    <value>Jeda saat tidak fokus (detik)</value>
+  </data>
+</root>

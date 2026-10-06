@@ -1,5 +1,52 @@
 # Chocobo Colourized - Changelog
 
+## 2026-10-06 - Hindi text integration
+
+- Append Hindi after the existing fourteen languages with all 161 resource entries translated. Shape authored Devanagari through the consumer-owned text host across window and font-status drawing; retain native glyph validation for other scripts, original font roles, raw timer names, native control identities and automation behavior.
+- Reserve Hindi natural height at both the main tab bar and its items, and route text measurement, custom painting, tooltips and single-line editing through the shared text bridge. Current Debug x64 compilation and focused native catalog/action/input checks pass; game, GPU and managed-host acceptance remain pending.
+
+## 2026-10-06 - Window appearance and transparency
+
+- Move colour configuration into the existing Settings Window appearance section, retaining compact/language access there. Independently hide or show the main-window compact and language controls, both visible by default. Add the main Transparency toggle without changing automation actions or native control identities.
+- Persist full-window opacity through the existing configuration: 100% normal opacity, automatic fade enabled, 50% unfocused opacity after 10 seconds. Clamp opacity to 10-100% and delay to 0-3600 seconds. Apply one shared opacity pass per owner after native drawing and motion restoration, including collapsed and font-status windows; retain native chrome, image alpha and owned child/pop-up content.
+- Translate the eight new appearance labels in all 14 existing catalogs. Current-version compilation, focused persistence/focus checks and game acceptance remain pending for this source change.
+
+## 2026-10-05 - Rounded outer window chrome
+
+- Adopt shared rounded chrome and native minimize in Main and font status, preserving native IDs, constraints, saved geometry and actions. Settings retains NoCollapse and gains rounded chrome. Native and game verification remain pending.
+
+## 2026-10-04 - Reference layout corrections
+
+- Measure retained Timers columns from translated headings and actual character/bird/status text. Keep rows on one line, size the table to its rows and expose overflow through native horizontal/vertical scrolling with a retained header. Preserve raw names, timer/plan data and table identity.
+- Retain complete translated tab widths and native scroll arrows at narrow sizes. Repaint captions within the native scrolling viewport and keep real body overflow separate from the tab strip. Settings keeps horizontal access for long native checkbox labels; the existing movable flag and save route remain unchanged.
+- Size Clear Plan and Clear Existing Plan from their complete translated captions. Keep Automation overflow inside its own native scrolling body, retaining the original control ID root and the main header/tab viewport; fill-width actions retain their complete single-line caption. Automation state, inventory gates and plan actions remain unchanged.
+
+- Align regular and compact calculator panels, headings, selector columns, tab artwork, feather, colour swatch and outlined Save/Copy actions with the approved references. Retain the native version title bar; body comparisons account for its measured 38/32 pixel height.
+- Budget warnings within their actual column width and use the measured empty feeding-child height when sizing or clamping its card. Keep translated content accessible through the outer calculator scroll while preserving actions, configuration and native IDs.
+- Keep native checkbox frame outlines visible against dark header and settings backgrounds, preserving their IDs and click behavior.
+- Current root Debug/x64 product and checker builds pass with zero warnings/errors. All fourteen locales independently pass 36,932 native/glyph/layout checks with the seven existing production font roles, glyph ranges and merge order at an explicit 4096 by 4096 diagnostic atlas, within 30 seconds/768 MiB per process. The English reference checks measure all three calculator card bounds and reject five-pixel shifts. Managed-host font readiness and game visual acceptance remain pending.
+
+## 2026-10-03 - Approved UI adoption
+
+- Add complete Vietnamese, Brazilian Portuguese, Indonesian, Polish and Turkish UI/status catalogs after the original nine locale choices. Keep native dropdown names, placeholder formats and raw diagnostic values intact.
+- Measure translated calculator groups, fruit headers and result actions; tighten panel/heading spacing and keep the reference-size empty feeding order visible. Long Calculate captions scroll horizontally while preserving the original native action ID and disabled behavior. Clip the empty fruit-table message to its panel viewport when longer translations reflow and scroll.
+- Match the most specific authored status template first and retain empty trailing arguments before considering trimmed labels. Verify actual compiled localized messages alongside source/embedded catalog parity.
+- Capture the atlas generation before checking required glyphs, so a rebuild during verification is checked again. Use an unambiguous typed formatting path for calculator numbers, and preserve raw names and diagnostic arguments when translating service messages.
+- Use relative theme colours for neutral text and prerequisite headings while retaining inventory warnings, automation state colours and dye swatches.
+- Earlier Debug and direct Release checks passed with zero warnings and errors. The Release ZIP check covered ChocoboColourized 1.1.0.5, AethertekUI 0.3.0.0 and the original nine 153-entry resource sets. The subsequent fourteen-language source is checked separately in local compilation and native UI diagnostics; it has not been repackaged or deployed here. Game visual acceptance remains pending.
+- Preserve already-formatted service values, leading zeroes, empty arguments and numbered placeholders in translated UI messages; typed calculator numbers still use the selected culture.
+- Adopt the regular and compact calculator composition, feather branding and native tabs. Keep the pre-calculation fruit table and feeding order empty, and reserve the Save/Copy actions when content scrolls.
+- Add shared nine-language resources, managed Segoe UI/CJK/symbol fonts, relative colour themes and compact preferences through the existing configuration save path. Retain dye swatches, status meanings and automation gates. Repair the borrowed compact label's native characters before packaging.
+- Preserve native widget identities through presentation child/table scopes, retain Timers/Automation/Settings behavior and include AethertekUI in the established artifact copy. Game visual acceptance remains pending.
+
+
+## 2026-10-02 - Build and release repair
+
+- Pin GitHub builds to SDK 10.0.201 and pass the downloaded Dalamud library path. Restore and build plugin projects with matching configuration, platform and runtime; stop on restore failure.
+- Keep build tokens read-only and release writes in a separate job. Use packaged manifest versions for untagged releases.
+- Consolidate tag releases in build-release.yml and retain the read-only CI build.
+- Local launchers build the plugin directly in the pinned environment and return its exit status.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).

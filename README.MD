@@ -1,5 +1,38 @@
 # Chocobo Colouring Automated
 
+The approved main and compact calculator designs show colour selection, required
+fruits and feeding order in separate panels, with Save/Copy actions reserved at
+the bottom. Before calculation the fruit table and feeding order are empty.
+Timers, Automation, their troubleshooting guide and Settings retain the existing
+actions and data with shared typography and appearance.
+
+Timers keeps character/bird names and status cells on one line. Narrow windows
+use native horizontal scrolling to reach every column; longer lists also retain
+vertical scrolling and their column headings. Translated tabs keep readable
+widths and native navigation arrows. Settings retains scrolling access for long
+labels and uses the existing configuration save route.
+
+The header colour/language selector and `C` compact toggle use the existing
+configuration save path and are mirrored in Settings. The nine original UI
+languages plus Vietnamese, Brazilian Portuguese, Indonesian, Polish and Turkish
+have complete embedded UI and status resources. Segoe UI fonts merge Dalamud-managed CJK coverage. The
+relative theme changes decorative surfaces and text together while actual dye
+swatches, inventory warnings and feeding state colours retain their meanings.
+No plugin or configuration version is changed.
+
+Complete offline calculator renders check both densities and narrow panes with
+empty and same-colour states. Panel spacing keeps the empty feeding order visible
+at the reference sizes; longer Calculate and result actions retain readable
+widths with native horizontal scrolling. Translated fruit headers use measured
+column widths. These CPU renders and native interaction checks leave managed-host
+font readiness and final game screenshot acceptance open.
+
+Local builds require the sibling `aethertekUI` checkout and SDK 10.0.201. Actions
+uses this repository's read-only `AETHERTEKUI_DEPLOY_KEY` for the private library,
+and the existing plugin artifact copy includes `AethertekUI.dll`. Local build
+checks are separate from game visual acceptance; mcvaxius owns installation and
+the final screenshot.
+
 
 ---
 
