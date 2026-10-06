@@ -1,5 +1,9 @@
 # Chocobo Colourized - Changelog
 
+## 2026-10-06 - Actions shared-library revision
+
+- Pin the existing AethertekUI checkout to published commit 6c193cf06ac67f954c549cafc2033ac0efdd630a so fresh builds receive the Hindi shaping APIs required by this consumer. Preserve existing credentials, build/package paths and release behavior; hosted execution is verified separately against each published commit.
+
 ## 2026-10-06 - Hindi text integration
 
 - Append Hindi after the existing fourteen languages with all 161 resource entries translated. Shape authored Devanagari through the consumer-owned text host across window and font-status drawing; retain native glyph validation for other scripts, original font roles, raw timer names, native control identities and automation behavior.
