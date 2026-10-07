@@ -1011,13 +1011,13 @@ public class MainWindow : Window, IDisposable
             UiGui.Text(UiText.F("State: {0}", UiText.T(automation.State.ToString())));
 
             ImGui.Spacing();
-            if (UiGui.Button("Stop Automation", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale)))
+            if (UiGui.Button("Stop Automation", new Vector2(-1, 0)))
                 StopFeedingFromUi();
         }
         else if (automation.State == FeedingState.Completed)
         {
             UiGui.TextColored(ColorGreen, "Feeding complete! Your chocobo's colour will change in 6 hours.");
-            if (UiGui.Button("OK", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale)))
+            if (UiGui.Button("OK", new Vector2(-1, 0)))
             {
                 automation.Reset();
             }
@@ -1025,7 +1025,7 @@ public class MainWindow : Window, IDisposable
         else if (automation.State == FeedingState.Error)
         {
             UiGui.TextColored(ColorRed, UiText.F("Error: {0}", UiText.T(automation.ErrorMessage)));
-            if (UiGui.Button("Dismiss", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale)))
+            if (UiGui.Button("Dismiss", new Vector2(-1, 0)))
             {
                 automation.Reset();
             }
@@ -1075,13 +1075,13 @@ public class MainWindow : Window, IDisposable
 
             if (hasEnough && !stableConditionBlocked)
             {
-                if (UiGui.Button("Start Automated Feeding", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale)))
+                if (UiGui.Button("Start Automated Feeding", new Vector2(-1, 0)))
                     StartFeedingFromUi();
             }
             else
             {
                 ImGui.BeginDisabled();
-                UiGui.Button("Start Automated Feeding (Insufficient Fruits)", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale));
+                UiGui.Button("Start Automated Feeding (Insufficient Fruits)", new Vector2(-1, 0));
                 ImGui.EndDisabled();
                 UiGui.TextColored(ColorRed, "You do not have enough fruits in your inventory.");
             }

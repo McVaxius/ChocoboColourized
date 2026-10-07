@@ -1,5 +1,10 @@
 # Chocobo Colourized - Changelog
 
+## Unreleased - Button sizing
+
+- Use local Toolbar metrics for ordinary and automation buttons. Reduce Calculate and result-action padding and height floors while measuring the active font and original icons and retaining existing button widths.
+- Current Debug/x64 compilation passes. Final actual-product native checks pass 10099 assertions across 48 focused scenes and 128 pointer activations, with integer exit 0 in all 3 routes. Coverage uses English/Hindi captions, original exercised font roles, both densities, 100/150 percent scale and enlarged text; game/GPU acceptance remains separate.
+
 ## Unreleased - Managed CJK font atlas
 
 - Merge one bundled CJK face per font role, selecting the active language's regional forms. Set both managed atlas dimensions to 4096 on every rebuild; preserve font heights, required glyph ranges, symbol merges and host-language coverage.

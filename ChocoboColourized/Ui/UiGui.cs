@@ -95,6 +95,8 @@ internal static class UiGui
     internal static bool Button(string label,string? display=null)
     {
         var translated=display ?? UiText.T(label.Split("##",2)[0]);
+        using var controls = ImGui.GetStyle().FramePadding.Y == 0 || MaterialControls.Context == MaterialControlContext.Dense
+            ? default(MaterialControls.ControlScope) : MaterialControls.Push(MaterialControlContext.Toolbar);
         using var height = MaterialText.PushLineHeight(translated);
         var width=MaterialText.Measure(translated).X+2*ImGui.GetStyle().FramePadding.X;
         if(width>ImGui.GetContentRegionAvail().X && ImGui.GetCursorPosX()>ImGui.GetStyle().WindowPadding.X+1) ImGui.NewLine();
@@ -115,8 +117,10 @@ internal static class UiGui
     internal static bool Button(string label, Vector2 pixels)
     {
         var translated = UiText.T(label.Split("##", 2)[0]);
+        using var controls = ImGui.GetStyle().FramePadding.Y == 0 || MaterialControls.Context == MaterialControlContext.Dense
+            ? default(MaterialControls.ControlScope) : MaterialControls.Push(MaterialControlContext.Toolbar);
         using var height = MaterialText.PushLineHeight(translated);
-        if (MaterialText.RequiresShaping(translated)) pixels.Y = Math.Max(pixels.Y, ImGui.GetFrameHeight());
+        pixels.Y = Math.Max(pixels.Y, ImGui.GetFrameHeight());
         if (pixels.X <= 0)
         {
             var minimum = MaterialText.Measure(translated).X + 2 * ImGui.GetStyle().FramePadding.X;
@@ -141,12 +145,14 @@ internal static class UiGui
         var s = MaterialTheme.Metrics.Scale;
         var c = MaterialTheme.Current.Colors;
         var label = UiText.T(original);
+        using var controls = MaterialControls.Push(MaterialControlContext.Toolbar);
+        using var lineHeight = MaterialText.PushLineHeight(label);
         var textSize = MaterialText.Measure(label);
         var iconSize = (ChocoboPresentation.Compact ? 30 : 32) * s;
         var gap = 16 * s;
-        var minimumWidth = textSize.X + iconSize + gap + 32 * s;
+        var minimumWidth = textSize.X + iconSize + gap + 2 * ImGui.GetStyle().FramePadding.X;
         var available = ImGui.GetContentRegionAvail().X + extraWidth;
-        var size = new Vector2(Math.Max(available, minimumWidth), Math.Max((ChocoboPresentation.Compact ? 60 : 70) * s, textSize.Y + 16 * s));
+        var size = new Vector2(Math.Max(available, minimumWidth), Math.Max(ImGui.GetFrameHeight(), iconSize + 2 * (ChocoboPresentation.Compact ? 2 : 4) * s));
         var overflow = minimumWidth > available;
         var parentId = ImGui.GetID("");
         using var scrollStyle = new MaterialStyleScope();
@@ -178,7 +184,7 @@ internal static class UiGui
         dl.PushClipRect(min, max, true);
         try
         {
-        var x = Math.Max(16 * s, (size.X - textSize.X - iconSize - gap) * .5f);
+        var x = Math.Max(ImGui.GetStyle().FramePadding.X, (size.X - textSize.X - iconSize - gap) * .5f);
         MaterialIcons.Draw(icon, min + new Vector2(x, (size.Y - iconSize) * .5f), iconSize, ink);
         MaterialText.AddText(dl, min + new Vector2(x + iconSize + gap, (size.Y - textSize.Y) * .5f), MaterialCanvas.Color(ink), label);
         }
@@ -200,18 +206,22 @@ internal static class UiGui
     {
         var scale = MaterialTheme.Metrics.Scale;
         var label = display ?? UiText.T(original.Split("##", 2)[0]);
+        using var controls = MaterialControls.Context == MaterialControlContext.Dense
+            ? default(MaterialControls.ControlScope) : MaterialControls.Push(MaterialControlContext.Toolbar);
+        using var lineHeight = MaterialText.PushLineHeight(label);
         var iconSize = logicalIconSize * scale; var gap = logicalGap * scale;
         var extra = trailingIcon == MaterialIcon.None ? 0 : gap + iconSize;
         var textSize = MaterialText.Measure(label);
-        pixels.X = Math.Max(pixels.X, textSize.X + iconSize + gap + extra + 24 * scale);
-        pixels.Y = Math.Max(pixels.Y, Math.Max(iconSize, textSize.Y) + 20 * scale);
+        pixels.X = Math.Max(pixels.X, textSize.X + iconSize + gap + extra + 2 * ImGui.GetStyle().FramePadding.X);
+        var vertical = MaterialControls.Context == MaterialControlContext.Dense ? ChocoboPresentation.Compact ? 1 : 2 : ChocoboPresentation.Compact ? 2 : 4;
+        pixels.Y = Math.Max(pixels.Y, Math.Max(ImGui.GetFrameHeight(), iconSize + 2 * vertical * scale));
         var ink = ImGui.GetStyle().Colors[(int)ImGuiCol.Text];
         ImGui.PushStyleColor(ImGuiCol.Text, Vector4.Zero);
         var clicked = ImGui.Button(original, pixels);
         ImGui.PopStyleColor();
         var min = ImGui.GetItemRectMin(); var max = ImGui.GetItemRectMax();
         var width = iconSize + gap + textSize.X + extra;
-        var position = min + new Vector2(Math.Max(12 * scale, (max.X - min.X - width) * ImGui.GetStyle().ButtonTextAlign.X), (max.Y - min.Y - iconSize) * .5f);
+        var position = min + new Vector2(Math.Max(ImGui.GetStyle().FramePadding.X, (max.X - min.X - width) * ImGui.GetStyle().ButtonTextAlign.X), (max.Y - min.Y - iconSize) * .5f);
         var drawList = ImGui.GetWindowDrawList();
         drawList.PushClipRect(min, max, true);
         try
@@ -227,8 +237,9 @@ internal static class UiGui
     internal static float IconButtonHeight(string original, float width)
     {
         var scale = MaterialTheme.Metrics.Scale;
-        var textHeight = MaterialText.Measure(UiText.T(original)).Y;
-        return Math.Max(ChocoboPresentation.FooterHeight * scale, Math.Max(28 * scale, textHeight) + 20 * scale);
+        using var controls = MaterialControls.Push(MaterialControlContext.Toolbar);
+        using var lineHeight = MaterialText.PushLineHeight(UiText.T(original));
+        return Math.Max(ImGui.GetFrameHeight(), (28 + 2 * (ChocoboPresentation.Compact ? 2 : 4)) * scale);
     }
     internal static bool TabItem(string original, MaterialIcon icon, float logicalWidth, ImGuiTabItemFlags flags = ImGuiTabItemFlags.None)
     {
