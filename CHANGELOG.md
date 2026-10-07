@@ -1,5 +1,16 @@
 # Chocobo Colourized - Changelog
 
+## Unreleased - Managed CJK font atlas
+
+- Merge one bundled CJK face per font role, selecting the active language's regional forms. Set both managed atlas dimensions to 4096 on every rebuild; preserve font heights, required glyph ranges, symbol merges and host-language coverage.
+- Current compilation and guarded production callback/rebuild checks pass, together with bounded native glyph checks for the checked text. Managed-host readiness, complete displayed glyph coverage, language/scale host rebuilds and game/GPU acceptance remain unverified.
+
+## Unreleased - Native titlebar shortcuts
+
+- Add Settings, Start Automated Feeding and Stop Automation shortcuts to the native main titlebar. Keep the body controls and share the current character, plan, timer, fruit and name-preparation checks; unavailable actions show their existing translated reason.
+- Reserve translated title and button space before window motion and keep custom title text clear of native buttons.
+- Validate the current Debug/x64 build through the unchanged launcher: zero warnings and errors. Focused English installed-host checks pass 1,082 assertions and 40 native pointer presses across both densities/scales and settled collapsed/expanded windows. Settings opens the retained window; logged-out and freshly logged-in missing-plan guards block feeding Start/Stop. Eligible feeding, managed-icon, GPU and game acceptance remain pending.
+
 ## 2026-10-06 - Actions shared-library revision
 
 - Pin the existing AethertekUI checkout to published commit 6c193cf06ac67f954c549cafc2033ac0efdd630a so fresh builds receive the Hindi shaping APIs required by this consumer. Preserve existing credentials, build/package paths and release behavior; hosted execution is verified separately against each published commit.

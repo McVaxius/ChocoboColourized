@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
 using ChocoboColourized.Core;
 using ChocoboColourized.Models;
@@ -56,18 +57,40 @@ public class MainWindow : Window, IDisposable
         SizeCondition = ImGuiCond.FirstUseEver;
         this.plugin = plugin;
         colorNames = ColorDatabase.AllColorNames;
+        TitleBarButtons.Add(new()
+        {
+            Icon = FontAwesomeIcon.Cog, Priority = 0, IconOffset = new(2, 1),
+            Click = button => { if (button == ImGuiMouseButton.Left) plugin.ToggleConfigUi(); },
+            ShowTooltip = () => MaterialText.SetTooltip(UiText.T("Chocobo Colourized Settings")),
+        });
+        TitleBarButtons.Add(new()
+        {
+            Icon = FontAwesomeIcon.Play, Priority = -10, IconOffset = new(2, 1),
+            Click = button => { if (button == ImGuiMouseButton.Left) StartFeedingFromUi(); },
+            ShowTooltip = () => ShowFeedingTitleTooltip(start: true),
+        });
+        TitleBarButtons.Add(new()
+        {
+            Icon = FontAwesomeIcon.Stop, Priority = -20, IconOffset = new(2, 1),
+            Click = button => { if (button == ImGuiMouseButton.Left) StopFeedingFromUi(); },
+            ShowTooltip = () => ShowFeedingTitleTooltip(start: false),
+        });
     }
 
     public void Dispose() { }
 
-    public override void PreDraw() => windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
+    public override void PreDraw()
+    {
+        UiGui.ReserveTitleSpace(this, UiText.T("Chocobo Colourized") + " v" + typeof(Plugin).Assembly.GetName().Version, 520);
+        windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
+    }
 
     public override void PostDraw() => windowMotion.Restore(this);
 
     public override void Draw()
     {
         windowMotion.DrawChrome();
-        UiGui.Title("Chocobo Colourized", UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"));
+        UiGui.TitleWithButtons("Chocobo Colourized", UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"), this);
         DrawHeader();
         using var tabFont = UiText.Font(UiFontRole.Action);
         using var tabs = new MaterialStyleScope();
@@ -989,10 +1012,7 @@ public class MainWindow : Window, IDisposable
 
             ImGui.Spacing();
             if (UiGui.Button("Stop Automation", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale)))
-            {
-                automation.Stop();
-                statusMessage = "Automation stopped.";
-            }
+                StopFeedingFromUi();
         }
         else if (automation.State == FeedingState.Completed)
         {
@@ -1056,15 +1076,7 @@ public class MainWindow : Window, IDisposable
             if (hasEnough && !stableConditionBlocked)
             {
                 if (UiGui.Button("Start Automated Feeding", new Vector2(-1, ChocoboPresentation.ControlHeight * MaterialTheme.Metrics.Scale)))
-                {
-                    // Auto-set chocobo name from player's first name if not already set
-                    if (string.IsNullOrEmpty(charData.ChocoboName))
-                    {
-                        var firstName = charName.Split(' ')[0];
-                        plugin.PlanStorage.SetChocoboName(charName, worldName, $"{firstName}'s Chocobo");
-                    }
-                    automation.Start(plan, charName, worldName);
-                }
+                    StartFeedingFromUi();
             }
             else
             {
@@ -1133,6 +1145,53 @@ public class MainWindow : Window, IDisposable
 
             ImGui.TreePop();
         }
+    }
+
+    private string FeedingActionBlocker(bool start)
+    {
+        if (!plugin.GameData.IsLoggedIn) return UiText.T("You must be logged in to use automated feeding.");
+        var data = plugin.PlanStorage.GetCharacterData(plugin.GameData.CharacterName, plugin.GameData.WorldName);
+        if (data.IsTimerActive)
+        {
+            var remaining = data.TimerRemaining;
+            return UiText.Interpolated($"Colour change already in progress: {remaining.Hours}h {remaining.Minutes:D2}m {remaining.Seconds:D2}s remaining.");
+        }
+        if (data.ActivePlan is not { } plan) return UiText.T("No active feeding plan.");
+        var automation = plugin.FeedingAutomation;
+        if (!start) return automation.IsRunning ? "" : UiText.T("Automation stopped.");
+        if (automation.IsRunning) return UiText.T("Automation is already running.");
+        if (automation.State == FeedingState.Completed) return UiText.T("Feeding complete! Your chocobo's colour will change in 6 hours.");
+        if (automation.State == FeedingState.Error) return UiText.F("Error: {0}", UiText.T(automation.ErrorMessage));
+        if (plan.IsComplete) return UiText.T("Plan is already complete.");
+        return plugin.GameData.HasEnoughFruits(GetRemainingFruitCounts(plan)) ? "" : UiText.T("You do not have enough fruits in your inventory.");
+    }
+
+    private void StartFeedingFromUi()
+    {
+        if (FeedingActionBlocker(start: true).Length != 0) return;
+        var character = plugin.GameData.CharacterName;
+        var world = plugin.GameData.WorldName;
+        var data = plugin.PlanStorage.GetCharacterData(character, world);
+        if (string.IsNullOrEmpty(data.ChocoboName))
+            plugin.PlanStorage.SetChocoboName(character, world, $"{character.Split(' ')[0]}'s Chocobo");
+        plugin.FeedingAutomation.Start(data.ActivePlan!, character, world);
+    }
+
+    private void StopFeedingFromUi()
+    {
+        if (FeedingActionBlocker(start: false).Length != 0) return;
+        plugin.FeedingAutomation.Stop();
+        statusMessage = "Automation stopped.";
+    }
+
+    private void ShowFeedingTitleTooltip(bool start)
+    {
+        var blocker = FeedingActionBlocker(start);
+        var label = UiText.T(start ? "Start Automated Feeding" : "Stop Automation");
+        if (start && blocker.Length == 0)
+            blocker = UiText.T("IMPORTANT: You must be at the Chocobo Stable in the FEED screen") + "\n"
+                + UiText.T("(inventory open with feedable items highlighted) before clicking Start.");
+        MaterialText.SetTooltip(label + (blocker.Length == 0 ? "" : "\n" + blocker));
     }
 
     // Helper: convert remaining plan fruits to FruitType counts for inventory check
