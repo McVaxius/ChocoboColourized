@@ -312,6 +312,17 @@ internal static class UiGui
     internal static void Title(string original,string translated)
         => TitleWithButtons(original, translated, null);
 
+    internal static void PaintTitleWithImage(Window owner, string display)
+    {
+        var window = ImGuiP.FindWindowByName(owner.WindowName);
+        if (window.IsNull) return;
+        var extraRightWidth = AdditionalTitleButtonWidth(owner, ImGuiP.CalcFontSize(window));
+        var texture = ChocoboPresentation.OriginalIcon;
+        using var font = UiText.Font(UiFontRole.Body);
+        MaterialWindowHeader.PaintTitle(window, display, texture?.Handle ?? default,
+            texture is null ? Vector2.Zero : new Vector2(texture.Width, texture.Height), extraRightWidth, owner.ShowCloseButton);
+    }
+
     internal static void ReserveTitleSpace(Window owner, string visible, float minimumWidth)
     {
         var style = ImGui.GetStyle();
@@ -320,7 +331,8 @@ internal static class UiGui
             && style.WindowMenuButtonPosition != ImGuiDir.None;
         var controls = AdditionalTitleButtonWidth(owner, fontSize)
             + ((owner.ShowCloseButton ? 1 : 0) + (collapse ? 1 : 0)) * (fontSize + style.ItemInnerSpacing.X);
-        var required = (MaterialText.Measure(visible).X + controls + style.FramePadding.X * 2 + style.ItemInnerSpacing.X)
+        var required = (MaterialText.Measure(visible).X + fontSize + style.ItemInnerSpacing.X
+            + controls + style.FramePadding.X * 2 + style.ItemInnerSpacing.X)
             / ImGui.GetIO().FontGlobalScale;
         var bounds = owner.SizeConstraints ?? new WindowSizeConstraints();
         bounds.MinimumSize = new(Math.Max(minimumWidth, required), bounds.MinimumSize.Y);

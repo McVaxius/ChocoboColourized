@@ -85,12 +85,15 @@ public class MainWindow : Window, IDisposable
         windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
     }
 
-    public override void PostDraw() => windowMotion.Restore(this);
+    public override void PostDraw()
+    {
+        windowMotion.Restore(this);
+        UiGui.PaintTitleWithImage(this, UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"));
+    }
 
     public override void Draw()
     {
         windowMotion.DrawChrome();
-        UiGui.TitleWithButtons("Chocobo Colourized", UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"), this);
         DrawHeader();
         using var tabFont = UiText.Font(UiFontRole.Action);
         using var tabs = new MaterialStyleScope();

@@ -1,5 +1,9 @@
 # Chocobo Colouring Automated
 
+Hindi uses installed shaping fonts. The source now leaves other languages usable when the Hindi menu caption is unavailable, showing a disabled ASCII `Hindi (unavailable)` option. Required text for a selected Hindi UI still requires full validation; on failure, the readable status offers **Use English**, saving English only after an explicit press. Native verification and Linux/Wine acceptance remain pending for this change.
+
+Use Settings for shared colour, UI language, compact spacing and window transparency/fade; optional Main selectors change the same saved preferences. The packaged plugin icon appears in Main branding and its expanded/collapsed title without recolouring dye swatches. Calculate creates the feeding plan; the Automation controls start or stop feeding using the existing character, timer and fruit checks.
+
 The approved main and compact calculator designs show colour selection, required
 fruits and feeding order in separate panels, with Save/Copy actions reserved at
 the bottom. Before calculation the fruit table and feeding order are empty.

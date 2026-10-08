@@ -1,5 +1,17 @@
 # Chocobo Colourized - Changelog
 
+## Unreleased - Hindi font availability and recovery
+
+- Treat the Hindi language-menu caption as optional while retaining mandatory selected/English catalogue checks. Refresh the stable Hindi option's availability with the existing font generation; unavailable captions use disabled ASCII `Hindi (unavailable)` without blocking ordinary languages.
+- Keep font-failure status readable in ASCII and offer an explicit Use English action for selected Hindi through the existing configuration save route. Retain atlas roles, merges, dimensions and native control IDs.
+- Source integration is complete; compilation, native availability/recovery checks and Linux/Wine acceptance remain pending.
+
+## Unreleased - Original plugin images and UI guidance
+
+- Replace Main's drawn emblem with the existing embedded plugin icon and add original-colour images to Main titles, including collapsed windows. Retain existing body geometry, title text, native actions and saved window placement; borrowed host textures keep aspect ratio and a blank reservation while unavailable.
+- Clarify shared appearance controls and this plugin's existing automation/setup ownership in the README.
+- Source integration is complete; compilation, native image/title/control checks and game acceptance remain pending.
+
 ## Unreleased - Button sizing
 
 - Use local Toolbar metrics for ordinary and automation buttons. Reduce Calculate and result-action padding and height floors while measuring the active font and original icons and retaining existing button widths.

@@ -8,6 +8,17 @@ internal enum UiFontRole { Body, BodyStrong, Title, PluginName, Counter, Action,
 
 internal static class ChocoboPresentation
 {
+    // Dalamud owns the shared texture through render submission; callers borrow its wrapper.
+    internal static Dalamud.Interface.Textures.TextureWraps.IDalamudTextureWrap? OriginalIcon
+        => Plugin.TextureProvider.GetFromManifestResource(typeof(Plugin).Assembly, "ChocoboColourized.images.icon.png").GetWrapOrDefault();
+
+    internal static void DrawPluginIcon(ImDrawListPtr drawList, Vector2 min, Vector2 max)
+    {
+        var texture = OriginalIcon;
+        if (texture is not null)
+            MaterialCanvas.DrawImage(drawList, texture.Handle, new Vector2(texture.Width, texture.Height), min, max);
+    }
+
     internal const uint ReferenceAccent = 0xF7D27A;
     internal static readonly float[] FontSizes = [18, 18, 32.5f, 31, 24, 20, 30.666667f];
     internal static readonly string[] FontFiles = ["segoeui.ttf", "seguisb.ttf", "segoeuib.ttf", "seguisb.ttf", "seguisb.ttf", "seguisb.ttf", "segoeuib.ttf"];
@@ -83,19 +94,6 @@ internal static class ChocoboPresentation
 
     internal static void Feather(Vector2 origin, float size)
     {
-        var dl = ImGui.GetWindowDrawList();
-        var ink = MaterialCanvas.Color(MaterialTheme.Current.Colors.Primary);
-        dl.PathLineTo(origin + new Vector2(.10f, .86f) * size);
-        dl.PathBezierCubicCurveTo(origin + new Vector2(.05f, .40f) * size, origin + new Vector2(.59f, .05f) * size, origin + new Vector2(.86f, .06f) * size, 24);
-        dl.PathBezierCubicCurveTo(origin + new Vector2(.90f, .35f) * size, origin + new Vector2(.59f, .78f) * size, origin + new Vector2(.10f, .86f) * size, 24);
-        dl.PathFillConvex(ink);
-        var background = MaterialCanvas.Color(MaterialTheme.Current.Colors.Background);
-        dl.AddLine(origin + new Vector2(.03f, .97f) * size, origin + new Vector2(.76f, .16f) * size, background, Math.Max(1, size * .027f));
-        var barbWidth = Math.Max(1, size * .036f);
-        dl.AddLine(origin + new Vector2(.29f, .74f) * size, origin + new Vector2(.51f, .71f) * size, background, barbWidth);
-        dl.AddLine(origin + new Vector2(.38f, .63f) * size, origin + new Vector2(.65f, .58f) * size, background, barbWidth);
-        dl.AddLine(origin + new Vector2(.46f, .54f) * size, origin + new Vector2(.76f, .48f) * size, background, barbWidth);
-        dl.AddLine(origin + new Vector2(.53f, .44f) * size, origin + new Vector2(.82f, .37f) * size, background, barbWidth);
-        dl.AddLine(origin + new Vector2(.03f, .97f) * size, origin + new Vector2(.26f, .73f) * size, ink, Math.Max(1, size * .036f));
+        DrawPluginIcon(ImGui.GetWindowDrawList(), origin, origin + new Vector2(size));
     }
 }

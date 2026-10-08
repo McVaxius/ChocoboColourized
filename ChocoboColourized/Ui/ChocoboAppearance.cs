@@ -61,6 +61,13 @@ internal sealed class ChocoboAppearance : IDisposable
                 foreach (var size in ChocoboPresentation.FontSizes.Distinct())
                     shapedText.Renderer.CheckGlyphs(text.RequiredText, size * ImGuiHelpers.GlobalScale);
                 fonts.CheckGlyphs(text.RequiredText);
+                var hindiLabel = UiText.Languages.Single(l => l.Code == "hi").Name;
+                var hindiAvailable = true;
+                foreach (var size in ChocoboPresentation.FontSizes.Distinct())
+                    hindiAvailable &= shapedText.Renderer.TryCheckGlyphs([hindiLabel], size * ImGuiHelpers.GlobalScale, out _);
+                languages.Replace(UiText.Languages.Select(l => new MaterialOption<string>(l.Code, l.Code,
+                    l.Code == "hi" && !hindiAvailable ? "Hindi (unavailable)" : l.Name,
+                    l.Code == "hi" && !hindiAvailable)).ToArray());
                 checkedGeneration = generation;
             }
             catch (Exception ex)
@@ -78,7 +85,14 @@ internal sealed class ChocoboAppearance : IDisposable
             if (ImGui.Begin("Chocobo Colourized##FontStatus", ImGuiWindowFlags.AlwaysAutoResize))
             {
                 fontStatusDecorations.Paint();
-                MaterialText.TextWrapped(UiText.T(fonts.LoadException is null && !fontIssueLogged ? "Loading UI fonts..." : "UI fonts failed to load. See the plugin log."));
+                var failed = fonts.LoadException is not null || fontIssueLogged;
+                ImGui.TextWrapped(appliedLanguage == "hi" && failed ? "Hindi UI fonts are unavailable. Use English to continue."
+                    : failed ? "UI fonts failed to load. See the plugin log." : "Loading UI fonts...");
+                if (appliedLanguage == "hi" && failed && ImGui.Button("Use English"))
+                {
+                    plugin.Configuration.UiLanguage = "en";
+                    plugin.Configuration.Save();
+                }
             }
             ImGui.End();
             fontStatusDecorations.Paint();
