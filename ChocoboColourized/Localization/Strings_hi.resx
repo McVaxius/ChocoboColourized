@@ -489,4 +489,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>फ़ोकस हटने के बाद विलंब (सेकंड)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>सेटिंग्स</value></data>
 </root>

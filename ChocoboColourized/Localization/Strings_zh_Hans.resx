@@ -179,4 +179,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>失去焦点后的等待时间 (秒)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>设置</value></data>
 </root>

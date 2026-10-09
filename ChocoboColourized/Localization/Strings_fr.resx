@@ -179,4 +179,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>Délai sans focus (secondes)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>Paramètres</value></data>
 </root>

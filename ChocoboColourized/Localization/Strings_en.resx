@@ -179,4 +179,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>Unfocused delay (seconds)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>Settings</value></data>
 </root>

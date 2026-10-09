@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using AethertekUI;
 using AethertekUI.Dalamud;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Windowing;
@@ -47,15 +48,32 @@ public class ConfigWindow : Window, IDisposable
         windowMotion.DrawChrome();
         UiGui.Title("Chocobo Colourized Settings", UiText.T("Chocobo Colourized Settings"));
         UiGui.TextWrapped("Chocobo Colourized Settings");
-        plugin.Appearance.DrawWindowAppearanceSettings();
-        ImGui.Separator();
-        ImGui.Spacing();
-
-        var movable = configuration.IsConfigWindowMovable;
-        if (UiGui.Checkbox("Movable Config Window", ref movable))
+        var settingsRoot = ImGui.GetID("");
+        using var tabs = MaterialTabs.Begin("ChocoboColourizedSettingsTabs", new[] { UiText.T("Settings"), UiText.T("Window appearance") }, ImGuiTabBarFlags.FittingPolicyScroll);
+        if (!tabs.Visible) return;
+        using (var general = MaterialTabs.Item(UiText.T("Settings") + "###Settings", ImGuiTabItemFlags.NoPushId))
         {
-            configuration.IsConfigWindowMovable = movable;
-            configuration.Save();
+            if (general.Visible)
+            {
+                ImGuiP.PushOverrideID(settingsRoot);
+                try
+                {
+                    var movable = configuration.IsConfigWindowMovable;
+                    if (UiGui.Checkbox("Movable Config Window", ref movable))
+                    {
+                        configuration.IsConfigWindowMovable = movable;
+                        configuration.Save();
+                    }
+                }
+                finally { ImGui.PopID(); }
+            }
         }
+        using (var appearance = MaterialTabs.Item(UiText.T("Window appearance") + "###WindowAppearance", ImGuiTabItemFlags.NoPushId))
+            if (appearance.Visible)
+            {
+                ImGuiP.PushOverrideID(settingsRoot);
+                try { plugin.Appearance.DrawWindowAppearanceSettings(); }
+                finally { ImGui.PopID(); }
+            }
     }
 }

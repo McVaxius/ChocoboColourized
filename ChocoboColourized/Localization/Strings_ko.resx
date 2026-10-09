@@ -179,4 +179,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>포커스를 잃은 후 대기 시간 (초)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>설정</value></data>
 </root>

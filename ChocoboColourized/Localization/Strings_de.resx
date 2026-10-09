@@ -179,4 +179,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>Verzögerung ohne Fokus (Sekunden)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>Einstellungen</value></data>
 </root>

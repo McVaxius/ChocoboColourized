@@ -179,4 +179,5 @@
   <data name="Unfocused delay (seconds)" xml:space="preserve">
     <value>Độ trễ khi mất tiêu điểm (giây)</value>
   </data>
+  <data name="Settings" xml:space="preserve"><value>Cài đặt</value></data>
 </root>
