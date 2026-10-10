@@ -1,5 +1,6 @@
 2026-10-09 - Tight compact list grids (I503/I509)
 
+
 - Use adjacent compact rows in the timer list, retaining every character, chocobo, status and remaining-time value.
 
 2026-10-09 - Separate XA Slave log-tools shortcut (I512)
