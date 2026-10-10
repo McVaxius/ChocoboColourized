@@ -40,6 +40,7 @@ public sealed class Plugin : IDalamudPlugin
     public Plugin()
     {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
+        if (Configuration.ApplyCompactDefaults()) Configuration.Save();
         Appearance = new(this);
 
         // Initialize services

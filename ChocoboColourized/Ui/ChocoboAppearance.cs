@@ -191,6 +191,9 @@ internal sealed class ChocoboAppearance : IDisposable
         var compactVisible = plugin.Configuration.UiCompactVisibleOnMainWindow;
         if (UiGui.Checkbox("Compact visible on main window", ref compactVisible))
         { plugin.Configuration.UiCompactVisibleOnMainWindow = compactVisible; plugin.Configuration.Save(); }
+        var transparencyVisible = plugin.Configuration.UiTransparencyVisibleOnMainWindow;
+        if (UiGui.Checkbox("Transparency visible on main window", ref transparencyVisible))
+        { plugin.Configuration.UiTransparencyVisibleOnMainWindow = transparencyVisible; plugin.Configuration.Save(); }
         var languageVisible = plugin.Configuration.UiLanguageVisibleOnMainWindow;
         if (UiGui.Checkbox("Language visible on main window", ref languageVisible))
         { plugin.Configuration.UiLanguageVisibleOnMainWindow = languageVisible; plugin.Configuration.Save(); }
