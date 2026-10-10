@@ -10,6 +10,7 @@ namespace ChocoboColourized.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
+    private readonly AethertekUI.Dalamud.MaterialSupportLog supportLog = new();
     private readonly MaterialWindowMotion windowMotion = new();
     private readonly Configuration configuration;
     private readonly Plugin plugin;
@@ -58,6 +59,8 @@ public class ConfigWindow : Window, IDisposable
                 ImGuiP.PushOverrideID(settingsRoot);
                 try
                 {
+                    supportLog.Draw(Plugin.PluginInterface, key => UiText.T(key),
+                        path => System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = path, UseShellExecute = true }), ex => Plugin.Log.Error(ex, "Dalamud log export failed."), Plugin.CommandManager);
                     var movable = configuration.IsConfigWindowMovable;
                     if (UiGui.Checkbox("Movable Config Window", ref movable))
                     {

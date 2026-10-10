@@ -840,6 +840,7 @@ public class MainWindow : Window, IDisposable
     // Feature 2: Six-hour timer list per character
     private void DrawTimersTab()
     {
+        using var tightRows = ChocoboPresentation.Compact ? MaterialTable.PushTightRows() : default;
         UiGui.Text("Colour Change Timers");
         ImGui.Separator();
         ImGui.Spacing();
