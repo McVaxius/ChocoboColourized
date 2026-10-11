@@ -88,7 +88,7 @@ public class MainWindow : Window, IDisposable
     public override void PostDraw()
     {
         windowMotion.Restore(this);
-        UiGui.PaintTitleWithImage(this, UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"));
+        UiGui.PaintTitleWithImageAndStatus(this, UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"), status: plugin.TitlebarStatus);
     }
 
     public override void Draw()

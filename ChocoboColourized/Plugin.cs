@@ -23,6 +23,36 @@ public sealed class Plugin : IDalamudPlugin
 
     private const string CommandName = "/chococolor";
 
+    internal AethertekUI.MaterialTitlebarStatus? TitlebarStatus
+    {
+        get
+        {
+            if (!Configuration.UiShowTitlebarStatus) return null;
+            var data = PlanStorage.GetAllCharacters().Values.FirstOrDefault(value =>
+                value.CharacterName == GameData.CharacterName && value.WorldName == GameData.WorldName);
+            var blocked = FeedingAutomation.State == FeedingState.Error;
+            var state = UiText.T(blocked ? "Blocked" : FeedingAutomation.IsRunning ? "Feeding" : data?.IsTimerActive == true ? "Waiting" : "Idle");
+            var concise = state;
+            var details = state;
+            if (data?.ActivePlan is { } plan)
+            {
+                details += " \u00b7 " + UiText.T(plan.TargetColorName);
+                var progress = plan.FruitsFed.ToString(UiText.Current.Culture) + "/" + plan.TotalFruits.ToString(UiText.Current.Culture);
+                concise += " \u00b7 " + progress;
+                details += " \u00b7 " + progress;
+            }
+            if (data?.IsTimerActive == true)
+            {
+                var remaining = UiText.F("{0}m left", (int)Math.Ceiling(data.TimerRemaining.TotalMinutes));
+                concise += " \u00b7 " + remaining;
+                details += " \u00b7 " + remaining;
+            }
+            var tooltip = details + (blocked ? "\n" + UiText.T(FeedingAutomation.ErrorMessage) : "");
+            return new(Configuration.UiDetailedTitlebarStatus ? details : concise, concise, tooltip,
+                blocked ? AethertekUI.MaterialTheme.Current.Colors.Error : AethertekUI.MaterialTheme.Current.Colors.OnSurfaceVariant);
+        }
+    }
+
     public Configuration Configuration { get; init; }
     internal ChocoboAppearance Appearance { get; }
 

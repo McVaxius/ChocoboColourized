@@ -42,7 +42,11 @@ public class ConfigWindow : Window, IDisposable
         windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
     }
 
-    public override void PostDraw() => windowMotion.Restore(this);
+    public override void PostDraw()
+    {
+        windowMotion.Restore(this);
+        UiGui.PaintTitleWithImageAndStatus(this, UiText.T("Chocobo Colourized Settings"), status: plugin.TitlebarStatus);
+    }
 
     public override void Draw()
     {

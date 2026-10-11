@@ -187,6 +187,12 @@ internal sealed class ChocoboAppearance : IDisposable
     internal void DrawWindowAppearanceSettings()
     {
         if (!UiGui.CollapsingHeader("Window appearance###UiWindowAppearance")) return;
+        var showTitlebarStatus = plugin.Configuration.UiShowTitlebarStatus;
+        if (UiGui.Checkbox(UiText.T("Show titlebar status") + "###UiShowTitlebarStatus", ref showTitlebarStatus))
+        { plugin.Configuration.UiShowTitlebarStatus = showTitlebarStatus; plugin.Configuration.Save(); }
+        var detailedTitlebarStatus = plugin.Configuration.UiDetailedTitlebarStatus;
+        if (UiGui.Checkbox(UiText.T("Detailed titlebar status") + "###UiDetailedTitlebarStatus", ref detailedTitlebarStatus))
+        { plugin.Configuration.UiDetailedTitlebarStatus = detailedTitlebarStatus; plugin.Configuration.Save(); }
         var compact = plugin.Configuration.UiCompact;
         if (UiGui.Checkbox("Compact mode", ref compact))
         { plugin.Configuration.UiCompact = compact; plugin.Configuration.Save(); }

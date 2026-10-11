@@ -205,4 +205,10 @@
   <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>打开XA Slave的Utility &gt; XA Mods面板，其中包含Dalamud Log Cleaner。</value></data>
   <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>无法打开XA Slave日志工具。</value></data>
   <data name="Transparency visible on main window" xml:space="preserve"><value>在主窗口显示透明度</value></data>
+  <data name="Show titlebar status" xml:space="preserve"><value>在标题栏显示状态</value></data>
+  <data name="Detailed titlebar status" xml:space="preserve"><value>详细标题栏状态</value></data>
+  <data name="Blocked" xml:space="preserve"><value>已阻止</value></data>
+  <data name="Feeding" xml:space="preserve"><value>喂食中</value></data>
+  <data name="Waiting" xml:space="preserve"><value>等待中</value></data>
+  <data name="{0}m left" xml:space="preserve"><value>剩余 {0} 分钟</value></data>
 </root>

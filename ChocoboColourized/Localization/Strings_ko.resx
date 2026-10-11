@@ -205,4 +205,10 @@
   <data name="Opens XA Slave&apos;s Utility &gt; XA Mods panel, which contains Dalamud Log Cleaner." xml:space="preserve"><value>Dalamud Log Cleaner가 있는 XA Slave의 Utility &gt; XA Mods 패널을 엽니다.</value></data>
   <data name="XA Slave log tools could not be opened." xml:space="preserve"><value>XA Slave 로그 도구를 열지 못했습니다.</value></data>
   <data name="Transparency visible on main window" xml:space="preserve"><value>메인 창에 투명도 표시</value></data>
+  <data name="Show titlebar status" xml:space="preserve"><value>제목 표시줄에 상태 표시</value></data>
+  <data name="Detailed titlebar status" xml:space="preserve"><value>자세한 제목 표시줄 상태</value></data>
+  <data name="Blocked" xml:space="preserve"><value>차단됨</value></data>
+  <data name="Feeding" xml:space="preserve"><value>먹이 주는 중</value></data>
+  <data name="Waiting" xml:space="preserve"><value>대기 중</value></data>
+  <data name="{0}m left" xml:space="preserve"><value>{0}분 남음</value></data>
 </root>

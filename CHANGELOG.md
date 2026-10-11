@@ -1,3 +1,9 @@
+2026-10-11 - Native titlebar status (I536)
+
+- Show feeding, waiting and blocked states with fruit progress and remaining timer values in native main and settings titles. Keep concise state and available numeric progress when detailed wording is off; hover retains full details.
+- Add saved Show titlebar status and Detailed titlebar status controls in Appearance, both enabled by default. Preserve native window identities, geometry and title actions.
+- Use the packaged plugin icon in settings and auxiliary titlebars. Translate the new controls and status labels in every supported language.
+
 2026-10-11 - Appearance titlebar shortcuts (I532)
 
 - Move Main's language, compact and transparency shortcuts into the native titlebar and add a colour palette shortcut. Other titled windows expose the same actions; retained Appearance settings and main-control visibility choices use the existing save path.

@@ -313,13 +313,20 @@ internal static class UiGui
         => TitleWithButtons(original, translated, null);
 
     internal static void PaintTitleWithImage(Window owner, string display)
+        => PaintTitleWithImageAndStatus(owner, display, null);
+
+    internal static void PaintTitleWithImageAndStatus(Window owner, string display, MaterialTitlebarStatus? status)
     {
         var window = ImGuiP.FindWindowByName(owner.WindowName);
         if (window.IsNull) return;
         var extraRightWidth = AdditionalTitleButtonWidth(owner, ImGuiP.CalcFontSize(window));
         var texture = ChocoboPresentation.OriginalIcon;
         using var font = UiText.Font(UiFontRole.Body);
-        MaterialWindowHeader.PaintTitle(window, display, texture?.Handle ?? default,
+        if (status is { } summary)
+            MaterialWindowHeader.PaintTitleWithStatus(window, display, texture?.Handle ?? default,
+            texture is null ? Vector2.Zero : new Vector2(texture.Width, texture.Height), summary, extraRightWidth, owner.ShowCloseButton);
+        else
+            MaterialWindowHeader.PaintTitle(window, display, texture?.Handle ?? default,
             texture is null ? Vector2.Zero : new Vector2(texture.Width, texture.Height), extraRightWidth, owner.ShowCloseButton);
     }
 
