@@ -146,34 +146,14 @@ public class MainWindow : Window, IDisposable
         ImGui.SetCursorScreenPos(origin + new Vector2(titleX, (ChocoboPresentation.Compact ? 40 : 44) * s));
         UiGui.TextColored(MaterialTheme.Current.Colors.OnSurfaceVariant, "Plan your chocobo's colour with precision.");
         var headerHeight = Math.Max(ChocoboPresentation.HeaderHeight * s, ImGui.GetItemRectMax().Y - origin.Y);
-        var selectorWidth = plugin.Configuration.UiLanguageVisibleOnMainWindow ? plugin.Appearance.SelectorWidth : 0;
         var supportWidth = MaterialText.Measure(UiText.T("Support on Ko-fi")).X + 92 * s;
-        var compactWidth = plugin.Configuration.UiCompactVisibleOnMainWindow
-            ? ImGui.GetFrameHeight() + ImGui.GetStyle().ItemInnerSpacing.X + MaterialText.Measure("C").X + ImGui.GetStyle().ItemSpacing.X : 0;
-        var opacityWidth = plugin.Configuration.UiTransparencyVisibleOnMainWindow ? ImGui.GetFrameHeight() + ImGui.GetStyle().ItemInnerSpacing.X + MaterialText.Measure(UiText.T("Transparency")).X : 0;
-        var controlWidth = compactWidth + opacityWidth + supportWidth + selectorWidth
-            + ImGui.GetStyle().ItemSpacing.X * ((plugin.Configuration.UiLanguageVisibleOnMainWindow ? 1 : 0) + (plugin.Configuration.UiTransparencyVisibleOnMainWindow ? 1 : 0));
+        var controlWidth = supportWidth;
         var headingRight = Math.Max(titleRight, ImGui.GetItemRectMax().X);
         var wrap = headingRight + 20 * s + controlWidth > origin.X + width;
         ImGui.SetCursorScreenPos(origin + new Vector2(wrap ? 0 : width - controlWidth, wrap ? headerHeight : (ChocoboPresentation.Compact ? 21 : 19) * s));
-        if (plugin.Configuration.UiCompactVisibleOnMainWindow)
-        {
-            var compact = plugin.Configuration.UiCompact;
-            if (UiGui.Checkbox("C##CompactMode", ref compact)) { plugin.Configuration.UiCompact = compact; plugin.Configuration.Save(); }
-            if (ImGui.IsItemHovered()) UiGui.SetTooltip("Compact mode");
-            if (plugin.Configuration.UiTransparencyVisibleOnMainWindow && ImGui.GetItemRectMax().X + ImGui.GetStyle().ItemSpacing.X + opacityWidth <= origin.X + width) ImGui.SameLine();
-        }
-        if (plugin.Configuration.UiTransparencyVisibleOnMainWindow)
-            plugin.Appearance.DrawTransparencyToggle();
-        if ((plugin.Configuration.UiCompactVisibleOnMainWindow || plugin.Configuration.UiTransparencyVisibleOnMainWindow) && ImGui.GetItemRectMax().X + ImGui.GetStyle().ItemSpacing.X + supportWidth <= origin.X + width) ImGui.SameLine();
         if (UiGui.IconButton("\u2661 Ko-fi \u2661", MaterialIcon.Heart, new Vector2(supportWidth, ImGui.GetFrameHeight()), MaterialIcon.ExternalLink, UiText.T("Support on Ko-fi")))
             Process.Start(new ProcessStartInfo { FileName = "https://ko-fi.com/mcvaxius", UseShellExecute = true });
         if (ImGui.IsItemHovered()) UiGui.SetTooltip("Support development on Ko-fi");
-        if (plugin.Configuration.UiLanguageVisibleOnMainWindow)
-        {
-            if (ImGui.GetItemRectMax().X + ImGui.GetStyle().ItemSpacing.X + selectorWidth <= origin.X + width) ImGui.SameLine();
-            plugin.Appearance.DrawSelector(false);
-        }
         var bottom = Math.Max(ImGui.GetItemRectMax().Y, origin.Y + headerHeight);
         ImGui.SetCursorScreenPos(origin);
         ImGui.Dummy(new Vector2(width, Math.Max(ChocoboPresentation.HeaderHeight * s, bottom - origin.Y)));

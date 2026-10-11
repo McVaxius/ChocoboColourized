@@ -1,3 +1,8 @@
+2026-10-11 - Appearance titlebar shortcuts (I532)
+
+- Move Main's language, compact and transparency shortcuts into the native titlebar and add a colour palette shortcut. Other titled windows expose the same actions; retained Appearance settings and main-control visibility choices use the existing save path.
+- Preserve existing title actions, window identities, geometry, complete-window opacity and release version. Popup ownership and collapsed-window actions remain subject to native and game verification.
+
 2026-10-10 - Compact defaults and main appearance controls (I521)
 
 - Apply Compact on once, with main Compact and Transparency controls hidden. Keep both controls and independent visibility choices in Appearance settings; preserve later choices, opacity, automation and unknown saved fields. Advance the release from 2.0.0.5 to 2.0.0.6.

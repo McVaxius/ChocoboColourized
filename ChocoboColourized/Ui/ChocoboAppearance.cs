@@ -14,6 +14,7 @@ internal sealed class ChocoboAppearance : IDisposable
     private UiText text;
     private ChocoboFonts fonts;
     private MaterialTheme theme;
+    private readonly Dictionary<Dalamud.Interface.Windowing.Window, AethertekUI.Dalamud.MaterialAppearanceTitleBar> appearanceTitleBars = new();
     private readonly MaterialWindowFold fontStatusMotion = new();
     private readonly MaterialWindowDecorations fontStatusDecorations = new();
     private readonly Dictionary<string, MaterialWindowOpacity> windowOpacities = new();
@@ -109,7 +110,9 @@ internal sealed class ChocoboAppearance : IDisposable
         style.Style(ImGuiStyleVar.FrameRounding, 4 * s);
         style.Style(ImGuiStyleVar.ChildRounding, 4 * s);
         using var body = fonts.Push(UiFontRole.Body);
+        PrepareAppearanceTitleBars(windows);
         windows.Draw();
+        foreach (var titlebar in appearanceTitleBars.Values) titlebar.DrawPopups();
         foreach (var window in windows.Windows)
             if (window.IsOpen) ApplyWindowOpacity(window.WindowName);
     }
@@ -197,6 +200,40 @@ internal sealed class ChocoboAppearance : IDisposable
         var languageVisible = plugin.Configuration.UiLanguageVisibleOnMainWindow;
         if (UiGui.Checkbox("Language visible on main window", ref languageVisible))
         { plugin.Configuration.UiLanguageVisibleOnMainWindow = languageVisible; plugin.Configuration.Save(); }
+        DrawTransparencySettings();
+    }
+
+    private void PrepareAppearanceTitleBars(Dalamud.Interface.Windowing.WindowSystem windows)
+    {
+        foreach (var window in windows.Windows.OfType<Dalamud.Interface.Windowing.Window>())
+        {
+            if ((window.Flags & ImGuiWindowFlags.NoTitleBar) != 0) continue;
+            if (!appearanceTitleBars.ContainsKey(window))
+                appearanceTitleBars.Add(window, AethertekUI.Dalamud.MaterialAppearanceTitleBar.Register(window,
+                    () => new(UiText.T("Language"), UiText.T("Compact mode"), UiText.T("Transparency"), UiText.T("Color")),
+                    () => DrawSelector(false),
+                    () => { plugin.Configuration.UiCompact = !plugin.Configuration.UiCompact; plugin.Configuration.Save(); },
+                    DrawTransparencySettings, DrawTitleBarColour,
+                    () => window is global::ChocoboColourized.Windows.MainWindow
+                        ? new(plugin.Configuration.UiLanguageVisibleOnMainWindow, plugin.Configuration.UiCompactVisibleOnMainWindow,
+                            plugin.Configuration.UiTransparencyVisibleOnMainWindow, true)
+                        : new(true, true, true, true)));
+            appearanceTitleBars[window].RefreshVisibility();
+        }
+    }
+
+    private void DrawTitleBarColour()
+    {
+        if (!MaterialAppearanceSelector.DrawPalette("appearance", ref accentDraft,
+                new(UiText.T("Color"), UiText.T("Language"), UiText.T("Teal"), UiText.T("Blue"), UiText.T("Pink"), UiText.T("Custom RGB")))) return;
+        plugin.Configuration.UiAccentRgb = ((uint)Math.Clamp((int)MathF.Round(accentDraft.X * 255), 0, 255) << 16)
+            | ((uint)Math.Clamp((int)MathF.Round(accentDraft.Y * 255), 0, 255) << 8)
+            | (uint)Math.Clamp((int)MathF.Round(accentDraft.Z * 255), 0, 255);
+        plugin.Configuration.Save();
+    }
+
+    private void DrawTransparencySettings()
+    {
         var enabled = plugin.Configuration.UiTransparencyEnabled;
         if (UiGui.Checkbox("Transparency", ref enabled))
         { plugin.Configuration.UiTransparencyEnabled = enabled; plugin.Configuration.Save(); }
