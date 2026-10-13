@@ -4,9 +4,9 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>2.0.0.8</Version>
-    <FileVersion>2.0.0.8</FileVersion>
-    <AssemblyVersion>2.0.0.8</AssemblyVersion>
+    <Version>2.0.0.9</Version>
+    <FileVersion>2.0.0.9</FileVersion>
+    <AssemblyVersion>2.0.0.9</AssemblyVersion>
     <PackageProjectUrl>https://github.com/McVaxius/ChocoboColourized</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
