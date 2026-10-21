@@ -40,7 +40,9 @@ internal static class ChocoboPresentation
     internal static float LanguageWidth => Compact ? 188 : 198;
     internal static Vector4 Rgb(uint rgb) => new(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, 1);
 
-    internal static MaterialTheme Theme(uint accent)
+    internal static MaterialTheme Theme(uint accent) => Theme(accent, new MaterialColorSettings());
+
+    internal static MaterialTheme Theme(uint accent, MaterialColorSettings colorSettings)
     {
         accent &= 0xFFFFFF;
         var selected = Rgb(accent);
@@ -74,7 +76,7 @@ internal static class ChocoboPresentation
             Tertiary = Relative(0xC2B8A3), OnTertiary = background, TertiaryContainer = Relative(0x363127), OnTertiaryContainer = foreground,
             InverseSurface = foreground, InverseOnSurface = background, InversePrimary = Relative(0x7E6123),
         };
-        return new(colors, MaterialDensity.Standard) { SurfaceOpacity = 1 };
+        return new(colorSettings.Apply(colors), MaterialDensity.Standard) { SurfaceOpacity = 1 };
     }
 
     internal static MaterialControlMetrics Controls(float height = 0)

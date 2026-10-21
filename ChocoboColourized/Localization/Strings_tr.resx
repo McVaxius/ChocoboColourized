@@ -211,4 +211,19 @@
   <data name="Feeding" xml:space="preserve"><value>Besleniyor</value></data>
   <data name="Waiting" xml:space="preserve"><value>Bekleniyor</value></data>
   <data name="{0}m left" xml:space="preserve"><value>{0} dk kaldı</value></data>
+  <data name="Auto" xml:space="preserve">
+    <value>Otomatik</value>
+  </data>
+  <data name="Picker" xml:space="preserve"><value>Seçici</value></data>
+  <data name="Default" xml:space="preserve"><value>Varsayılan</value></data>
+  <data name="Background, controls and text follow your theme." xml:space="preserve"><value>Arka plan, denetimler ve metin temanızı izler.</value></data>
+  <data name="Theme colour" xml:space="preserve"><value>Tema rengi</value></data>
+  <data name="Choose each colour independently." xml:space="preserve"><value>Her rengi bağımsız olarak seçin.</value></data>
+  <data name="Background" xml:space="preserve"><value>Arka plan</value></data>
+  <data name="Controls" xml:space="preserve"><value>Denetimler</value></data>
+  <data name="Text" xml:space="preserve"><value>Metin</value></data>
+  <data name="Aa  Preview text" xml:space="preserve"><value>Aa  Metin önizlemesi</value></data>
+  <data name="Control" xml:space="preserve"><value>Denetim</value></data>
+  <data name="Switch to Picker to set each colour yourself." xml:space="preserve"><value>Her rengi ayarlamak için Seçici'ye geçin.</value></data>
+  <data name="Switch back to Auto to use the automatic theme." xml:space="preserve"><value>Otomatik temayı kullanmak için Otomatik'e dönün.</value></data>
 </root>

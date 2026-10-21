@@ -1,3 +1,8 @@
+2026-10-20 - Independent UI colours
+
+- Add Auto and Picker colour choices in the native Colour popup and Appearance settings. Auto preserves the existing theme; Picker saves independent Background, Controls and Text choices through the existing configuration.
+- Retain picker colours when returning to Auto, existing language and opacity controls, native window identities and game colour swatches.
+
 2026-10-11 - Native titlebar status (I536)
 
 - Show feeding, waiting and blocked states with fruit progress and remaining timer values in native main and settings titles. Keep concise state and available numeric progress when detailed wording is off; hover retains full details.

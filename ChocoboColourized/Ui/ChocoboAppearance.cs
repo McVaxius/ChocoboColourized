@@ -22,6 +22,9 @@ internal sealed class ChocoboAppearance : IDisposable
     private string appliedLanguage = "";
     private uint appliedAccent;
     private Vector3 accentDraft;
+    private MaterialColorSettings colorDraft = new();
+    private MaterialColorSettings? appliedColors;
+    private MaterialColorSettings? appliedSavedColors;
     private int checkedGeneration = -1;
     private bool fontIssueLogged;
 
@@ -38,10 +41,17 @@ internal sealed class ChocoboAppearance : IDisposable
             checkedGeneration = -1;
             fontIssueLogged = false;
         }
-        if (theme is null || appliedAccent != (plugin.Configuration.UiAccentRgb & 0xFFFFFF))
+        var savedColors = plugin.Configuration.UiColors ?? new MaterialColorSettings();
+        if (savedColors != appliedSavedColors)
+        {
+            colorDraft = savedColors;
+            appliedSavedColors = savedColors;
+        }
+        if (theme is null || appliedAccent != (plugin.Configuration.UiAccentRgb & 0xFFFFFF) || colorDraft != appliedColors)
         {
             appliedAccent = plugin.Configuration.UiAccentRgb & 0xFFFFFF;
-            theme = ChocoboPresentation.Theme(appliedAccent);
+            appliedColors = colorDraft;
+            theme = ChocoboPresentation.Theme(appliedAccent, colorDraft);
             var rgb = ChocoboPresentation.Rgb(appliedAccent);
             accentDraft = new(rgb.X, rgb.Y, rgb.Z);
         }
@@ -129,25 +139,12 @@ internal sealed class ChocoboAppearance : IDisposable
 
     internal void DrawSelector(bool includeAccent = true)
     {
-        var language = appliedLanguage;
         using var controls = MaterialControls.Push(ChocoboPresentation.Controls(ChocoboPresentation.SelectorHeight));
-        var labels = new MaterialAppearanceLabels(UiText.T("Color"), UiText.T("Language"), UiText.T("Teal"), UiText.T("Blue"), UiText.T("Pink"), UiText.T("Custom RGB"));
-        var rowY = ImGui.GetCursorPosY();
-        var accentChanged = false;
-        if (includeAccent)
-        {
-            ImGui.SetCursorPosY(rowY + (ChocoboPresentation.SelectorHeight - ChocoboPresentation.AccentSize) * .5f * MaterialTheme.Metrics.Scale);
-            accentChanged = MaterialAppearanceSelector.DrawAccent("appearance", ref accentDraft, labels, ChocoboPresentation.AccentSize);
-            ImGui.SameLine();
-        }
-        ImGui.SetCursorPosY(rowY);
-        var languageChanged = MaterialAppearanceSelector.DrawLanguage("appearance", ref language, languages, ChocoboPresentation.LanguageWidth);
-        var changed = new MaterialAppearanceChange(accentChanged, languageChanged);
-        if (changed.AccentChanged)
-            plugin.Configuration.UiAccentRgb = ((uint)Math.Clamp((int)MathF.Round(accentDraft.X * 255), 0, 255) << 16)
-                | ((uint)Math.Clamp((int)MathF.Round(accentDraft.Y * 255), 0, 255) << 8) | (uint)Math.Clamp((int)MathF.Round(accentDraft.Z * 255), 0, 255);
-        if (changed.LanguageChanged) plugin.Configuration.UiLanguage = language;
-        if (changed.AccentChanged || changed.LanguageChanged) plugin.Configuration.Save();
+        if (includeAccent) { DrawTitleBarColour(); ImGui.Spacing(); }
+        var language = appliedLanguage;
+        if (!MaterialAppearanceSelector.DrawLanguage("appearance", ref language, languages, ChocoboPresentation.LanguageWidth)) return;
+        plugin.Configuration.UiLanguage = language;
+        plugin.Configuration.Save();
     }
 
     internal ChocoboAppearance(Plugin plugin)
@@ -158,7 +155,9 @@ internal sealed class ChocoboAppearance : IDisposable
         text = new(appliedLanguage, PushFont);
         fonts = new(Plugin.PluginInterface.UiBuilder.FontAtlas, text.GlyphRanges(), appliedLanguage);
         appliedAccent = plugin.Configuration.UiAccentRgb & 0xFFFFFF;
-        theme = ChocoboPresentation.Theme(appliedAccent);
+        colorDraft = plugin.Configuration.UiColors ?? new MaterialColorSettings();
+        appliedSavedColors = appliedColors = colorDraft;
+        theme = ChocoboPresentation.Theme(appliedAccent, colorDraft);
         var rgb = ChocoboPresentation.Rgb(appliedAccent);
         accentDraft = new(rgb.X, rgb.Y, rgb.Z);
     }
@@ -230,11 +229,15 @@ internal sealed class ChocoboAppearance : IDisposable
 
     private void DrawTitleBarColour()
     {
-        if (!MaterialAppearanceSelector.DrawPalette("appearance", ref accentDraft,
-                new(UiText.T("Color"), UiText.T("Language"), UiText.T("Teal"), UiText.T("Blue"), UiText.T("Pink"), UiText.T("Custom RGB")))) return;
-        plugin.Configuration.UiAccentRgb = ((uint)Math.Clamp((int)MathF.Round(accentDraft.X * 255), 0, 255) << 16)
-            | ((uint)Math.Clamp((int)MathF.Round(accentDraft.Y * 255), 0, 255) << 8)
-            | (uint)Math.Clamp((int)MathF.Round(accentDraft.Z * 255), 0, 255);
+        if (!MaterialAppearanceSelector.DrawColors("appearance", ref colorDraft, ref accentDraft,
+                new(UiText.T("Color"), UiText.T("Language"), UiText.T("Teal"), UiText.T("Blue"), UiText.T("Pink"), UiText.T("Custom RGB")),
+                new(UiText.T("Auto"), UiText.T("Picker"), UiText.T("Default"), UiText.T("Background, controls and text follow your theme."),
+                    UiText.T("Theme colour"), UiText.T("Choose each colour independently."), UiText.T("Background"), UiText.T("Controls"),
+                    UiText.T("Text"), UiText.T("Aa  Preview text"), UiText.T("Control"),
+                    UiText.T("Switch to Picker to set each colour yourself."), UiText.T("Switch back to Auto to use the automatic theme.")),
+                plugin.Configuration.UiCompact ? 298 : 316)) return;
+        plugin.Configuration.UiColors = colorDraft;
+        plugin.Configuration.UiAccentRgb = MaterialColorSettings.ToRgb(accentDraft);
         plugin.Configuration.Save();
     }
 
