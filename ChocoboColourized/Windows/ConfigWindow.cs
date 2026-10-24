@@ -51,7 +51,11 @@ public class ConfigWindow : Window, IDisposable
     public override void Draw()
     {
         windowMotion.DrawChrome();
-        UiGui.TitleWithButtons("Chocobo Colourized Settings", UiText.T("Chocobo Colourized Settings"), this);
+        if (MaterialTheme.Current.IsLcars)
+        {
+            using (UiText.Font(UiFontRole.Title)) MaterialLcars.Header(UiText.T("Chocobo Colourized Settings"));
+        }
+        else UiGui.TitleWithButtons("Chocobo Colourized Settings", UiText.T("Chocobo Colourized Settings"), this);
         UiGui.TextWrapped("Chocobo Colourized Settings");
         var settingsRoot = ImGui.GetID("");
         using var tabs = MaterialTabs.Begin("ChocoboColourizedSettingsTabs", new[] { UiText.T("Settings"), UiText.T("Window appearance") }, ImGuiTabBarFlags.FittingPolicyScroll);

@@ -4,6 +4,8 @@ Hindi uses installed shaping fonts. The source now leaves other languages usable
 
 Use Settings for shared colour, UI language, compact spacing and window transparency/fade; titlebar appearance actions change the same saved preferences. The packaged plugin icon appears in Main branding and its expanded/collapsed title without recolouring dye swatches. Calculate creates the feeding plan; the Automation controls start or stop feeding using the existing character, timer and fruit checks.
 
+The Colour popup and Window appearance settings share Auto, Picker and LCARS. LCARS adds black surfaces, segmented rails, framed panels and outlined controls while retaining saved Picker colours. Wide LCARS calculator windows show required fruits beside feeding order; narrower windows stack them. Optional UI sounds start muted. The titlebar speaker and UI sounds setting control the same saved preference; Preview sound is available when sounds are enabled.
+
 The approved main and compact calculator designs show colour selection, required
 fruits and feeding order in separate panels, with Save/Copy actions reserved at
 the bottom. Before calculation the fruit table and feeding order are empty.

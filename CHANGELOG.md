@@ -1,3 +1,10 @@
+2026-10-23 - LCARS appearance (unreleased)
+
+- Add LCARS as the third Colour choice after Auto and Picker, retaining the existing automatic palette, saved Picker RGB values and game dye swatches.
+- Add segmented header rails, framed calculator panels, outlined controls, readable selected tabs and responsive fruit/feeding-order columns. Keep native control identities, feeding gates, timer data and Save/Copy actions.
+- Add optional UI tones, muted by default, with one saved preference shared by Settings and the titlebar speaker. Keep playback owned by this plugin and stop it when muted, leaving LCARS or unloading.
+- Localize the new appearance controls across all fifteen catalogs and pin the already-published compatible AethertekUI commit in both workflows. Keep the current product version.
+
 2026-10-20 - Independent UI colours
 
 - Add Auto and Picker colour choices in the native Colour popup and Appearance settings. Auto preserves the existing theme; Picker saves independent Background, Controls and Text choices through the existing configuration.

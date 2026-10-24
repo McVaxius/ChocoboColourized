@@ -27,7 +27,7 @@ internal static class ChocoboPresentation
     internal static float HeaderHeight => Compact ? 64 : 78;
     internal static float Gap => 16;
     internal static float ControlHeight => Compact ? 44 : 52;
-    internal static Vector2 PanelPadding => new(Compact ? 25 : 27, Compact ? 4 : 8);
+    internal static Vector2 PanelPadding => new(Compact ? 25 : 27, MaterialTheme.Current.IsLcars ? 16 : Compact ? 4 : 8);
     internal static float HeadingHeight => (Compact ? 29.5f : 31) * 4 / 3;
     internal static float HeadingAdvance => Compact ? -3 : 0;
     internal static float FooterHeight => Compact ? 50 : 52;

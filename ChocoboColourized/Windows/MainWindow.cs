@@ -135,6 +135,17 @@ public class MainWindow : Window, IDisposable
     private void DrawHeader()
     {
         var s = MaterialTheme.Metrics.Scale;
+        if (MaterialTheme.Current.IsLcars)
+        {
+            using (UiText.Font(ChocoboPresentation.Compact ? UiFontRole.CompactTitle : UiFontRole.Title))
+                MaterialLcars.Header(UiText.T("Chocobo Colourized"));
+            UiGui.TextColored(MaterialTheme.Current.Colors.OnSurfaceVariant, "Plan your chocobo's colour with precision.");
+            var lcarsSupportWidth = MaterialText.Measure(UiText.T("Support on Ko-fi")).X + 92 * s;
+            if (UiGui.IconButton("\u2661 Ko-fi \u2661", MaterialIcon.Heart, new Vector2(lcarsSupportWidth, ImGui.GetFrameHeight()), MaterialIcon.ExternalLink, UiText.T("Support on Ko-fi")))
+                Process.Start(new ProcessStartInfo { FileName = "https://ko-fi.com/mcvaxius", UseShellExecute = true });
+            if (ImGui.IsItemHovered()) UiGui.SetTooltip("Support development on Ko-fi");
+            return;
+        }
         var origin = ImGui.GetCursorScreenPos();
         var width = ImGui.GetContentRegionAvail().X;
         ChocoboPresentation.Feather(origin + new Vector2(ChocoboPresentation.Compact ? 9 : 13, ChocoboPresentation.Compact ? -1 : 8) * s, (ChocoboPresentation.Compact ? 60 : 56) * s);
@@ -208,58 +219,100 @@ public class MainWindow : Window, IDisposable
                 DrawColorSelection();
             });
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + Math.Max(0, ChocoboPresentation.Gap * s - 4 * s));
-            var fruitHeight = Math.Max(ChocoboPresentation.Compact ? 191 : 230,
-                PanelHeight("Required Fruits", "The following fruits are required for this colour change.", (ChocoboPresentation.Compact ? 105 : 126) * s) / s);
-            Panel("##RequiredFruits", fruitHeight, () =>
+            var splitResults = false;
+            if (MaterialTheme.Current.IsLcars)
             {
-                Heading("Required Fruits", "The following fruits are required for this colour change.");
-                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (ChocoboPresentation.Compact ? 3 : 8) * s);
-                if (lastResult is null)
-                    DrawEmptyFruitTable();
-                else
-                {
-                    DrawInventoryRequirements();
-                    DrawPlanButtons();
-                    if (lastResult.TotalFruits == 0) UiGui.TextColored(ColorGreen, "Already at the closest possible colour!");
-                    if (UiGui.TreeNode("Calculation details"))
-                    {
-                        ImGuiP.PushOverrideID(calculatorRootId);
-                        DrawResults();
-                        ImGui.PopID();
-                        ImGui.TreePop();
-                    }
-                }
-            });
-            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + Math.Max(0, ChocoboPresentation.Gap * s - 4 * s));
-            var emptyPadding = (ChocoboPresentation.Compact ? 8 : 12) * s;
-            var emptyWidth = Math.Max(1, ImGui.GetContentRegionAvail().X - ChocoboPresentation.PanelPadding.X * 2 * s
-                - emptyPadding * 2 - 40 * s - 1 - ImGui.GetStyle().ChildBorderSize * 2);
-            var emptyHeight = MathF.Ceiling(Math.Max(24 * s, MaterialText.Measure(UiText.T("Your feeding order will appear here."), false, emptyWidth).Y)
-                + emptyPadding * 2 + ImGui.GetStyle().ChildBorderSize * 2);
-            var feedBodyHeight = Math.Max((ChocoboPresentation.Compact ? 56 : 80) * s, lastResult is null ? emptyHeight : 0);
-            var minimumFeedHeight = PanelHeight("Feeding order", "Feed the following fruits to your chocobo in order.",
-                feedBodyHeight + (ChocoboPresentation.Compact ? 0 : 2) * s) / s;
-            var feedHeight = Math.Max(ChocoboPresentation.Compact ? 139 : 180, minimumFeedHeight);
-            if (lastResult is null && ImGui.GetContentRegionAvail().Y / s >= minimumFeedHeight)
-                feedHeight = Math.Min(feedHeight, ImGui.GetContentRegionAvail().Y / s);
-            Panel("##FeedingOrderPanel", feedHeight, () =>
+                float minimumFruitWidth;
+                using (UiText.Font(UiFontRole.BodyStrong))
+                    minimumFruitWidth = new[] { "Fruit", "Required", "Owned", "Status" }
+                        .Sum(label => MaterialText.Measure(UiText.T(label)).X + ImGui.GetStyle().CellPadding.X * 2)
+                        + ChocoboPresentation.PanelPadding.X * 2 * s;
+                splitResults = ImGui.GetContentRegionAvail().X >= Math.Max(1000 * s, minimumFruitWidth * 2 + 16 * s);
+            }
+            if (splitResults && ImGui.BeginTable("##LcarsResultPanels", 2, ImGuiTableFlags.SizingStretchSame | ImGuiTableFlags.NoSavedSettings))
             {
-                Heading("Feeding order", "Feed the following fruits to your chocobo in order.");
-                if (!ChocoboPresentation.Compact) ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 2 * s);
-                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(ChocoboPresentation.Compact ? 8 : 12) * s);
-                if (ImGui.BeginChild("FeedingOrder", new Vector2(-1, lastResult is null ? feedBodyHeight : 0), true))
+                try
                 {
-                    if (lastResult is null) DrawEmptyFeedingOrder();
-                    else for (var index = 0; index < lastResult.Fruits.Count; index++)
-                        UiGui.Text(UiText.F("{0}. {1}", index + 1, FruitData.GetDisplayName(lastResult.Fruits[index])));
+                    ImGui.TableNextColumn();
+                    ImGuiP.PushOverrideID(calculatorRootId);
+                    float fruitHeight;
+                    try { fruitHeight = DrawFruitPanel(); }
+                    finally { ImGui.PopID(); }
+                    ImGui.TableNextColumn();
+                    ImGuiP.PushOverrideID(calculatorRootId);
+                    try { DrawFeedingOrderPanel(fruitHeight); }
+                    finally { ImGui.PopID(); }
                 }
-                ImGui.EndChild();
-                ImGui.PopStyleVar();
-            });
+                finally { ImGui.EndTable(); }
+            }
+            else
+            {
+                DrawFruitPanel();
+                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + Math.Max(0, ChocoboPresentation.Gap * s - 4 * s));
+                DrawFeedingOrderPanel();
+            }
             ImGui.PopID();
         }
         ImGui.EndChild();
         DrawResultActions();
+    }
+
+    private float DrawFruitPanel()
+    {
+        var s = MaterialTheme.Metrics.Scale;
+        var fruitHeight = Math.Max(ChocoboPresentation.Compact ? 191 : 230,
+            PanelHeight("Required Fruits", "The following fruits are required for this colour change.", (ChocoboPresentation.Compact ? 105 : 126) * s) / s);
+        Panel("##RequiredFruits", fruitHeight, () =>
+        {
+            Heading("Required Fruits", "The following fruits are required for this colour change.");
+            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (ChocoboPresentation.Compact ? 3 : 8) * s);
+            if (lastResult is null)
+                DrawEmptyFruitTable();
+            else
+            {
+                DrawInventoryRequirements();
+                DrawPlanButtons();
+                if (lastResult.TotalFruits == 0) UiGui.TextColored(ColorGreen, "Already at the closest possible colour!");
+                if (UiGui.TreeNode("Calculation details"))
+                {
+                    ImGuiP.PushOverrideID(calculatorRootId);
+                    DrawResults();
+                    ImGui.PopID();
+                    ImGui.TreePop();
+                }
+            }
+        });
+        return fruitHeight;
+    }
+
+    private void DrawFeedingOrderPanel(float minimumHeight = 0)
+    {
+        var s = MaterialTheme.Metrics.Scale;
+        var emptyPadding = (ChocoboPresentation.Compact ? 8 : 12) * s;
+        var emptyWidth = Math.Max(1, ImGui.GetContentRegionAvail().X - ChocoboPresentation.PanelPadding.X * 2 * s
+            - emptyPadding * 2 - 40 * s - 1 - ImGui.GetStyle().ChildBorderSize * 2);
+        var emptyHeight = MathF.Ceiling(Math.Max(24 * s, MaterialText.Measure(UiText.T("Your feeding order will appear here."), false, emptyWidth).Y)
+            + emptyPadding * 2 + ImGui.GetStyle().ChildBorderSize * 2);
+        var feedBodyHeight = Math.Max((ChocoboPresentation.Compact ? 56 : 80) * s, lastResult is null ? emptyHeight : 0);
+        var minimumFeedHeight = PanelHeight("Feeding order", "Feed the following fruits to your chocobo in order.",
+            feedBodyHeight + (ChocoboPresentation.Compact ? 0 : 2) * s) / s;
+        var feedHeight = Math.Max(minimumHeight, Math.Max(ChocoboPresentation.Compact ? 139 : 180, minimumFeedHeight));
+        if (minimumHeight <= 0 && lastResult is null && ImGui.GetContentRegionAvail().Y / s >= minimumFeedHeight)
+            feedHeight = Math.Min(feedHeight, ImGui.GetContentRegionAvail().Y / s);
+        Panel("##FeedingOrderPanel", feedHeight, () =>
+        {
+            Heading("Feeding order", "Feed the following fruits to your chocobo in order.");
+            if (!ChocoboPresentation.Compact) ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 2 * s);
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(ChocoboPresentation.Compact ? 8 : 12) * s);
+            if (ImGui.BeginChild("FeedingOrder", new Vector2(-1, lastResult is null ? feedBodyHeight : 0), true))
+            {
+                if (lastResult is null) DrawEmptyFeedingOrder();
+                else for (var index = 0; index < lastResult.Fruits.Count; index++)
+                    UiGui.Text(UiText.F("{0}. {1}", index + 1, FruitData.GetDisplayName(lastResult.Fruits[index])));
+            }
+            ImGui.EndChild();
+            ImGui.PopStyleVar();
+        });
     }
 
     private static float PanelHeight(string title, string subtitle, float bodyHeight)
@@ -275,7 +328,7 @@ public class MainWindow : Window, IDisposable
             try { titleHeight = MaterialText.Measure(UiText.T(title), false, width).Y; }
             finally { ImGui.SetWindowFontScale(fontScale); }
         }
-        return MathF.Ceiling(padding.Y * 2 + titleHeight + ChocoboPresentation.HeadingAdvance * s
+        return MathF.Ceiling(padding.Y * 2 + titleHeight + (ChocoboPresentation.HeadingAdvance + (MaterialTheme.Current.IsLcars ? 12 : 0)) * s
             + MaterialText.Measure(UiText.T(subtitle), false, width).Y + 8 * s + bodyHeight);
     }
 
@@ -287,6 +340,12 @@ public class MainWindow : Window, IDisposable
         ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(10, 4) * s);
         if (ImGui.BeginChild(id, new Vector2(0, logicalHeight * s), true, ImGuiWindowFlags.AlwaysUseWindowPadding))
         {
+            if (MaterialTheme.Current.IsLcars)
+            {
+                var min = ImGui.GetWindowPos() + new Vector2(2 * s);
+                var max = ImGui.GetWindowPos() + ImGui.GetWindowSize() - new Vector2(2 * s);
+                MaterialLcars.PanelFrame(min, max, id == "##RequiredFruits" ? 1 : 0);
+            }
             ImGuiP.PushOverrideID(parentId);
             draw();
             ImGui.PopID();
@@ -302,7 +361,11 @@ public class MainWindow : Window, IDisposable
         {
             var fontScale = ImGuiP.GetCurrentWindow().FontWindowScale;
             ImGui.SetWindowFontScale(fontScale * ChocoboPresentation.HeadingHeight / ChocoboPresentation.AtlasHeight(UiFontRole.PluginName));
-            try { UiGui.TextWrapped(title); }
+            try
+            {
+                if (MaterialTheme.Current.IsLcars) MaterialLcars.PanelHeading(UiText.T(title), title == "Required Fruits" ? 1 : 0);
+                else UiGui.TextWrapped(title);
+            }
             finally { ImGui.SetWindowFontScale(fontScale); }
         }
         ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (ChocoboPresentation.HeadingAdvance - 1) * MaterialTheme.Metrics.Scale);
