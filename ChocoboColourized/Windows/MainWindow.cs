@@ -18,6 +18,7 @@ namespace ChocoboColourized.Windows;
 public class MainWindow : Window, IDisposable
 {
     private readonly MaterialWindowMotion windowMotion = new();
+    private bool materialBackdropPending;
     private readonly Plugin plugin;
 
     // Colour selection state
@@ -83,16 +84,20 @@ public class MainWindow : Window, IDisposable
     {
         UiGui.ReserveTitleSpace(this, UiText.T("Chocobo Colourized") + " v" + typeof(Plugin).Assembly.GetName().Version, 520);
         windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
+        materialBackdropPending = ChocoboPresentation.PrepareMaterialBackdrop();
     }
 
     public override void PostDraw()
     {
+        ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
         windowMotion.Restore(this);
         UiGui.PaintTitleWithImageAndStatus(this, UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"), status: plugin.TitlebarStatus);
     }
 
     public override void Draw()
     {
+        ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
+        MaterialSkin.Backdrop();
         windowMotion.DrawChrome();
         DrawHeader();
         using var tabFont = UiText.Font(UiFontRole.Action);
@@ -304,8 +309,19 @@ public class MainWindow : Window, IDisposable
             Heading("Feeding order", "Feed the following fruits to your chocobo in order.");
             if (!ChocoboPresentation.Compact) ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 2 * s);
             ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(ChocoboPresentation.Compact ? 8 : 12) * s);
-            if (ImGui.BeginChild("FeedingOrder", new Vector2(-1, lastResult is null ? feedBodyHeight : 0), true))
+            bool visible;
+            using (var surface = new MaterialStyleScope())
             {
+                if (ChocoboPresentation.IsMaterial) surface.Color(ImGuiCol.Border, Vector4.Zero);
+                visible = ImGui.BeginChild("FeedingOrder", new Vector2(-1, lastResult is null ? feedBodyHeight : 0), true);
+            }
+            if (visible)
+            {
+                if (ChocoboPresentation.IsMaterial)
+                {
+                    var window = ImGuiP.GetCurrentWindow();
+                    ChocoboPresentation.Surface(window.InnerRect.Min, window.InnerRect.Max, inset: true);
+                }
                 if (lastResult is null) DrawEmptyFeedingOrder();
                 else for (var index = 0; index < lastResult.Fruits.Count; index++)
                     UiGui.Text(UiText.F("{0}. {1}", index + 1, FruitData.GetDisplayName(lastResult.Fruits[index])));
@@ -325,7 +341,18 @@ public class MainWindow : Window, IDisposable
         {
             var fontScale = ImGuiP.GetCurrentWindow().FontWindowScale;
             ImGui.SetWindowFontScale(fontScale * ChocoboPresentation.HeadingHeight / ChocoboPresentation.AtlasHeight(UiFontRole.PluginName));
-            try { titleHeight = MaterialText.Measure(UiText.T(title), false, width).Y; }
+            try
+            {
+                var text = UiText.T(title);
+                if (MaterialTheme.Current.IsCyberpunk)
+                {
+                    var left = Math.Min((title == "Required Fruits" ? 52 : 18) * s, width * .25f);
+                    var right = Math.Min(24 * s, width * .15f);
+                    var plateWidth = Math.Min(width, Math.Max(256 * s, MaterialText.Measure(text).X + left + right));
+                    titleHeight = Math.Max(28 * s, MaterialText.Measure(text, wrapWidth: Math.Max(1, plateWidth - left - right)).Y + 8 * s);
+                }
+                else titleHeight = MaterialText.Measure(text, false, width).Y;
+            }
             finally { ImGui.SetWindowFontScale(fontScale); }
         }
         return MathF.Ceiling(padding.Y * 2 + titleHeight + (ChocoboPresentation.HeadingAdvance + (MaterialTheme.Current.IsLcars ? 12 : 0)) * s
@@ -338,13 +365,25 @@ public class MainWindow : Window, IDisposable
         var s = MaterialTheme.Metrics.Scale;
         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, ChocoboPresentation.PanelPadding * s);
         ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(10, 4) * s);
-        if (ImGui.BeginChild(id, new Vector2(0, logicalHeight * s), true, ImGuiWindowFlags.AlwaysUseWindowPadding))
+        bool visible;
+        using (var surface = new MaterialStyleScope())
         {
-            if (MaterialTheme.Current.IsLcars)
+            if (ChocoboPresentation.IsMaterial) surface.Color(ImGuiCol.Border, Vector4.Zero);
+            visible = ImGui.BeginChild(id, new Vector2(0, logicalHeight * s), true, ImGuiWindowFlags.AlwaysUseWindowPadding);
+        }
+        if (visible)
+        {
+            if (MaterialTheme.Current.IsLcars || ChocoboPresentation.IsMaterial)
             {
                 var min = ImGui.GetWindowPos() + new Vector2(2 * s);
                 var max = ImGui.GetWindowPos() + ImGui.GetWindowSize() - new Vector2(2 * s);
-                MaterialLcars.PanelFrame(min, max, id == "##RequiredFruits" ? 1 : 0);
+                if (ChocoboPresentation.IsMaterial)
+                {
+                    var window = ImGuiP.GetCurrentWindow();
+                    min = window.InnerRect.Min + new Vector2(2 * s);
+                    max = window.InnerRect.Max - new Vector2(2 * s);
+                }
+                ChocoboPresentation.Surface(min, max, id == "##RequiredFruits" ? 1 : 0);
             }
             ImGuiP.PushOverrideID(parentId);
             draw();
@@ -364,6 +403,7 @@ public class MainWindow : Window, IDisposable
             try
             {
                 if (MaterialTheme.Current.IsLcars) MaterialLcars.PanelHeading(UiText.T(title), title == "Required Fruits" ? 1 : 0);
+                else if (MaterialTheme.Current.IsCyberpunk) MaterialSkin.Heading(UiText.T(title), title == "Required Fruits" ? 1 : 0);
                 else UiGui.TextWrapped(title);
             }
             finally { ImGui.SetWindowFontScale(fontScale); }
@@ -638,11 +678,10 @@ public class MainWindow : Window, IDisposable
         var preview = ColorDatabase.GetByIndex(selectedIndex);
         var drawList = ImGui.GetWindowDrawList();
         var min = ImGui.GetCursorScreenPos();
-        var padding = ImGui.GetStyle().FramePadding;
         var height = ImGui.GetFrameHeight();
         var max = min + new Vector2(ImGui.CalcItemWidth(), height);
         ImGui.PushStyleVar(ImGuiStyleVar.FrameBorderSize, 1 * MaterialTheme.Metrics.Scale);
-        var open = ImGui.BeginCombo(label, "");
+        var open = UiGui.BeginCombo(label, "");
         var swatchSize = Math.Min(height - 8 * MaterialTheme.Metrics.Scale, (ChocoboPresentation.Compact ? 30 : 34) * MaterialTheme.Metrics.Scale);
         drawList.PushClipRect(min, new Vector2(max.X - height, max.Y), true);
         var swatchPosition = min + new Vector2(14 * MaterialTheme.Metrics.Scale, (height - swatchSize) * .5f);
@@ -885,8 +924,12 @@ public class MainWindow : Window, IDisposable
     private void DrawTimersTab()
     {
         using var tightRows = ChocoboPresentation.Compact ? MaterialTable.PushTightRows() : default;
-        UiGui.Text("Colour Change Timers");
-        ImGui.Separator();
+        if (MaterialTheme.Current.IsCyberpunk) MaterialSkin.Heading(UiText.T("Colour Change Timers"));
+        else
+        {
+            UiGui.Text("Colour Change Timers");
+            ImGui.Separator();
+        }
         ImGui.Spacing();
 
         var allChars = plugin.PlanStorage.GetAllCharacters();
@@ -994,8 +1037,12 @@ public class MainWindow : Window, IDisposable
 
     private void DrawAutomationContents()
     {
-        UiGui.Text("Automated Feeding");
-        ImGui.Separator();
+        if (MaterialTheme.Current.IsCyberpunk) MaterialSkin.Heading(UiText.T("Automated Feeding"));
+        else
+        {
+            UiGui.Text("Automated Feeding");
+            ImGui.Separator();
+        }
         ImGui.Spacing();
 
         if (!plugin.GameData.IsLoggedIn)

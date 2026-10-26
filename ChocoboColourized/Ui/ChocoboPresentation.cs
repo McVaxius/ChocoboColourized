@@ -24,6 +24,7 @@ internal static class ChocoboPresentation
     internal static readonly string[] FontFiles = ["segoeui.ttf", "seguisb.ttf", "segoeuib.ttf", "seguisb.ttf", "seguisb.ttf", "seguisb.ttf", "segoeuib.ttf"];
     internal static float AtlasHeight(UiFontRole role) => FontSizes[(int)role] * 4 / 3;
     internal static bool Compact => MaterialTheme.Current.Density == MaterialDensity.Compact;
+    internal static bool IsMaterial => MaterialTheme.Current.IsGlassmorphism || MaterialTheme.Current.IsSpatial || MaterialTheme.Current.IsCyberpunk;
     internal static float HeaderHeight => Compact ? 64 : 78;
     internal static float Gap => 16;
     internal static float ControlHeight => Compact ? 44 : 52;
@@ -87,8 +88,27 @@ internal static class ChocoboPresentation
             Gap = 8 * s, IconSize = 22 * s, Rounding = 4 * s, ItemSpacing = new(10 * s, 6 * s), CellPadding = new(12 * s, 6 * s) };
     }
 
-    internal static void Surface(Vector2 min, Vector2 max)
+    internal static bool PrepareMaterialBackdrop()
     {
+        if (!IsMaterial) return false;
+        ImGui.PushStyleColor(ImGuiCol.WindowBg, Vector4.Zero);
+        return true;
+    }
+
+    internal static void RestoreMaterialBackdrop(ref bool pending)
+    {
+        if (!pending) return;
+        ImGui.PopStyleColor();
+        pending = false;
+    }
+
+    internal static void Surface(Vector2 min, Vector2 max, int accent = 0, bool inset = false)
+    {
+        if (IsMaterial || MaterialTheme.Current.IsLcars)
+        {
+            MaterialSkin.PanelFrame(min, max, accent, inset);
+            return;
+        }
         var c = MaterialTheme.Current.Colors;
         MaterialCanvas.Surface(min, max, c.SurfaceContainerHigh, c.Surface, 4 * MaterialTheme.Metrics.Scale);
         ImGui.GetWindowDrawList().AddRect(min, max, MaterialCanvas.Color(c.OutlineVariant), 4 * MaterialTheme.Metrics.Scale);

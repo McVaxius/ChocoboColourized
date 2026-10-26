@@ -9,6 +9,36 @@ namespace ChocoboColourized.Ui;
 // This also preserves English-derived helper IDs and existing saved window identities.
 internal static class UiGui
 {
+    internal static bool BeginCombo(string nativeLabel, string preview, ImGuiComboFlags flags = ImGuiComboFlags.None)
+    {
+        bool open;
+        using (var backdrop = MaterialSkin.BackdropStyle(popup: true))
+        {
+            var style = ImGui.GetStyle();
+            var framePadding = style.FramePadding;
+            var prepaintPadding = framePadding;
+            if (ChocoboPresentation.IsMaterial)
+            {
+                var caption = nativeLabel.Split("##", 2)[0];
+                var visiblePreview = (flags & ImGuiComboFlags.NoPreview) == 0 ? preview.Split("##", 2)[0] : "";
+                using (var height = MaterialText.PushLineHeight(caption, visiblePreview))
+                    prepaintPadding = style.FramePadding;
+            }
+            MaterialStyleScope field;
+            try
+            {
+                // Paint at the shaped height; the native helper reserves that height itself.
+                style.FramePadding = prepaintPadding;
+                field = MaterialSkin.NativeFieldStyle();
+            }
+            finally { style.FramePadding = framePadding; }
+            using (field)
+                open = MaterialText.BeginCombo(nativeLabel, preview, flags);
+        }
+        if (open) MaterialSkin.Backdrop();
+        return open;
+    }
+
     internal static IDisposable FooterFont() => new FooterFontScope();
     private readonly struct FooterFontScope : IDisposable
     {
@@ -56,6 +86,7 @@ internal static class UiGui
         try
         {
             using var height = MaterialText.PushLineHeight(value, UiText.T(hint));
+            using var field = MaterialSkin.NativeFieldStyle();
             changed = MaterialShapedInput.SingleLine(label, UiText.T(hint), ref value, length);
         }
         finally { ImGui.PopStyleVar(2); }
@@ -103,15 +134,18 @@ internal static class UiGui
         var translated=display ?? UiText.T(label.Split("##",2)[0]);
         using var controls = ImGui.GetStyle().FramePadding.Y == 0 || MaterialControls.Context == MaterialControlContext.Dense
             ? default(MaterialControls.ControlScope) : MaterialControls.Push(MaterialControlContext.Toolbar);
-        using var lcars = MaterialLcars.NativeButtonStyle();
+        using var skin = MaterialSkin.NativeButtonStyle();
         using var height = MaterialText.PushLineHeight(translated);
         var width=MaterialText.Measure(translated).X+2*ImGui.GetStyle().FramePadding.X;
         if(width>ImGui.GetContentRegionAvail().X && ImGui.GetCursorPosX()>ImGui.GetStyle().WindowPadding.X+1) ImGui.NewLine();
         var foreground=ImGui.GetStyle().Colors[(int)ImGuiCol.Text];
         ImGui.PushStyleColor(ImGuiCol.Text,Vector4.Zero);
-        var clicked=ImGui.Button(label,new Vector2(width,0));
+        bool clicked;
+        using (var face = ChocoboPresentation.IsMaterial ? MaterialSkin.TransparentButtonFace() : default(MaterialStyleScope))
+            clicked=ImGui.Button(label,new Vector2(width,0));
         ImGui.PopStyleColor();
         var min=ImGui.GetItemRectMin(); var max=ImGui.GetItemRectMax();
+        if (ChocoboPresentation.IsMaterial) MaterialSkin.PaintButton(min, max);
         foreground.W*=ImGui.GetStyle().Alpha;
         ImGui.GetWindowDrawList().PushClipRect(min,max,true);
         try
@@ -127,7 +161,7 @@ internal static class UiGui
         var translated = UiText.T(label.Split("##", 2)[0]);
         using var controls = ImGui.GetStyle().FramePadding.Y == 0 || MaterialControls.Context == MaterialControlContext.Dense
             ? default(MaterialControls.ControlScope) : MaterialControls.Push(MaterialControlContext.Toolbar);
-        using var lcars = MaterialLcars.NativeButtonStyle();
+        using var skin = MaterialSkin.NativeButtonStyle();
         using var height = MaterialText.PushLineHeight(translated);
         pixels.Y = Math.Max(pixels.Y, ImGui.GetFrameHeight());
         if (pixels.X <= 0)
@@ -137,9 +171,12 @@ internal static class UiGui
         }
         var color = ImGui.GetStyle().Colors[(int)ImGuiCol.Text];
         ImGui.PushStyleColor(ImGuiCol.Text, Vector4.Zero);
-        var clicked = ImGui.Button(label, pixels);
+        bool clicked;
+        using (var face = ChocoboPresentation.IsMaterial ? MaterialSkin.TransparentButtonFace() : default(MaterialStyleScope))
+            clicked = ImGui.Button(label, pixels);
         ImGui.PopStyleColor();
         var min = ImGui.GetItemRectMin(); var max = ImGui.GetItemRectMax();
+        if (ChocoboPresentation.IsMaterial) MaterialSkin.PaintButton(min, max);
         var dl = ImGui.GetWindowDrawList();
         dl.PushClipRect(min, max, true);
         try
@@ -156,7 +193,7 @@ internal static class UiGui
         var c = MaterialTheme.Current.Colors;
         var label = UiText.T(original);
         using var controls = MaterialControls.Push(MaterialControlContext.Toolbar);
-        using var lcars = MaterialLcars.NativeButtonStyle(MaterialLcars.Periwinkle);
+        using var skin = MaterialSkin.NativeButtonStyle(MaterialTheme.Current.IsLcars ? MaterialLcars.Periwinkle : null);
         using var lineHeight = MaterialText.PushLineHeight(label);
         var textSize = MaterialText.Measure(label);
         var iconSize = (ChocoboPresentation.Compact ? 30 : 32) * s;
@@ -188,9 +225,12 @@ internal static class UiGui
         ImGui.PushStyleColor(ImGuiCol.ButtonHovered, MaterialColor.Layer(fill, MaterialTheme.Current.IsLcars ? MaterialLcars.Periwinkle : c.OnPrimary, .08f));
         ImGui.PushStyleColor(ImGuiCol.ButtonActive, MaterialColor.Layer(fill, MaterialTheme.Current.IsLcars ? MaterialLcars.Periwinkle : c.OnPrimary, .14f));
         ImGui.PushStyleColor(ImGuiCol.Text, Vector4.Zero);
-        var clicked = ImGui.Button(original, size);
-        ImGui.PopStyleColor(4);
+        bool clicked;
+        using (var face = ChocoboPresentation.IsMaterial ? MaterialSkin.TransparentButtonFace() : default(MaterialStyleScope))
+            clicked = ImGui.Button(original, size);
         var min = ImGui.GetItemRectMin(); var max = ImGui.GetItemRectMax();
+        if (ChocoboPresentation.IsMaterial) MaterialSkin.PaintButton(min, max);
+        ImGui.PopStyleColor(4);
         var ink = MaterialTheme.Current.IsLcars ? MaterialLcars.Periwinkle : c.OnPrimary;
         var dl = ImGui.GetWindowDrawList();
         dl.PushClipRect(min, max, true);
@@ -221,7 +261,7 @@ internal static class UiGui
         var label = display ?? UiText.T(original.Split("##", 2)[0]);
         using var controls = MaterialControls.Context == MaterialControlContext.Dense
             ? default(MaterialControls.ControlScope) : MaterialControls.Push(MaterialControlContext.Toolbar);
-        using var lcars = MaterialLcars.NativeButtonStyle();
+        using var skin = MaterialSkin.NativeButtonStyle();
         using var lineHeight = MaterialText.PushLineHeight(label);
         var iconSize = logicalIconSize * scale; var gap = logicalGap * scale;
         var extra = trailingIcon == MaterialIcon.None ? 0 : gap + iconSize;
@@ -231,9 +271,12 @@ internal static class UiGui
         pixels.Y = Math.Max(pixels.Y, Math.Max(ImGui.GetFrameHeight(), iconSize + 2 * vertical * scale));
         var ink = ImGui.GetStyle().Colors[(int)ImGuiCol.Text];
         ImGui.PushStyleColor(ImGuiCol.Text, Vector4.Zero);
-        var clicked = ImGui.Button(original, pixels);
+        bool clicked;
+        using (var face = ChocoboPresentation.IsMaterial ? MaterialSkin.TransparentButtonFace() : default(MaterialStyleScope))
+            clicked = ImGui.Button(original, pixels);
         ImGui.PopStyleColor();
         var min = ImGui.GetItemRectMin(); var max = ImGui.GetItemRectMax();
+        if (ChocoboPresentation.IsMaterial) MaterialSkin.PaintButton(min, max);
         var width = iconSize + gap + textSize.X + extra;
         var position = min + new Vector2(Math.Max(ImGui.GetStyle().FramePadding.X, (max.X - min.X - width) * ImGui.GetStyle().ButtonTextAlign.X), (max.Y - min.Y - iconSize) * .5f);
         var drawList = ImGui.GetWindowDrawList();
@@ -256,6 +299,49 @@ internal static class UiGui
         using var lineHeight = MaterialText.PushLineHeight(UiText.T(original));
         return Math.Max(ImGui.GetFrameHeight(), (28 + 2 * (ChocoboPresentation.Compact ? 2 : 4)) * scale);
     }
+    internal static MaterialTabs.TabItemScope TabItem(string label, ImGuiTabItemFlags flags = ImGuiTabItemFlags.None)
+    {
+        if (!ChocoboPresentation.IsMaterial) return MaterialTabs.Item(label, flags);
+        MaterialTabs.TabItemScope tab;
+        using (var native = new MaterialStyleScope())
+        {
+            native.Color(ImGuiCol.Tab, Vector4.Zero);
+            native.Color(ImGuiCol.TabHovered, Vector4.Zero);
+            native.Color(ImGuiCol.TabActive, Vector4.Zero);
+            native.Color(ImGuiCol.TabUnfocused, Vector4.Zero);
+            native.Color(ImGuiCol.TabUnfocusedActive, Vector4.Zero);
+            native.Color(ImGuiCol.Text, Vector4.Zero);
+            tab = MaterialTabs.Item(label, flags);
+        }
+        try
+        {
+            var min = ImGui.GetItemRectMin(); var max = ImGui.GetItemRectMax();
+            var bar = ImGui.GetCurrentContext().CurrentTabBar;
+            var clipMin = new Vector2(Math.Max(min.X, bar.ScrollingRectMinX), min.Y);
+            var clipMax = new Vector2(Math.Min(max.X, bar.ScrollingRectMaxX), max.Y);
+            if (clipMax.X <= clipMin.X || clipMax.Y <= clipMin.Y) return tab;
+            var drawList = ImGui.GetWindowDrawList();
+            drawList.PushClipRect(clipMin, clipMax, true);
+            try
+            {
+                var c = MaterialTheme.Current.Colors;
+                using var selected = new MaterialStyleScope();
+                var fill = tab.Visible ? c.Primary : c.SurfaceContainerHigh;
+                selected.Color(ImGuiCol.Button, fill);
+                selected.Color(ImGuiCol.ButtonHovered, MaterialColor.Layer(fill, c.OnSurface, .08f));
+                selected.Color(ImGuiCol.ButtonActive, MaterialColor.Layer(fill, c.OnSurface, .14f));
+                MaterialSkin.PaintButton(min, max);
+                var caption = label.Split("##", 2)[0];
+                var textSize = MaterialText.Measure(caption);
+                MaterialText.AddText(drawList, min + new Vector2(bar.FramePadding.X, (max.Y - min.Y - textSize.Y) * .5f),
+                    MaterialCanvas.Color(tab.Visible ? c.OnPrimary : c.OnSurface), caption);
+            }
+            finally { drawList.PopClipRect(); }
+            return tab;
+        }
+        catch { tab.Dispose(); throw; }
+    }
+
     internal static bool TabItem(string original, MaterialIcon icon, float logicalWidth, ImGuiTabItemFlags flags = ImGuiTabItemFlags.None)
     {
         var s = MaterialTheme.Metrics.Scale;
@@ -267,30 +353,63 @@ internal static class UiGui
         ImGui.PushStyleColor(ImGuiCol.TabActive, MaterialTheme.Current.IsLcars ? MaterialLcars.Amber : MaterialTheme.Current.Colors.SurfaceContainer);
         var window = ImGuiP.GetCurrentWindow();
         var priorContentRight = window.DC.CursorMaxPos.X;
-        var open = ImGui.BeginTabItem(original, flags);
+        bool open;
+        Vector4 nativeBackground;
+        using (var native = new MaterialStyleScope())
+        {
+            if (ChocoboPresentation.IsMaterial)
+            {
+                native.Color(ImGuiCol.Tab, Vector4.Zero);
+                native.Color(ImGuiCol.TabHovered, Vector4.Zero);
+                native.Color(ImGuiCol.TabActive, Vector4.Zero);
+                native.Color(ImGuiCol.TabUnfocused, Vector4.Zero);
+                native.Color(ImGuiCol.TabUnfocusedActive, Vector4.Zero);
+                native.Color(ImGuiCol.Text, Vector4.Zero);
+            }
+            open = ImGui.BeginTabItem(original, flags);
+            nativeBackground = ImGui.GetStyle().Colors[(int)(ImGui.IsItemHovered() ? ImGuiCol.TabHovered : open ? ImGuiCol.TabActive : ImGuiCol.Tab)];
+        }
         window.DC.CursorMaxPos.X = Math.Max(priorContentRight, Math.Min(window.DC.CursorMaxPos.X, window.WorkRect.Max.X));
-        var nativeBackground = ImGui.GetStyle().Colors[(int)(ImGui.IsItemHovered() ? ImGuiCol.TabHovered : open ? ImGuiCol.TabActive : ImGuiCol.Tab)];
         ImGui.PopStyleColor();
         ImGui.PopStyleVar();
         var min = ImGui.GetItemRectMin();
         var max = ImGui.GetItemRectMax();
         var c = MaterialTheme.Current.Colors;
         var drawList = ImGui.GetWindowDrawList();
-        var tabInk = open && MaterialTheme.Current.IsLcars ? MaterialLcars.Background : open ? c.Primary : c.OnSurface;
+        var tabInk = open && MaterialTheme.Current.IsLcars ? MaterialLcars.Background
+            : open && ChocoboPresentation.IsMaterial ? c.OnPrimary : open ? c.Primary : c.OnSurface;
         var iconSize = 30 * s;
         var iconGap = 14 * s;
         var left = Math.Max(12 * s, (max.X - min.X - iconSize - iconGap - MaterialText.Measure(label).X) * .5f);
         var bar = ImGui.GetCurrentContext().CurrentTabBar;
-        drawList.PushClipRect(new Vector2(Math.Max(min.X, bar.ScrollingRectMinX), min.Y), new Vector2(Math.Min(max.X, bar.ScrollingRectMaxX), max.Y), true);
+        var clipMin = new Vector2(Math.Max(min.X, bar.ScrollingRectMinX), min.Y);
+        var clipMax = new Vector2(Math.Min(max.X, bar.ScrollingRectMaxX), max.Y);
+        if (clipMax.X <= clipMin.X || clipMax.Y <= clipMin.Y) return open;
+        drawList.PushClipRect(clipMin, clipMax, true);
         try
         {
-        var padding = new Vector2(16, ChocoboPresentation.Compact ? 12 : 16) * s;
-        drawList.AddRectFilled(min + padding - Vector2.One, min + padding + MaterialText.Measure(original) + Vector2.One, MaterialCanvas.Color(nativeBackground));
+        if (ChocoboPresentation.IsMaterial)
+        {
+            using var selected = new MaterialStyleScope();
+            var fill = open ? c.Primary : c.SurfaceContainerHigh;
+            selected.Color(ImGuiCol.Button, fill);
+            selected.Color(ImGuiCol.ButtonHovered, MaterialColor.Layer(fill, c.OnSurface, .08f));
+            selected.Color(ImGuiCol.ButtonActive, MaterialColor.Layer(fill, c.OnSurface, .14f));
+            MaterialSkin.PaintButton(min, max);
+        }
+        else
+        {
+            var padding = new Vector2(16, ChocoboPresentation.Compact ? 12 : 16) * s;
+            drawList.AddRectFilled(min + padding - Vector2.One, min + padding + MaterialText.Measure(original) + Vector2.One, MaterialCanvas.Color(nativeBackground));
+        }
         MaterialIcons.Draw(icon, min + new Vector2(left, Math.Max(0, (max.Y - min.Y - iconSize) * .5f)), iconSize, tabInk);
         MaterialText.AddText(drawList, min + new Vector2(left + iconSize + iconGap, Math.Max(0, (max.Y - min.Y - MaterialText.Measure(label).Y) * .5f)),
             MaterialCanvas.Color(tabInk), label);
-        drawList.AddRect(min, max, MaterialCanvas.Color(open ? c.Primary : c.OutlineVariant), 4 * s);
-        if (open) drawList.AddRectFilled(new Vector2(min.X, max.Y - 4 * s), max, MaterialCanvas.Color(c.Primary));
+        if (!ChocoboPresentation.IsMaterial)
+        {
+            drawList.AddRect(min, max, MaterialCanvas.Color(open ? c.Primary : c.OutlineVariant), 4 * s);
+            if (open) drawList.AddRectFilled(new Vector2(min.X, max.Y - 4 * s), max, MaterialCanvas.Color(c.Primary));
+        }
         }
         finally { drawList.PopClipRect(); }
         return open;
@@ -437,12 +556,25 @@ internal static class UiGui
     {
         var label = UiText.T(original.Split("##", 2)[0]);
         using var height = MaterialText.PushLineHeight(label);
+        using var skin = ChocoboPresentation.IsMaterial ? MaterialSkin.NativeButtonStyle() : default(MaterialStyleScope);
+        using var material = new MaterialStyleScope();
+        if (ChocoboPresentation.IsMaterial)
+        {
+            var colors = ImGui.GetStyle().Colors;
+            material.Color(ImGuiCol.Button, colors[(int)ImGuiCol.Header]);
+            material.Color(ImGuiCol.ButtonHovered, colors[(int)ImGuiCol.HeaderHovered]);
+            material.Color(ImGuiCol.ButtonActive, colors[(int)ImGuiCol.HeaderActive]);
+            material.Color(ImGuiCol.Header, Vector4.Zero);
+            material.Color(ImGuiCol.HeaderHovered, Vector4.Zero);
+            material.Color(ImGuiCol.HeaderActive, Vector4.Zero);
+        }
         var origin = ImGui.GetCursorScreenPos();
         var color = ImGui.GetStyle().Colors[(int)ImGuiCol.Text];
         ImGui.PushStyleColor(ImGuiCol.Text, Vector4.Zero);
         var open = ImGui.CollapsingHeader(original);
         ImGui.PopStyleColor();
         var min = ImGui.GetItemRectMin(); var max = ImGui.GetItemRectMax();
+        if (ChocoboPresentation.IsMaterial) MaterialSkin.PaintButton(min, max);
         var drawList = ImGui.GetWindowDrawList();
         drawList.PushClipRect(min, max, true);
         try

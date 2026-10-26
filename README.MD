@@ -4,7 +4,9 @@ Hindi uses installed shaping fonts. The source now leaves other languages usable
 
 Use Settings for shared colour, UI language, compact spacing and window transparency/fade; titlebar appearance actions change the same saved preferences. The packaged plugin icon appears in Main branding and its expanded/collapsed title without recolouring dye swatches. Calculate creates the feeding plan; the Automation controls start or stop feeding using the existing character, timer and fruit checks.
 
-The Colour popup and Window appearance settings share Auto, Picker and LCARS. LCARS adds black surfaces, segmented rails, framed panels and outlined controls while retaining saved Picker colours. Wide LCARS calculator windows show required fruits beside feeding order; narrower windows stack them. Optional UI sounds start muted. The titlebar speaker and UI sounds setting control the same saved preference; Preview sound is available when sounds are enabled.
+The Colour popup and Window appearance settings share Auto, Picker, LCARS, Glassmorphism, Spatial and Cyberpunk. Each new material retains its own Background, Controls and Text palette; LCARS has Background and three bar colours. Individual and current-palette resets preserve other palettes and the exact game dye swatches. Wide calculator windows show required fruits beside feeding order; narrower windows stack them. Optional LCARS sounds start muted and share their existing saved preference.
+
+Glass animation starts enabled, with speed from 0.1 to 10x (default 1x), three editable wave colours and a separate wave reset. Pausing animation keeps wave colours editable. Palette resets retain the waves, while wave resets retain the palette. Appearance uses the existing configuration; feeding plans keep their separate storage and existing timer and inventory checks.
 
 The approved main and compact calculator designs show colour selection, required
 fruits and feeding order in separate panels, with Save/Copy actions reserved at

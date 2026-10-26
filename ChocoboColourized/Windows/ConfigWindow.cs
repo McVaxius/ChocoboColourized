@@ -12,6 +12,7 @@ public class ConfigWindow : Window, IDisposable
 {
     private readonly AethertekUI.Dalamud.MaterialSupportLog supportLog = new();
     private readonly MaterialWindowMotion windowMotion = new();
+    private bool materialBackdropPending;
     private readonly Configuration configuration;
     private readonly Plugin plugin;
 
@@ -40,16 +41,20 @@ public class ConfigWindow : Window, IDisposable
             Flags |= ImGuiWindowFlags.NoMove;
         }
         windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
+        materialBackdropPending = ChocoboPresentation.PrepareMaterialBackdrop();
     }
 
     public override void PostDraw()
     {
+        ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
         windowMotion.Restore(this);
         UiGui.PaintTitleWithImageAndStatus(this, UiText.T("Chocobo Colourized Settings"), status: plugin.TitlebarStatus);
     }
 
     public override void Draw()
     {
+        ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
+        MaterialSkin.Backdrop();
         windowMotion.DrawChrome();
         if (MaterialTheme.Current.IsLcars)
         {
@@ -60,7 +65,7 @@ public class ConfigWindow : Window, IDisposable
         var settingsRoot = ImGui.GetID("");
         using var tabs = MaterialTabs.Begin("ChocoboColourizedSettingsTabs", new[] { UiText.T("Settings"), UiText.T("Window appearance") }, ImGuiTabBarFlags.FittingPolicyScroll);
         if (!tabs.Visible) return;
-        using (var general = MaterialTabs.Item(UiText.T("Settings") + "###Settings", ImGuiTabItemFlags.NoPushId))
+        using (var general = UiGui.TabItem(UiText.T("Settings") + "###Settings", ImGuiTabItemFlags.NoPushId))
         {
             if (general.Visible)
             {
@@ -79,7 +84,7 @@ public class ConfigWindow : Window, IDisposable
                 finally { ImGui.PopID(); }
             }
         }
-        using (var appearance = MaterialTabs.Item(UiText.T("Window appearance") + "###WindowAppearance", ImGuiTabItemFlags.NoPushId))
+        using (var appearance = UiGui.TabItem(UiText.T("Window appearance") + "###WindowAppearance", ImGuiTabItemFlags.NoPushId))
             if (appearance.Visible)
             {
                 ImGuiP.PushOverrideID(settingsRoot);

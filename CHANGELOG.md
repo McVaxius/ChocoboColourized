@@ -1,3 +1,9 @@
+2026-10-26 - 2.0.0.12 - Approved material styles and colour controls
+
+- Add Glassmorphism, Spatial and Cyberpunk to the retained calculator, Automation, Timers, Settings and supporting surfaces. Preserve Auto, Picker, LCARS, native actions/IDs, dye swatches, fonts, density and opacity.
+- Expose independent palettes and resets, LCARS Background/three-bar colours, and Glass animation, speed and three wave colours with separate resets through the existing settings. Translate the controls in all fifteen catalogs.
+- Update both existing CI library pins to the published AethertekUI revision used by the integration. Preserve feeding gates, timer-first completion and separate plan storage.
+
 2026-10-23 - LCARS appearance (unreleased)
 
 - Add LCARS as the third Colour choice after Auto and Picker, retaining the existing automatic palette, saved Picker RGB values and game dye swatches.
