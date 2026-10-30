@@ -1,3 +1,10 @@
+2026-10-29 - 2.0.0.13 - Shared glass backgrounds and window controls
+
+- Add actual glass Background rendering, independent Waves/Lights/Image controls, an image browser, and explicit screenshot pause in Colour and Transparency. Keep foreground controls, saved palettes, opacity/fade and languages.
+- Add native/styled UI and movement/resize lock controls in Settings and native titles, plus `/chococolor ui`, `ui on`, `ui off`, `lock` and `unlock`. Keep window movement independent from blur and preserve the existing Settings movement preference.
+- Release the image picker on unload and derive popup opacity from its actual owner, including when reopening a window.
+- Ship the shared renderer dependencies and Glasswork MIT notice. Host GPU, detached-window and screenshot acceptance remain separate from local compilation.
+
 2026-10-26 - 2.0.0.12 - Approved material styles and colour controls
 
 - Add Glassmorphism, Spatial and Cyberpunk to the retained calculator, Automation, Timers, Settings and supporting surfaces. Preserve Auto, Picker, LCARS, native actions/IDs, dye swatches, fonts, density and opacity.

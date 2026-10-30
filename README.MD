@@ -8,6 +8,8 @@ The Colour popup and Window appearance settings share Auto, Picker, LCARS, Glass
 
 Glass animation starts enabled, with speed from 0.1 to 10x (default 1x), three editable wave colours and a separate wave reset. Pausing animation keeps wave colours editable. Palette resets retain the waves, while wave resets retain the palette. Appearance uses the existing configuration; feeding plans keep their separate storage and existing timer and inventory checks.
 
+Background blur uses actual glass behind Background surfaces, with 75% Frost initially enabled for Glassmorphism and disabled for other styles. Glass offers Waves, three Lights effects and a browsable local Image, retaining their independent colours and palettes. Colour and Transparency share an explicit screenshot-pause control that starts off. Native/styled UI and movement/resize lock are available in titlebars and Settings; `/chococolor style`, `style on`, `style off`, `lock` and `unlock` control the same preferences. Window movement remains independent from glass, and opacity/fade keeps its separate controls.
+
 The approved main and compact calculator designs show colour selection, required
 fruits and feeding order in separate panels, with Save/Copy actions reserved at
 the bottom. Before calculation the fruit table and feeding order are empty.

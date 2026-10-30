@@ -5,6 +5,7 @@ using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 using Dalamud.Interface;
+using Dalamud.Interface.ImGuiFileDialog;
 
 namespace ChocoboColourized.Ui;
 
@@ -31,6 +32,10 @@ internal sealed class ChocoboAppearance : IDisposable
     private MaterialUiSoundPlayer? uiSoundPlayer;
     private bool appliedSoundsMuted = true;
     private readonly Dictionary<Window, TitleBarButton> soundTitleButtons = new();
+    private readonly FileDialogManager imagePicker = new();
+    private MaterialGlassRenderer? backgroundGlass;
+    internal bool BackgroundEnabled => plugin.Configuration.UiStylingEnabled &&
+        (colorDraft.HasBackgroundBlur(colorDraft.Mode) || colorDraft.Mode == MaterialColorMode.Glassmorphism && colorDraft.GlassBackground == MaterialGlassBackground.Image);
 
     private void Apply()
     {
@@ -71,8 +76,28 @@ internal sealed class ChocoboAppearance : IDisposable
 
     internal void Draw(WindowSystem windows)
     {
+        try { DrawCore(windows); }
+        catch { backgroundGlass?.EndFrame(false); throw; }
+    }
+
+    private void DrawCore(WindowSystem windows)
+    {
         Apply();
-        if (!windows.Windows.Any(window => window.IsOpen)) return;
+        if (!windows.Windows.Any(window => window.IsOpen))
+        {
+            backgroundGlass?.EndFrame(false);
+            if (fonts.Ready && checkedGeneration == fonts.Generation)
+            {
+                using var pickerText = text.Enter();
+                using var pickerShaping = shapedText.Push();
+                using var pickerTheme = MaterialTheme.Push(theme, ImGuiHelpers.GlobalScale,
+                    plugin.Configuration.UiStylingEnabled ? MaterialStyleMode.ColorsOnly : MaterialStyleMode.Native);
+                using var pickerBody = fonts.Push(UiFontRole.Body);
+                using var pickerBackground = MaterialSkin.PushBackgroundRenderer(null, false, 0);
+                imagePicker.Draw();
+            }
+            return;
+        }
         using var resources = text.Enter();
         using var shaping = shapedText.Push();
         if (fonts.Ready && checkedGeneration != fonts.Generation)
@@ -97,20 +122,25 @@ internal sealed class ChocoboAppearance : IDisposable
                 if (!fontIssueLogged) { Plugin.Log.Error(ex, "[ChocoboColourized] Required UI glyph coverage failed."); fontIssueLogged = true; }
             }
         }
-        using var palette = MaterialTheme.Push(theme, ImGuiHelpers.GlobalScale, MaterialStyleMode.ColorsOnly);
-        using var chrome = MaterialWindowChrome.Push();
+        using var palette = MaterialTheme.Push(theme, ImGuiHelpers.GlobalScale,
+            plugin.Configuration.UiStylingEnabled ? MaterialStyleMode.ColorsOnly : MaterialStyleMode.Native);
+        using var chrome = plugin.Configuration.UiStylingEnabled ? MaterialWindowChrome.Push() : default;
         if (!fonts.Ready || checkedGeneration != fonts.Generation)
         {
+            backgroundGlass?.EndFrame(false);
             if (!fontIssueLogged && fonts.LoadException is { } error) { Plugin.Log.Error(error, "[ChocoboColourized] Required UI fonts failed to load."); fontIssueLogged = true; }
             ImGui.SetNextWindowSize(new Vector2(460 * ImGuiHelpers.GlobalScale, 0));
-            fontStatusMotion.PreDraw("Chocobo Colourized##FontStatus", null, null, reducedMotion: false, prepareDecorations: fontStatusDecorations.Prepare);
+            fontStatusMotion.PreDraw("Chocobo Colourized##FontStatus", null, null,
+                reducedMotion: !plugin.Configuration.UiStylingEnabled,
+                prepareDecorations: plugin.Configuration.UiStylingEnabled ? fontStatusDecorations.Prepare : null);
             bool visible;
             using (var backdrop = MaterialSkin.BackdropStyle())
-                visible = ImGui.Begin("Chocobo Colourized##FontStatus", ImGuiWindowFlags.AlwaysAutoResize);
+                visible = ImGui.Begin("Chocobo Colourized##FontStatus", ImGuiWindowFlags.AlwaysAutoResize |
+                    (plugin.Configuration.UiWindowsLocked ? ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize : ImGuiWindowFlags.None));
             if (visible)
             {
                 MaterialSkin.Backdrop();
-                fontStatusDecorations.Paint();
+                if (plugin.Configuration.UiStylingEnabled) fontStatusDecorations.Paint();
                 var failed = fonts.LoadException is not null || fontIssueLogged;
                 ImGui.TextWrapped(appliedLanguage == "hi" && failed ? "Hindi UI fonts are unavailable. Use English to continue."
                     : failed ? "UI fonts failed to load. See the plugin log." : "Loading UI fonts...");
@@ -121,26 +151,58 @@ internal sealed class ChocoboAppearance : IDisposable
                 }
             }
             ImGui.End();
-            fontStatusDecorations.Paint();
+            if (plugin.Configuration.UiStylingEnabled) fontStatusDecorations.Paint();
             fontStatusMotion.PostDraw();
             ApplyWindowOpacity("Chocobo Colourized##FontStatus");
             return;
         }
-        using var style = new MaterialStyleScope();
-        var s = ImGuiHelpers.GlobalScale;
-        style.Style(ImGuiStyleVar.WindowPadding, new Vector2(16) * s);
-        style.Style(ImGuiStyleVar.ItemSpacing, new Vector2(plugin.Configuration.UiCompact ? 8 : 12, plugin.Configuration.UiCompact ? 5 : 10) * s);
-        style.Style(ImGuiStyleVar.FramePadding, new Vector2(plugin.Configuration.UiCompact ? 10 : 14, plugin.Configuration.UiCompact ? 4 : 7) * s);
-        style.Style(ImGuiStyleVar.CellPadding, new Vector2(plugin.Configuration.UiCompact ? 6 : 10, plugin.Configuration.UiCompact ? 4 : 8) * s);
-        style.Style(ImGuiStyleVar.FrameRounding, 4 * s);
-        style.Style(ImGuiStyleVar.ChildRounding, 4 * s);
-        if (ChocoboPresentation.IsMaterial) style.Color(ImGuiCol.ChildBg, Vector4.Zero);
-        using var body = fonts.Push(UiFontRole.Body);
-        PrepareAppearanceTitleBars(windows);
-        windows.Draw();
-        foreach (var titlebar in appearanceTitleBars.Values) titlebar.DrawPopups();
-        foreach (var window in windows.Windows)
-            if (window.IsOpen) ApplyWindowOpacity(window.WindowName);
+        var blur = plugin.Configuration.UiStylingEnabled && colorDraft.HasBackgroundBlur(colorDraft.Mode);
+        var image = plugin.Configuration.UiStylingEnabled && colorDraft.Mode == MaterialColorMode.Glassmorphism &&
+            colorDraft.GlassBackground == MaterialGlassBackground.Image;
+        if (blur || image) backgroundGlass ??= new(Plugin.PluginInterface, Plugin.Log);
+        backgroundGlass?.ConfigureImage(Plugin.TextureProvider, image, plugin.Configuration.UiColors?.GlassImagePath);
+        backgroundGlass?.BeginFrame();
+        var restoreBackground = blur || image
+            ? windows.Windows.Where(window => (window.Flags & ImGuiWindowFlags.NoBackground) == 0).ToArray()
+            : Array.Empty<Window>();
+        var completed = false;
+        using (MaterialSkin.PushBackgroundRenderer(blur || image ? backgroundGlass : null, blur, colorDraft.BackgroundBlurPercent / 100f))
+        {
+            try
+            {
+                using var style = new MaterialStyleScope();
+                var s = ImGuiHelpers.GlobalScale;
+                if (plugin.Configuration.UiStylingEnabled)
+                {
+                    style.Style(ImGuiStyleVar.WindowPadding, new Vector2(16) * s);
+                    style.Style(ImGuiStyleVar.ItemSpacing, new Vector2(plugin.Configuration.UiCompact ? 8 : 12, plugin.Configuration.UiCompact ? 5 : 10) * s);
+                    style.Style(ImGuiStyleVar.FramePadding, new Vector2(plugin.Configuration.UiCompact ? 10 : 14, plugin.Configuration.UiCompact ? 4 : 7) * s);
+                    style.Style(ImGuiStyleVar.CellPadding, new Vector2(plugin.Configuration.UiCompact ? 6 : 10, plugin.Configuration.UiCompact ? 4 : 8) * s);
+                    style.Style(ImGuiStyleVar.FrameRounding, 4 * s);
+                    style.Style(ImGuiStyleVar.ChildRounding, 4 * s);
+                    if (ChocoboPresentation.IsMaterial) style.Color(ImGuiCol.ChildBg, Vector4.Zero);
+                }
+                using var body = fonts.Push(UiFontRole.Body);
+                PrepareAppearanceTitleBars(windows);
+                foreach (var window in windows.Windows) window.AllowBackgroundBlur = false;
+                foreach (var window in restoreBackground) window.Flags |= ImGuiWindowFlags.NoBackground;
+                windows.Draw();
+                foreach (var (window, titlebar) in appearanceTitleBars)
+                {
+                    PrepareBackgroundOpacity(window.WindowName);
+                    titlebar.DrawPopups();
+                }
+                foreach (var window in windows.Windows)
+                    if (window.IsOpen) ApplyWindowOpacity(window.WindowName);
+                completed = true;
+            }
+            finally
+            {
+                foreach (var window in restoreBackground) window.Flags &= ~ImGuiWindowFlags.NoBackground;
+                backgroundGlass?.EndFrame((blur || image) && completed);
+            }
+        }
+        using (fonts.Push(UiFontRole.Body)) imagePicker.Draw();
     }
 
     internal float SelectorWidth
@@ -177,14 +239,54 @@ internal sealed class ChocoboAppearance : IDisposable
         theme.Feedback = PlayLcarsSound;
         var rgb = ChocoboPresentation.Rgb(appliedAccent);
         accentDraft = new(rgb.X, rgb.Y, rgb.Z);
+        Plugin.PluginInterface.UiBuilder.ResizeBuffers += ReleaseBackgroundResources;
     }
     private IDisposable PushFont(UiFontRole role) => fonts.Push(role);
     internal string Label(string key) => text.Label(key);
     internal string Format(string key, params object?[] arguments) => text.Format(key, arguments);
 
-    public void Dispose() { uiSoundPlayer?.Dispose(); fonts?.Dispose(); text?.Dispose(); shapedText.Dispose(); }
+    public void Dispose()
+    {
+        Plugin.PluginInterface.UiBuilder.ResizeBuffers -= ReleaseBackgroundResources;
+        imagePicker.Reset();
+        backgroundGlass?.Dispose();
+        uiSoundPlayer?.Dispose(); fonts?.Dispose(); text?.Dispose(); shapedText.Dispose();
+    }
 
-    private bool LcarsActive => plugin.Configuration.UiColors?.Mode == MaterialColorMode.Lcars;
+    private void ReleaseBackgroundResources() => backgroundGlass?.ReleaseResources();
+
+    private bool LcarsActive => plugin.Configuration.UiStylingEnabled && plugin.Configuration.UiColors?.Mode == MaterialColorMode.Lcars;
+
+    internal bool TryApplyCommand(string arguments)
+    {
+        switch (arguments.Trim().ToLowerInvariant())
+        {
+            case "lock": plugin.Configuration.UiWindowsLocked = true; break;
+            case "unlock": plugin.Configuration.UiWindowsLocked = false; break;
+            case "ui": case "style": case "styling": SetStyling(!plugin.Configuration.UiStylingEnabled); return true;
+            case "ui on": case "style on": case "styling on": SetStyling(true); return true;
+            case "ui off": case "style off": case "styling off": SetStyling(false); return true;
+            default: return false;
+        }
+        plugin.Configuration.Save();
+        return true;
+    }
+
+    private void SetStyling(bool enabled)
+    {
+        plugin.Configuration.UiStylingEnabled = enabled;
+        if (!enabled) uiSoundPlayer?.Stop();
+        plugin.Configuration.Save();
+    }
+
+    internal void PrepareBackgroundOpacity(string windowName, bool appearing = false)
+    {
+        if (backgroundGlass == null) return;
+        var owner = ImGuiP.FindWindowByName(windowName);
+        appearing |= !owner.IsNull && owner.Appearing;
+        backgroundGlass.Opacity = !plugin.Configuration.UiTransparencyEnabled ? 1 : appearing || !windowOpacities.TryGetValue(windowName, out var opacity)
+            ? plugin.Configuration.UiWindowOpacityPercent / 100f : opacity.CurrentOpacity;
+    }
 
     private void PlayLcarsSound(MaterialUiSoundCue cue)
     {
@@ -245,6 +347,11 @@ internal sealed class ChocoboAppearance : IDisposable
     internal void DrawWindowAppearanceSettings()
     {
         if (!UiGui.CollapsingHeader("Window appearance###UiWindowAppearance")) return;
+        var styling = plugin.Configuration.UiStylingEnabled;
+        if (MaterialSelection.Checkbox("UI styling", UiText.T("UI styling"), ref styling, Math.Max(1, ImGui.GetContentRegionAvail().X))) SetStyling(styling);
+        var locked = plugin.Configuration.UiWindowsLocked;
+        if (MaterialSelection.Checkbox("Lock window movement and resizing", UiText.T("Lock window movement and resizing"), ref locked, Math.Max(1, ImGui.GetContentRegionAvail().X)))
+        { plugin.Configuration.UiWindowsLocked = locked; plugin.Configuration.Save(); }
         var showTitlebarStatus = plugin.Configuration.UiShowTitlebarStatus;
         if (UiGui.Checkbox(UiText.T("Show titlebar status") + "###UiShowTitlebarStatus", ref showTitlebarStatus))
         { plugin.Configuration.UiShowTitlebarStatus = showTitlebarStatus; plugin.Configuration.Save(); }
@@ -274,7 +381,8 @@ internal sealed class ChocoboAppearance : IDisposable
         {
             if ((window.Flags & ImGuiWindowFlags.NoTitleBar) != 0) continue;
             if (!appearanceTitleBars.ContainsKey(window))
-                appearanceTitleBars.Add(window, AethertekUI.Dalamud.MaterialAppearanceTitleBar.Register(window,
+            {
+                var actions = AethertekUI.Dalamud.MaterialAppearanceTitleBar.Register(window,
                     () => new(UiText.T("Language"), UiText.T("Compact mode"), UiText.T("Transparency"), UiText.T("Color")),
                     () => DrawSelector(false),
                     () => { plugin.Configuration.UiCompact = !plugin.Configuration.UiCompact; plugin.Configuration.Save(); },
@@ -282,9 +390,15 @@ internal sealed class ChocoboAppearance : IDisposable
                     () => window is global::ChocoboColourized.Windows.MainWindow
                         ? new(plugin.Configuration.UiLanguageVisibleOnMainWindow, plugin.Configuration.UiCompactVisibleOnMainWindow,
                             plugin.Configuration.UiTransparencyVisibleOnMainWindow, true)
-                        : new(true, true, true, true)));
+                        : new(true, true, true, true));
+                actions.RegisterWindowControls(() => SetStyling(!plugin.Configuration.UiStylingEnabled),
+                    () => UiText.T(plugin.Configuration.UiStylingEnabled ? "Use native UI" : "Use styled UI"),
+                    () => { plugin.Configuration.UiWindowsLocked = !plugin.Configuration.UiWindowsLocked; plugin.Configuration.Save(); },
+                    () => UiText.T(plugin.Configuration.UiWindowsLocked ? "Unlock windows" : "Lock windows"));
+                appearanceTitleBars.Add(window, actions);
+            }
             appearanceTitleBars[window].RefreshVisibility();
-            appearanceTitleBars[window].SetLcarsIcons(theme.IsLcars);
+            appearanceTitleBars[window].SetLcarsIcons(LcarsActive);
             if (!soundTitleButtons.TryGetValue(window, out var sound))
             {
                 sound = new TitleBarButton
@@ -297,14 +411,14 @@ internal sealed class ChocoboAppearance : IDisposable
                 soundTitleButtons.Add(window, sound);
             }
             sound.Icon = plugin.Configuration.UiLcarsSoundsMuted ? FontAwesomeIcon.VolumeMute : FontAwesomeIcon.VolumeUp;
-            if (theme.IsLcars && !window.TitleBarButtons.Contains(sound)) window.TitleBarButtons.Add(sound);
-            else if (!theme.IsLcars) window.TitleBarButtons.Remove(sound);
+            if (LcarsActive && !window.TitleBarButtons.Contains(sound)) window.TitleBarButtons.Add(sound);
+            else if (!LcarsActive) window.TitleBarButtons.Remove(sound);
         }
     }
 
     private void DrawTitleBarColour()
     {
-        if (!MaterialAppearanceSelector.DrawColors("appearance", ref colorDraft, ref accentDraft,
+        var changed = MaterialAppearanceSelector.DrawColors("appearance", ref colorDraft, ref accentDraft,
                 new(UiText.T("Color"), UiText.T("Language"), UiText.T("Teal"), UiText.T("Blue"), UiText.T("Pink"), UiText.T("Custom RGB")),
                 new(UiText.T("Auto"), UiText.T("Picker"), UiText.T("Default"), UiText.T("Background, controls and text follow your theme."),
                     UiText.T("Theme colour"), UiText.T("Choose each colour independently."), UiText.T("Background"), UiText.T("Controls"),
@@ -319,15 +433,53 @@ internal sealed class ChocoboAppearance : IDisposable
                         WaveColors = UiText.T("Wave colours"), GlassWave1 = UiText.T("Wave colour 1"),
                         GlassWave2 = UiText.T("Wave colour 2"), GlassWave3 = UiText.T("Wave colour 3"),
                         ResetWaveColors = UiText.T("Reset wave colours"),
+                        BackgroundMode = UiText.T("Background mode"), Waves = UiText.T("Waves"), Lights = UiText.T("Lights"), Image = UiText.T("Image"),
+                        LightEffect = UiText.T("Light effect"), AmbientGlows = UiText.T("Ambient glows"), SweepingBeams = UiText.T("Sweeping beams"),
+                        PointerGlow = UiText.T("Mouse-following glow"), ImageFile = UiText.T("Image file"), BrowseImage = UiText.T("Browse..."),
+                        LoadImage = UiText.T("Load image"), ImageHelp = UiText.T("The image fills the window. Blur (%) applies to the image."),
+                        LightColors = UiText.T("Light colours"), GlassLight1 = UiText.T("Light colour 1"), GlassLight2 = UiText.T("Light colour 2"),
+                        GlassLight3 = UiText.T("Light colour 3"), ResetLightColors = UiText.T("Reset light colours"),
+                        BackgroundBlur = UiText.T("Background blur"), BlurPercent = UiText.T("Blur (%)"),
                     }, new MaterialColorSettings(), MaterialColorSettings.Rgb(ChocoboPresentation.ReferenceAccent),
-                plugin.Configuration.UiCompact ? 298 : 316)) return;
-        plugin.Configuration.UiColors = colorDraft;
-        plugin.Configuration.UiAccentRgb = MaterialColorSettings.ToRgb(accentDraft);
-        plugin.Configuration.Save();
+                BrowseImage, plugin.Configuration.UiCompact ? 298 : 316);
+        if (changed)
+        {
+            plugin.Configuration.UiColors = colorDraft;
+            plugin.Configuration.UiAccentRgb = MaterialColorSettings.ToRgb(accentDraft);
+            plugin.Configuration.Save();
+        }
+        DrawScreenshotPause("colour");
+        if (backgroundGlass?.ImageProblem is { } problem) UiGui.TextWrapped(problem);
+    }
+
+    private void BrowseImage()
+        => imagePicker.OpenFileDialog(UiText.T("Choose background image") + "###ChocoboColourizedBackgroundImagePicker",
+            UiText.T("Images") + "{.png,.jpg,.jpeg,.bmp,.gif,.webp,.tif,.tiff,.dds,.tga},.*", (accepted, path) =>
+            {
+                if (!accepted) return;
+                var previous = plugin.Configuration.UiColors?.GlassImagePath;
+                plugin.Configuration.UiColors = colorDraft = colorDraft with { GlassImagePath = path };
+                if (path != previous) plugin.Configuration.Save();
+            });
+
+    private void DrawScreenshotPause(string id)
+    {
+        var paused = backgroundGlass?.ScreenshotsPaused == true;
+        if (!paused && colorDraft.Mode == MaterialColorMode.Glassmorphism && colorDraft.GlassBackground == MaterialGlassBackground.Image)
+        { UiGui.TextWrapped("Image backgrounds remain visible to screenshots."); return; }
+        ImGui.PushID(id);
+        ImGui.BeginDisabled(!paused && backgroundGlass?.CanPauseForScreenshots != true);
+        try
+        {
+            if (MaterialSelection.Checkbox("##pause-backdrop", UiText.T("Pause backdrop for screenshots"), ref paused,
+                Math.Max(1, ImGui.GetContentRegionAvail().X))) backgroundGlass?.TrySetScreenshotsPaused(paused);
+        }
+        finally { ImGui.EndDisabled(); ImGui.PopID(); }
     }
 
     private void DrawTransparencySettings()
     {
+        DrawScreenshotPause("transparency");
         var enabled = plugin.Configuration.UiTransparencyEnabled;
         if (UiGui.Checkbox("Transparency", ref enabled))
         { plugin.Configuration.UiTransparencyEnabled = enabled; plugin.Configuration.Save(); }

@@ -4,9 +4,9 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>2.0.0.12</Version>
-    <FileVersion>2.0.0.12</FileVersion>
-    <AssemblyVersion>2.0.0.12</AssemblyVersion>
+    <Version>2.0.0.13</Version>
+    <FileVersion>2.0.0.13</FileVersion>
+    <AssemblyVersion>2.0.0.13</AssemblyVersion>
     <PackageProjectUrl>https://github.com/McVaxius/ChocoboColourized</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
@@ -26,6 +26,12 @@
     <None Include="images\icon.png" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="images\icon.png" LogicalName="ChocoboColourized.images.icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="TerraFX.Interop.Windows">
+      <HintPath>$(DalamudLibPath)/TerraFX.Interop.Windows.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
 
   <Target Name="CopyPluginArtifacts" AfterTargets="Build">
     <PropertyGroup>
@@ -38,6 +44,10 @@
       <PluginFiles Include="$(TargetPath)" />
       <PluginFiles Include="$(TargetDir)AethertekUI.dll" />
       <PluginFiles Include="$(TargetDir)AethertekUI.Dalamud.dll" />
+      <PluginFiles Include="$(TargetDir)Glasswork.dll" />
+      <PluginFiles Include="$(TargetDir)Glasswork.Glass.dll" />
+      <PluginFiles Include="$(TargetDir)Glasswork.Backend.dll" />
+      <PluginFiles Include="$(TargetDir)Notices\Glasswork.MIT.txt" />
       <PluginFiles Include="$(ProjectDir)$(AssemblyName).json" />
     </ItemGroup>
 

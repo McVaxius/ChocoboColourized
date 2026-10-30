@@ -124,6 +124,7 @@ public sealed class Plugin : IDalamudPlugin
 
     private void OnCommand(string command, string args)
     {
+        if (Appearance.TryApplyCommand(args)) return;
         MainWindow.IsOpen = !MainWindow.IsOpen;
         if (MainWindow.IsOpen)
             BuddyFeedCutsceneSkip.Enable();

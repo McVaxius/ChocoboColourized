@@ -88,9 +88,9 @@ internal static class ChocoboPresentation
             Gap = 8 * s, IconSize = 22 * s, Rounding = 4 * s, ItemSpacing = new(10 * s, 6 * s), CellPadding = new(12 * s, 6 * s) };
     }
 
-    internal static bool PrepareMaterialBackdrop()
+    internal static bool PrepareMaterialBackdrop(bool backgroundEnabled)
     {
-        if (!IsMaterial) return false;
+        if (!IsMaterial && !backgroundEnabled) return false;
         ImGui.PushStyleColor(ImGuiCol.WindowBg, Vector4.Zero);
         return true;
     }
@@ -110,7 +110,7 @@ internal static class ChocoboPresentation
             return;
         }
         var c = MaterialTheme.Current.Colors;
-        MaterialCanvas.Surface(min, max, c.SurfaceContainerHigh, c.Surface, 4 * MaterialTheme.Metrics.Scale);
+        MaterialCanvas.Surface(min, max, MaterialSkin.BackgroundFill(c.SurfaceContainerHigh), MaterialSkin.BackgroundFill(c.Surface), 4 * MaterialTheme.Metrics.Scale);
         ImGui.GetWindowDrawList().AddRect(min, max, MaterialCanvas.Color(c.OutlineVariant), 4 * MaterialTheme.Metrics.Scale);
     }
 

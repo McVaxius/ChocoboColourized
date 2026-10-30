@@ -12,6 +12,7 @@ public class ConfigWindow : Window, IDisposable
 {
     private readonly AethertekUI.Dalamud.MaterialSupportLog supportLog = new();
     private readonly MaterialWindowMotion windowMotion = new();
+    private readonly MaterialWindowLock movementLock = new();
     private bool materialBackdropPending;
     private readonly Configuration configuration;
     private readonly Plugin plugin;
@@ -40,12 +41,14 @@ public class ConfigWindow : Window, IDisposable
         {
             Flags |= ImGuiWindowFlags.NoMove;
         }
-        windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
-        materialBackdropPending = ChocoboPresentation.PrepareMaterialBackdrop();
+        windowMotion.Prepare(this, reducedMotion: !configuration.UiStylingEnabled, roundedCorners: configuration.UiStylingEnabled);
+        materialBackdropPending = ChocoboPresentation.PrepareMaterialBackdrop(plugin.Appearance.BackgroundEnabled);
+        movementLock.Apply(this, configuration.UiWindowsLocked);
     }
 
     public override void PostDraw()
     {
+        movementLock.Restore(this);
         ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
         windowMotion.Restore(this);
         UiGui.PaintTitleWithImageAndStatus(this, UiText.T("Chocobo Colourized Settings"), status: plugin.TitlebarStatus);
@@ -54,7 +57,9 @@ public class ConfigWindow : Window, IDisposable
     public override void Draw()
     {
         ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
+        plugin.Appearance.PrepareBackgroundOpacity(WindowName, ImGui.IsWindowAppearing());
         MaterialSkin.Backdrop();
+        using var structuralBackgrounds = MaterialSkin.StructuralBackgroundStyle();
         windowMotion.DrawChrome();
         if (MaterialTheme.Current.IsLcars)
         {

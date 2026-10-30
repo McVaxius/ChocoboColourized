@@ -18,6 +18,7 @@ namespace ChocoboColourized.Windows;
 public class MainWindow : Window, IDisposable
 {
     private readonly MaterialWindowMotion windowMotion = new();
+    private readonly MaterialWindowLock movementLock = new();
     private bool materialBackdropPending;
     private readonly Plugin plugin;
 
@@ -83,12 +84,14 @@ public class MainWindow : Window, IDisposable
     public override void PreDraw()
     {
         UiGui.ReserveTitleSpace(this, UiText.T("Chocobo Colourized") + " v" + typeof(Plugin).Assembly.GetName().Version, 520);
-        windowMotion.Prepare(this, reducedMotion: false, roundedCorners: true);
-        materialBackdropPending = ChocoboPresentation.PrepareMaterialBackdrop();
+        windowMotion.Prepare(this, reducedMotion: !plugin.Configuration.UiStylingEnabled, roundedCorners: plugin.Configuration.UiStylingEnabled);
+        materialBackdropPending = ChocoboPresentation.PrepareMaterialBackdrop(plugin.Appearance.BackgroundEnabled);
+        movementLock.Apply(this, plugin.Configuration.UiWindowsLocked);
     }
 
     public override void PostDraw()
     {
+        movementLock.Restore(this);
         ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
         windowMotion.Restore(this);
         UiGui.PaintTitleWithImageAndStatus(this, UiText.T("Chocobo Colourized") + " v" + (typeof(Plugin).Assembly.GetName().Version?.ToString() ?? "0.0.0.0"), status: plugin.TitlebarStatus);
@@ -97,7 +100,9 @@ public class MainWindow : Window, IDisposable
     public override void Draw()
     {
         ChocoboPresentation.RestoreMaterialBackdrop(ref materialBackdropPending);
+        plugin.Appearance.PrepareBackgroundOpacity(WindowName, ImGui.IsWindowAppearing());
         MaterialSkin.Backdrop();
+        using var structuralBackgrounds = MaterialSkin.StructuralBackgroundStyle();
         windowMotion.DrawChrome();
         DrawHeader();
         using var tabFont = UiText.Font(UiFontRole.Action);
