@@ -284,4 +284,6 @@
   <data name="Background blur" xml:space="preserve"><value>Rozmycie tła</value></data>
   <data name="Blur (%)" xml:space="preserve"><value>Rozmycie (%)</value></data>
   <data name="Pause backdrop for screenshots" xml:space="preserve"><value>Wstrzymaj tło na czas zrzutów ekranu</value></data>
+  <data name="Highlight contrast" xml:space="preserve"><value>Kontrast wyróżnienia</value></data>
+  <data name="Makes controls and selection states more distinct." xml:space="preserve"><value>Ułatwia rozróżnianie elementów sterujących i stanów zaznaczenia.</value></data>
 </root>

@@ -1,3 +1,7 @@
+2026-11-12 - 2.0.0.15 - Highlight contrast
+
+- Add a saved Highlight contrast control in Appearance and the Colour menu, defaulting to 50%, with translated captions and help.
+
 2026-11-09 - 2.0.0.14 - Shared UI library update
 
 - Update shared text controls and glass rendering to the reviewed AethertekUI 0.3.1 baseline.

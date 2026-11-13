@@ -284,4 +284,6 @@
   <data name="Background blur" xml:space="preserve"><value>Làm mờ nền</value></data>
   <data name="Blur (%)" xml:space="preserve"><value>Làm mờ (%)</value></data>
   <data name="Pause backdrop for screenshots" xml:space="preserve"><value>Tạm dừng nền để chụp ảnh màn hình</value></data>
+  <data name="Highlight contrast" xml:space="preserve"><value>Độ tương phản khi làm nổi bật</value></data>
+  <data name="Makes controls and selection states more distinct." xml:space="preserve"><value>Làm cho các thành phần điều khiển và trạng thái chọn dễ phân biệt hơn.</value></data>
 </root>
