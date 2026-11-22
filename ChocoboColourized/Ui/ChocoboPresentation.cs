@@ -1,5 +1,6 @@
 using System.Numerics;
 using AethertekUI;
+using AethertekUI.Dalamud;
 using Dalamud.Bindings.ImGui;
 
 namespace ChocoboColourized.Ui;
@@ -21,7 +22,16 @@ internal static class ChocoboPresentation
 
     internal const uint ReferenceAccent = 0xF7D27A;
     internal static readonly float[] FontSizes = [18, 18, 32.5f, 31, 24, 20, 30.666667f];
-    internal static readonly string[] FontFiles = ["segoeui.ttf", "seguisb.ttf", "segoeuib.ttf", "seguisb.ttf", "seguisb.ttf", "seguisb.ttf", "segoeuib.ttf"];
+    internal static readonly MaterialFontWeight[] FontWeights =
+    [
+        MaterialFontWeight.Regular,
+        MaterialFontWeight.Semibold,
+        MaterialFontWeight.Bold,
+        MaterialFontWeight.Semibold,
+        MaterialFontWeight.Semibold,
+        MaterialFontWeight.Semibold,
+        MaterialFontWeight.Bold,
+    ];
     internal static float AtlasHeight(UiFontRole role) => FontSizes[(int)role] * 4 / 3;
     internal static bool Compact => MaterialTheme.Current.Density == MaterialDensity.Compact;
     internal static bool IsMaterial => MaterialTheme.Current.IsGlassmorphism || MaterialTheme.Current.IsSpatial || MaterialTheme.Current.IsCyberpunk;
