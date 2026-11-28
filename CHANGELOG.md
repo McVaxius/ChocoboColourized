@@ -1,3 +1,7 @@
+2026-11-28 - 2.0.0.17 - On-demand interface resources
+
+- **Reduced interface memory use while windows are closed.** The plugin loads fonts and backdrop resources when needed and releases them when the last window closes.
+
 2026-11-22 - 2.0.0.16 - Portable interface fonts
 
 - **Updated interface fonts.** Dalamud loads bundled fonts on Windows and Wine.
